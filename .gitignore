@@ -41,3 +41,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+Timee.v11.suo
+*.suo
+Timee/bin
+Timee/obj
