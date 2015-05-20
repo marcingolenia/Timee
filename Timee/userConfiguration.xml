@@ -1,0 +1,18 @@
+<UserConfiguration>
+  <Location>
+    <location id="1" name="Katowice" default="true"/>
+    <location id="2" name="GLiwice" default="false"/>
+  </Location>
+  <Project>
+    <Project id="1" name="Name of project" default="true" />
+    <Project id="2" name="Name of project" default="false" />
+  </Project>
+  <Sub-project>
+    <Sub-project id="1" name="Name of sub-project" default="true"/>
+    <Sub-project id="2" name="Name of sub-project" default="false"/>
+  </Sub-project>
+  <Task>
+    <Task id="1" name="Name of task" default="true"/>
+    <Task id="2" name="Name of task" default="false"/>
+  </Task>
+</UserConfiguration>
