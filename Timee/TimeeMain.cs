@@ -12,7 +12,6 @@ namespace Timee
     public partial class TimeeMain : Form
     {
         public TimeeContext Context = new TimeeContext();
-
         public TimeeMain()
         {
             InitializeComponent();
