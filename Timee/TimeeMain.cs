@@ -16,6 +16,7 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
+            //
             //Test purposes only:
             this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(DateTime.Now, DateTime.Now, null, "testSP", "testT", "testL", "testC");
 
