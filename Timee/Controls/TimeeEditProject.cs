@@ -22,5 +22,5 @@ namespace Timee.Controls
     /// Empty class - workaround for designer. Control normaly can inherit directly the generic class but crashes designer.
     /// </summary>
     public class TimeeEditProjectNonGeneric : TimeeEditComponent<Models.UserConfigurationProject>
-    { }
+    {}
 }

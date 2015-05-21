@@ -5,14 +5,14 @@
   </Location>
   <Project>
     <Project id="1" name="Name of project" default="true" />
-    <Project id="2" name="Name of project" default="false" />
+    <Project id="2" name="Name of project2" default="false" />
   </Project>
   <Sub-project>
     <Sub-project id="1" name="Name of sub-project" default="true"/>
-    <Sub-project id="2" name="Name of sub-project" default="false"/>
+    <Sub-project id="2" name="Name of sub-project2" default="false"/>
   </Sub-project>
   <Task>
     <Task id="1" name="Name of task" default="true"/>
-    <Task id="2" name="Name of task" default="false"/>
+    <Task id="2" name="Name of task2" default="false"/>
   </Task>
 </UserConfiguration>

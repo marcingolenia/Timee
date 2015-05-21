@@ -16,7 +16,7 @@ namespace Timee
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Timee());
+            Application.Run(new TimeeMain());
         }
     }
 }

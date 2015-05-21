@@ -28,40 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.editComponentLocation = new System.Windows.Forms.TabControl();
-            this.tabLocation = new System.Windows.Forms.TabPage();
+            this.tabsComponents = new System.Windows.Forms.TabControl();
             this.tabProject = new System.Windows.Forms.TabPage();
             this.tabSubProject = new System.Windows.Forms.TabPage();
             this.tabTask = new System.Windows.Forms.TabPage();
+            this.tabLocation = new System.Windows.Forms.TabPage();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.timeeEditLocation1 = new Controls.TimeeEditLocation();
-            this.editComponentLocation.SuspendLayout();
+            this.compLocationControl = new Timee.Controls.TimeeEditLocation();
+            this.tabsComponents.SuspendLayout();
             this.tabLocation.SuspendLayout();
             this.SuspendLayout();
             // 
-            // editComponentLocation
+            // tabsComponents
             // 
-            this.editComponentLocation.Controls.Add(this.tabLocation);
-            this.editComponentLocation.Controls.Add(this.tabProject);
-            this.editComponentLocation.Controls.Add(this.tabSubProject);
-            this.editComponentLocation.Controls.Add(this.tabTask);
-            this.editComponentLocation.Location = new System.Drawing.Point(12, 12);
-            this.editComponentLocation.Name = "editComponentLocation";
-            this.editComponentLocation.SelectedIndex = 0;
-            this.editComponentLocation.Size = new System.Drawing.Size(402, 252);
-            this.editComponentLocation.TabIndex = 7;
-            // 
-            // tabLocation
-            // 
-            this.tabLocation.Controls.Add(this.timeeEditLocation1);
-            this.tabLocation.Location = new System.Drawing.Point(4, 22);
-            this.tabLocation.Name = "tabLocation";
-            this.tabLocation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLocation.Size = new System.Drawing.Size(394, 226);
-            this.tabLocation.TabIndex = 0;
-            this.tabLocation.Text = "Location";
-            this.tabLocation.UseVisualStyleBackColor = true;
+            this.tabsComponents.Controls.Add(this.tabProject);
+            this.tabsComponents.Controls.Add(this.tabSubProject);
+            this.tabsComponents.Controls.Add(this.tabTask);
+            this.tabsComponents.Controls.Add(this.tabLocation);
+            this.tabsComponents.Location = new System.Drawing.Point(12, 12);
+            this.tabsComponents.Name = "tabsComponents";
+            this.tabsComponents.SelectedIndex = 0;
+            this.tabsComponents.Size = new System.Drawing.Size(402, 252);
+            this.tabsComponents.TabIndex = 7;
             // 
             // tabProject
             // 
@@ -91,6 +80,17 @@
             this.tabTask.Text = "Task";
             this.tabTask.UseVisualStyleBackColor = true;
             // 
+            // tabLocation
+            // 
+            this.tabLocation.Controls.Add(this.compLocationControl);
+            this.tabLocation.Location = new System.Drawing.Point(4, 22);
+            this.tabLocation.Name = "tabLocation";
+            this.tabLocation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLocation.Size = new System.Drawing.Size(394, 226);
+            this.tabLocation.TabIndex = 0;
+            this.tabLocation.Text = "Location";
+            this.tabLocation.UseVisualStyleBackColor = true;
+            // 
             // btnOK
             // 
             this.btnOK.Location = new System.Drawing.Point(12, 270);
@@ -99,6 +99,7 @@
             this.btnOK.TabIndex = 8;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
@@ -108,14 +109,15 @@
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // timeeEditLocation1
+            // compLocationControl
             // 
-            this.timeeEditLocation1.BindingSource = null;
-            this.timeeEditLocation1.Location = new System.Drawing.Point(0, 0);
-            this.timeeEditLocation1.Name = "timeeEditLocation1";
-            this.timeeEditLocation1.Size = new System.Drawing.Size(391, 215);
-            this.timeeEditLocation1.TabIndex = 0;
+            this.compLocationControl.BindingSourceList = null;
+            this.compLocationControl.Location = new System.Drawing.Point(0, 0);
+            this.compLocationControl.Name = "compLocationControl";
+            this.compLocationControl.Size = new System.Drawing.Size(391, 215);
+            this.compLocationControl.TabIndex = 0;
             // 
             // TimeeEditDialog
             // 
@@ -124,10 +126,10 @@
             this.ClientSize = new System.Drawing.Size(423, 316);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.editComponentLocation);
+            this.Controls.Add(this.tabsComponents);
             this.Name = "TimeeEditDialog";
             this.Text = "Edit positions";
-            this.editComponentLocation.ResumeLayout(false);
+            this.tabsComponents.ResumeLayout(false);
             this.tabLocation.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -135,14 +137,14 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl editComponentLocation;
+        private System.Windows.Forms.TabControl tabsComponents;
         private System.Windows.Forms.TabPage tabLocation;
         private System.Windows.Forms.TabPage tabProject;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TabPage tabSubProject;
         private System.Windows.Forms.TabPage tabTask;
-        private Controls.TimeeEditLocation timeeEditLocation1;
+        private Controls.TimeeEditLocation compLocationControl;
     }
 }
 

@@ -28,20 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.grdComponents = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.grdComponents)).BeginInit();
             this.SuspendLayout();
             // 
-            // listView1
+            // grdComponents
             // 
-            this.listView1.Location = new System.Drawing.Point(87, 37);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(265, 161);
-            this.listView1.TabIndex = 7;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.grdComponents.AllowUserToAddRows = false;
+            this.grdComponents.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grdComponents.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.grdComponents.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.grdComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdComponents.Location = new System.Drawing.Point(87, 38);
+            this.grdComponents.Name = "grdComponents";
+            this.grdComponents.Size = new System.Drawing.Size(267, 174);
+            this.grdComponents.TabIndex = 14;
             // 
             // btnAdd
             // 
@@ -51,6 +56,7 @@
             this.btnAdd.TabIndex = 13;
             this.btnAdd.Text = "+";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // textBox1
             // 
@@ -67,6 +73,7 @@
             this.btnDown.TabIndex = 9;
             this.btnDown.Text = "Down";
             this.btnDown.UseVisualStyleBackColor = true;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
             // btnUp
             // 
@@ -76,18 +83,20 @@
             this.btnUp.TabIndex = 8;
             this.btnUp.Text = "Up";
             this.btnUp.UseVisualStyleBackColor = true;
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
             // TimeeEditComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.grdComponents);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
             this.Name = "TimeeEditComponent";
             this.Size = new System.Drawing.Size(391, 215);
+            ((System.ComponentModel.ISupportInitialize)(this.grdComponents)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,10 +104,10 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.DataGridView grdComponents;
     }
 }

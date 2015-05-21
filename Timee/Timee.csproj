@@ -68,17 +68,19 @@
     <Compile Include="Controls\TimeeEditComponent.Designer.cs">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeeComponent.cs" />
+    <Compile Include="Models\TimeeContext.cs" />
     <Compile Include="TimeeEditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TimeeEditDialog.Designer.cs">
       <DependentUpon>TimeeEditDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Timee.cs">
+    <Compile Include="TimeeMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Timee.Designer.cs">
-      <DependentUpon>Timee.cs</DependentUpon>
+    <Compile Include="TimeeMain.Designer.cs">
+      <DependentUpon>TimeeMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\userconfigurations.cs">
       <DependentUpon>userconfigurations.xsd</DependentUpon>
@@ -91,8 +93,8 @@
     <EmbeddedResource Include="TimeeEditDialog.resx">
       <DependentUpon>TimeeEditDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Timee.resx">
-      <DependentUpon>Timee.cs</DependentUpon>
+    <EmbeddedResource Include="TimeeMain.resx">
+      <DependentUpon>TimeeMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -125,9 +127,13 @@
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableRowChangeEventHandler.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationLocation.datasource" />
+    <None Include="Properties\DataSources\Timee.Models.UserConfigurationLocation1.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationProject.datasource" />
+    <None Include="Properties\DataSources\Timee.Models.UserConfigurationProject1.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationSubproject.datasource" />
+    <None Include="Properties\DataSources\Timee.Models.UserConfigurationSubproject1.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationTask.datasource" />
+    <None Include="Properties\DataSources\Timee.Models.UserConfigurationTask1.datasource" />
     <None Include="Properties\DataSources\Timee.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\Timee.Properties.Settings.datasource" />
     <None Include="Properties\DataSources\Timer.datasource" />

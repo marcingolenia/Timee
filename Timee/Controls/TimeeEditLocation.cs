@@ -16,10 +16,17 @@ namespace Timee.Controls
         {
             InitializeComponent();
         }
+        protected override void btnAdd_Click(object sender, EventArgs e)
+        {
+            var location = new Models.UserConfigurationLocation();
+            location.name = "Hello";
+            this.BindingSourceList.Add(location);
+        }
+        
     }
     /// <summary>
     /// Empty class - workaround for designer. Control normaly can inherit directly the generic class but crashes designer.
     /// </summary>
     public class TimeEditLocationNonGeneric : TimeeEditComponent<Models.UserConfigurationLocation>
-    { }
+    {}
 }

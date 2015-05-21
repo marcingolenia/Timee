@@ -419,7 +419,7 @@ namespace Timee.DAL {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TimeSheetTableRow AddTimeSheetTableRow(double Time, System.DateTime Date, string Project, string SubProject, string Task, string Location, string Comment) {
+            public TimeSheetTableRow AddTimeSheetTableRow(System.DateTime Time, System.DateTime Date, string Project, string SubProject, string Task, string Location, string Comment) {
                 TimeSheetTableRow rowTimeSheetTableRow = ((TimeSheetTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Time,
@@ -463,7 +463,7 @@ namespace Timee.DAL {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnTime = new global::System.Data.DataColumn("Time", typeof(double), null, global::System.Data.MappingType.Element);
+                this.columnTime = new global::System.Data.DataColumn("Time", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTime);
                 this.columnDate = new global::System.Data.DataColumn("Date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDate);
@@ -619,10 +619,10 @@ namespace Timee.DAL {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double Time {
+            public System.DateTime Time {
                 get {
                     try {
-                        return ((double)(this[this.tableTimeSheetTable.TimeColumn]));
+                        return ((global::System.DateTime)(this[this.tableTimeSheetTable.TimeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'Time\' in table \'TimeSheetTable\' is DBNull.", e);
