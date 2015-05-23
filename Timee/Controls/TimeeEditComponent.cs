@@ -26,7 +26,7 @@ namespace Timee.Controls
             this.grdComponents.DataSource = BindingSourceList;
             foreach (DataGridViewColumn c in grdComponents.Columns)
             {
-                if(c.Name != displayMember)
+                if (c.Name != displayMember)
                 {
                     c.Visible = false;
                 }
@@ -40,13 +40,60 @@ namespace Timee.Controls
 
         private void btnUp_Click(object sender, EventArgs e)
         {
-            //TODO: It was only for testing - to be finished
-            this.BindingSourceList.Insert(0, BindingSourceList.Last());
-            this.BindingSourceList.RemoveAt(BindingSourceList.Count-1);
+            var mostTopCell = this.grdComponents.SelectedCells.Cast<DataGridViewCell>()
+                                                    .OrderBy(c => c.RowIndex)
+                                                    .FirstOrDefault();
+            var mostBottomCell = this.grdComponents.SelectedCells.Cast<DataGridViewCell>()
+                                        .OrderByDescending(c => c.RowIndex)
+                                        .FirstOrDefault();
+
+            if (mostTopCell != null && mostTopCell.RowIndex > 0)
+            {
+                foreach (DataGridViewCell c in this.grdComponents.SelectedCells
+                                                                .Cast<DataGridViewCell>()
+                                                                .OrderBy(c => c.RowIndex))
+                {
+                    var row = c.OwningRow;
+                    var i = row.Index;
+                    this.BindingSourceList.Swap(i, i - 1);
+                }
+                this.grdComponents.Rows[mostTopCell.RowIndex - 1].Cells[mostTopCell.ColumnIndex].Selected = true;
+                mostBottomCell.Selected = false;
+            }
         }
 
         private void btnDown_Click(object sender, EventArgs e)
         {
+            var mostTopCell = this.grdComponents.SelectedCells.Cast<DataGridViewCell>()
+                                                     .OrderBy(c => c.RowIndex)
+                                                     .FirstOrDefault();
+            var mostBottomCell = this.grdComponents.SelectedCells.Cast<DataGridViewCell>()
+                                        .OrderByDescending(c => c.RowIndex)
+                                        .FirstOrDefault();
+
+            if (mostBottomCell != null && mostBottomCell.RowIndex < this.BindingSourceList.Count-1)
+            {
+                foreach (DataGridViewCell c in this.grdComponents.SelectedCells
+                                                                .Cast<DataGridViewCell>()
+                                                                .OrderByDescending(c => c.RowIndex))
+                {
+                    var row = c.OwningRow;
+                    var i = row.Index;
+                    this.BindingSourceList.Swap(i, i + 1);
+                }
+                this.grdComponents.Rows[mostBottomCell.RowIndex + 1].Cells[mostTopCell.ColumnIndex].Selected = true;
+                mostTopCell.Selected = false;
+            }
         }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            foreach(DataGridViewCell c in grdComponents.SelectedCells)
+            {
+                this.grdComponents.Rows.Remove(c.OwningRow);
+            }
+        }
+
+
     }
 }

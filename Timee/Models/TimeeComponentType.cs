@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Timee.Models
 {
-    public enum TimeeComponent
+    public enum TimeeComponentType
     {
         Project,
         Subproject,

@@ -33,6 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdComponents)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@
             // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(37, 117);
+            this.btnDown.Location = new System.Drawing.Point(37, 134);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(44, 53);
             this.btnDown.TabIndex = 9;
@@ -77,7 +78,7 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(37, 59);
+            this.btnUp.Location = new System.Drawing.Point(37, 47);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(44, 52);
             this.btnUp.TabIndex = 8;
@@ -85,10 +86,21 @@
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(37, 105);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(44, 23);
+            this.btnRemove.TabIndex = 15;
+            this.btnRemove.Text = "Del.";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
             // TimeeEditComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.grdComponents);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.textBox1);
@@ -109,5 +121,6 @@
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.DataGridView grdComponents;
+        private System.Windows.Forms.Button btnRemove;
     }
 }

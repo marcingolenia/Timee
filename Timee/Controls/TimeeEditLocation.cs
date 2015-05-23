@@ -19,7 +19,7 @@ namespace Timee.Controls
         protected override void btnAdd_Click(object sender, EventArgs e)
         {
             var location = new Models.UserConfigurationLocation();
-            location.name = "Hello";
+            location.Name = "Hello";
             this.BindingSourceList.Add(location);
         }
         

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Timee.Models
 {
-    [Serializable]
     public class TimeeContext
     {
         public BindingList<Models.UserConfigurationLocation> Locations { get; set; }

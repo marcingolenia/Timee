@@ -5,13 +5,12 @@
         <xs:element name="Location">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="location" maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="Location" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
-                      <xs:attribute type="xs:byte" name="id" use="optional"/>
-                      <xs:attribute type="xs:string" name="name" use="optional"/>
-                      <xs:attribute type="xs:string" name="default" use="optional"/>
+                      <xs:attribute type="xs:byte" name="Order" use="optional"/>
+                      <xs:attribute type="xs:string" name="Name" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -26,9 +25,8 @@
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
-                      <xs:attribute type="xs:byte" name="id" use="optional"/>
-                      <xs:attribute type="xs:string" name="name" use="optional"/>
-                      <xs:attribute type="xs:string" name="default" use="optional"/>
+                      <xs:attribute type="xs:byte" name="Order" use="optional"/>
+                      <xs:attribute type="xs:string" name="Name" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -43,9 +41,8 @@
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
-                      <xs:attribute type="xs:byte" name="id" use="optional"/>
-                      <xs:attribute type="xs:string" name="name" use="optional"/>
-                      <xs:attribute type="xs:string" name="default" use="optional"/>
+                      <xs:attribute type="xs:byte" name="Order" use="optional"/>
+                      <xs:attribute type="xs:string" name="Name" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -60,9 +57,8 @@
                 <xs:complexType>
                   <xs:simpleContent>
                     <xs:extension base="xs:string">
-                      <xs:attribute type="xs:byte" name="id" use="optional"/>
-                      <xs:attribute type="xs:string" name="name" use="optional"/>
-                      <xs:attribute type="xs:string" name="default" use="optional"/>
+                      <xs:attribute type="xs:byte" name="Order" use="optional"/>
+                      <xs:attribute type="xs:string" name="Name" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>

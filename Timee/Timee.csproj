@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,8 +69,12 @@
     <Compile Include="Controls\TimeeEditComponent.Designer.cs">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\TimeeComponent.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Models\TimeeComponentType.cs" />
     <Compile Include="Models\TimeeContext.cs" />
+    <Compile Include="Models\UserConfiguration.cs">
+      <DependentUpon>UserConfiguration.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TimeeEditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,9 +86,6 @@
     </Compile>
     <Compile Include="TimeeMain.Designer.cs">
       <DependentUpon>TimeeMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\userconfigurations.cs">
-      <DependentUpon>userconfigurations.xsd</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,7 +119,7 @@
     <None Include="DAL\TimeeDataSet.xss">
       <DependentUpon>TimeeDataSet.xsd</DependentUpon>
     </None>
-    <None Include="Models\userconfigurations.xsd">
+    <None Include="Models\UserConfiguration.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\Program.datasource" />

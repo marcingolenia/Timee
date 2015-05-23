@@ -49,26 +49,25 @@ namespace Timee
 
             grdWorkSummaryInit();
         }
-
         //Events
         private void btnConfigureComponent_Click(object sender, EventArgs e)
         {
-            TimeeComponent component = TimeeComponent.Undefined;
+            TimeeComponentType component = TimeeComponentType.Undefined;
             if (sender.Equals(btnProject))
             {
-                component = TimeeComponent.Project;
+                component = TimeeComponentType.Project;
             }
             else if (sender.Equals(btnSubProject))
             {
-                component = TimeeComponent.Subproject;
+                component = TimeeComponentType.Subproject;
             }
             else if (sender.Equals(btnTask))
             {
-                component = TimeeComponent.Task;
+                component = TimeeComponentType.Task;
             }
             else if (sender.Equals(btnLocation))
             {
-                component = TimeeComponent.Location;
+                component = TimeeComponentType.Location;
             }
             using (var dlgEdit = new TimeeEditDialog(this.Context, component))
             {
