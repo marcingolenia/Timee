@@ -8,12 +8,13 @@ using System.Xml.Linq;
 using Timee.Models;
 using System.Data;
 using Timee.Tools;
+using Timee.DAL;
 
 namespace Timee
 {
     public partial class TimeeMain : Form
     {
-        public TimeeContext Context = new TimeeContext();
+        public TimeeContext Context;
         public TimeeMain()
         {
             InitializeComponent();
@@ -31,24 +32,11 @@ namespace Timee
 
         private void Timer_Load(object sender, EventArgs e)
         {
-
-            XmlSerializer s = new XmlSerializer(typeof(Models.UserConfiguration));
-            XDocument doc =
-            XDocument.Load(Path.Combine(Environment.CurrentDirectory, "userConfiguration.xml"));
-            var conf = (Models.UserConfiguration)s.Deserialize(doc.CreateReader());
-
-            Context.Locations = new BindingList<Models.UserConfigurationLocation>(conf.Location.ToList());
+            this.Context = TimeeXMLService.Instance.LoadContext();
             cmbLocations.DataSource = Context.Locations;
-
-            Context.Projects = new BindingList<Models.UserConfigurationProject>(conf.Project.ToList());
             cmbProject.DataSource = Context.Projects;
-
-            Context.Tasks = new BindingList<Models.UserConfigurationTask>(conf.Task.ToList());
             cmbTask.DataSource = Context.Tasks;
-
-            Context.Subprojects = new BindingList<Models.UserConfigurationSubproject>(conf.Subproject.ToList());
             cmbSubProject.DataSource = Context.Subprojects;
-
             grdWorkSummaryInit();
         }
 
@@ -75,10 +63,11 @@ namespace Timee
             using (var dlgEdit = new TimeeEditDialog(this.Context, component))
             {
                 dlgEdit.ShowDialog();
-                //Do things...
+                if(dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    TimeeXMLService.Instance.SaveContext(this.Context);
+                }
             }
-            // this.Context.Locations.ResetBindings();
-            // this.cmbLocations.re.Refresh();
         }
 
         private void exportToXlsButton_Click(object sender, EventArgs e)

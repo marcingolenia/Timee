@@ -64,6 +64,18 @@
     <Compile Include="Controls\TimeeEditProject.Designer.cs">
       <DependentUpon>TimeeEditProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TimeeEditSubproject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimeeEditSubproject.Designer.cs">
+      <DependentUpon>TimeeEditSubproject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeeEditTask.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimeeEditTask.Designer.cs">
+      <DependentUpon>TimeeEditTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\TimeeDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -75,6 +87,7 @@
     <Compile Include="Controls\TimeeEditComponent.Designer.cs">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\TimeeXMLService.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\TimeeComponentType.cs" />
     <Compile Include="Models\TimeeContext.cs" />

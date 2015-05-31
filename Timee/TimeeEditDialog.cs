@@ -22,10 +22,13 @@ namespace Timee
         public TimeeEditDialog(TimeeContext context, TimeeComponentType component)
         {
             InitializeComponent();
+            this.context = context;
+
             switch (component)
             {
                 case TimeeComponentType.Project:
                     this.tabsComponents.SelectedTab = tabProject;
+                 
                     break;
                 case TimeeComponentType.Subproject:
                     this.tabsComponents.SelectedTab = tabSubProject;
@@ -39,18 +42,22 @@ namespace Timee
                 default:
                     break;
             }
-            this.context = context;
             this.compLocationControl.BindData(context.Locations, DISPLAY_MEMBER);
-            // and next right here
+            this.compProjectControl.BindData(context.Projects, DISPLAY_MEMBER);
+            this.compSubprojectControl.BindData(context.Subprojects, DISPLAY_MEMBER);
+            this.compTaskControl.BindData(context.Tasks, DISPLAY_MEMBER);
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            context.Locations.ResetBindings();
+            context.ResetAllBindings();
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.Close();
         }
     }
 }
