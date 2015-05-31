@@ -101,7 +101,7 @@ namespace Timee.Models
     public partial class UserConfigurationLocation
     {
 
-        private sbyte orderField;
+        private int orderField;
 
         private bool orderFieldSpecified;
 
@@ -111,7 +111,7 @@ namespace Timee.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public sbyte Order
+        public int Order
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Timee.Models
     public partial class UserConfigurationProject
     {
 
-        private sbyte orderField;
+        private int orderField;
 
         private bool orderFieldSpecified;
 
@@ -185,7 +185,7 @@ namespace Timee.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public sbyte Order
+        public int Order
         {
             get
             {
@@ -249,7 +249,7 @@ namespace Timee.Models
     public partial class UserConfigurationSubproject
     {
 
-        private sbyte orderField;
+        private int orderField;
 
         private bool orderFieldSpecified;
 
@@ -259,7 +259,7 @@ namespace Timee.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public sbyte Order
+        public int Order
         {
             get
             {
@@ -323,7 +323,7 @@ namespace Timee.Models
     public partial class UserConfigurationTask
     {
 
-        private sbyte orderField;
+        private int orderField;
 
         private bool orderFieldSpecified;
 
@@ -333,7 +333,7 @@ namespace Timee.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public sbyte Order
+        public int Order
         {
             get
             {

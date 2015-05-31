@@ -18,14 +18,13 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
-            //
             //Test purposes only:
             this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(DateTime.Now, DateTime.Now, null, "testSP", "testT", "testL", "testC");
 
         }
         private void grdWorkSummaryInit()
         {
-            var c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
+            DataGridViewComboBoxColumn c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
             c.DataSource = Context.Projects;
             //grdWorkSummary.
         }
@@ -39,7 +38,6 @@ namespace Timee
             cmbSubProject.DataSource = Context.Subprojects;
             grdWorkSummaryInit();
         }
-
         //Events
         private void btnConfigureComponent_Click(object sender, EventArgs e)
         {
@@ -63,7 +61,7 @@ namespace Timee
             using (var dlgEdit = new TimeeEditDialog(this.Context, component))
             {
                 dlgEdit.ShowDialog();
-                if(dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
+                if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
                     TimeeXMLService.Instance.SaveContext(this.Context);
                 }
@@ -75,6 +73,39 @@ namespace Timee
             DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
             XlsExportManager exporter = new XlsExportManager();
             exporter.ExportAllEntries(allEntries);
+        }
+
+        private void grdWorkSummary_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (grdWorkSummary.CurrentCell.OwningColumn.Name == "Project")
+            {
+                ComboBox combo = e.Control as ComboBox;
+
+                if (combo == null)
+                    return;
+
+                combo.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+        }
+
+        private void grdWorkSummary_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            //MessageBox.Show("Val");
+            var cell = ((DataGridView)sender).CurrentCell;
+            if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
+                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+                && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            {
+                var newProject = new Models.UserConfigurationProject() 
+                { 
+                    Name= cell.EditedFormattedValue.ToString(), 
+                    Order = this.Context.Projects.Max(p=>p.Order) + 1,
+                    OrderSpecified = true
+                };
+                this.Context.Projects.Add(newProject);
+                this.Context.Projects.ResetBindings();
+                cell.Value = newProject.Name;
+            }
         }
     }
 }
