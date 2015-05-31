@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.76.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -89,6 +95,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\XlsExportManager.cs" />
     <EmbeddedResource Include="Controls\TimeeEditComponent.resx">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +129,7 @@
     <None Include="Models\UserConfiguration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableDataTable.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableRow.datasource" />

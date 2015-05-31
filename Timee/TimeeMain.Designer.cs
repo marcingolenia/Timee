@@ -42,7 +42,7 @@
             this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeeDataSet = new Timee.DAL.TimeeDataSet();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.exportToXlsButton = new System.Windows.Forms.Button();
             this.cmbProject = new System.Windows.Forms.ComboBox();
             this.cmbSubProject = new System.Windows.Forms.ComboBox();
             this.userConfigurationSubprojectBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -122,7 +122,6 @@
             // 
             this.Project.DataPropertyName = "Project";
             this.Project.DataSource = this.userConfigurationProjectBindingSource;
-            this.Project.DisplayMember = "name";
             this.Project.HeaderText = "Project";
             this.Project.Name = "Project";
             this.Project.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -170,14 +169,15 @@
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // exportToXlsButton
             // 
-            this.button2.Location = new System.Drawing.Point(253, 266);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(281, 26);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.exportToXlsButton.Location = new System.Drawing.Point(813, 265);
+            this.exportToXlsButton.Name = "exportToXlsButton";
+            this.exportToXlsButton.Size = new System.Drawing.Size(79, 26);
+            this.exportToXlsButton.TabIndex = 3;
+            this.exportToXlsButton.Text = "Export to *.xls";
+            this.exportToXlsButton.UseVisualStyleBackColor = true;
+            this.exportToXlsButton.Click += new System.EventHandler(this.exportToXlsButton_Click);
             // 
             // cmbProject
             // 
@@ -336,7 +336,7 @@
             this.Controls.Add(this.cmbTask);
             this.Controls.Add(this.cmbSubProject);
             this.Controls.Add(this.cmbProject);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.exportToXlsButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.grdWorkSummary);
             this.Controls.Add(this.cmbLocations);
@@ -359,7 +359,7 @@
         private System.Windows.Forms.ComboBox cmbLocations;
         private System.Windows.Forms.DataGridView grdWorkSummary;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button exportToXlsButton;
         private System.Windows.Forms.ComboBox cmbProject;
         private System.Windows.Forms.ComboBox cmbSubProject;
         private System.Windows.Forms.ComboBox cmbTask;

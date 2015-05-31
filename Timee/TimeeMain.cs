@@ -6,6 +6,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml.Linq;
 using Timee.Models;
+using System.Data;
+using Timee.Tools;
 
 namespace Timee
 {
@@ -49,6 +51,7 @@ namespace Timee
 
             grdWorkSummaryInit();
         }
+
         //Events
         private void btnConfigureComponent_Click(object sender, EventArgs e)
         {
@@ -76,6 +79,13 @@ namespace Timee
             }
             // this.Context.Locations.ResetBindings();
             // this.cmbLocations.re.Refresh();
+        }
+
+        private void exportToXlsButton_Click(object sender, EventArgs e)
+        {
+            DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
+            XlsExportManager exporter = new XlsExportManager();
+            exporter.ExportAllEntries(allEntries);
         }
     }
 }
