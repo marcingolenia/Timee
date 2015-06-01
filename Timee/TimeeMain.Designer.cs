@@ -32,15 +32,22 @@
             this.cmbLocations = new System.Windows.Forms.ComboBox();
             this.userConfigurationLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdWorkSummary = new System.Windows.Forms.DataGridView();
+            this.dateDataGridViewTextBoxColumn = new Timee.Controls.CalendarColumn.CalendarColumn();
+            this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Project = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.userConfigurationProjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.SubProject = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userConfigurationSubprojectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Task = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userConfigurationTaskBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.timeeDataSet = new Timee.DAL.TimeeDataSet();
             this.button1 = new System.Windows.Forms.Button();
             this.exportToXlsButton = new System.Windows.Forms.Button();
             this.cmbProject = new System.Windows.Forms.ComboBox();
             this.cmbSubProject = new System.Windows.Forms.ComboBox();
-            this.userConfigurationSubprojectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbTask = new System.Windows.Forms.ComboBox();
-            this.userConfigurationTaskBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnProject = new System.Windows.Forms.Button();
             this.btnSubProject = new System.Windows.Forms.Button();
             this.btnTask = new System.Windows.Forms.Button();
@@ -53,19 +60,12 @@
             this.lblSubProject = new System.Windows.Forms.Label();
             this.lblLocation = new System.Windows.Forms.Label();
             this.lblTask = new System.Windows.Forms.Label();
-            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Project = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.subProjectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.taskDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.locationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbLocations
@@ -84,6 +84,8 @@
             // 
             // grdWorkSummary
             // 
+            this.grdWorkSummary.AllowUserToOrderColumns = true;
+            this.grdWorkSummary.AllowUserToResizeRows = false;
             this.grdWorkSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grdWorkSummary.AutoGenerateColumns = false;
@@ -96,12 +98,13 @@
             this.dateDataGridViewTextBoxColumn,
             this.timeDataGridViewTextBoxColumn,
             this.Project,
-            this.subProjectDataGridViewTextBoxColumn,
-            this.taskDataGridViewTextBoxColumn,
-            this.locationDataGridViewTextBoxColumn,
+            this.SubProject,
+            this.Task,
+            this.Location,
             this.commentDataGridViewTextBoxColumn});
             this.grdWorkSummary.DataMember = "TimeSheetTable";
             this.grdWorkSummary.DataSource = this.timeeDataSet;
+            this.grdWorkSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.grdWorkSummary.Location = new System.Drawing.Point(13, 107);
             this.grdWorkSummary.Name = "grdWorkSummary";
             this.grdWorkSummary.Size = new System.Drawing.Size(880, 153);
@@ -109,9 +112,80 @@
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
             this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
             // 
+            // dateDataGridViewTextBoxColumn
+            // 
+            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            this.dateDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dateDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // timeDataGridViewTextBoxColumn
+            // 
+            this.timeDataGridViewTextBoxColumn.DataPropertyName = "Time";
+            this.timeDataGridViewTextBoxColumn.HeaderText = "Time";
+            this.timeDataGridViewTextBoxColumn.Name = "timeDataGridViewTextBoxColumn";
+            // 
+            // Project
+            // 
+            this.Project.DataPropertyName = "Project";
+            this.Project.DataSource = this.userConfigurationProjectBindingSource;
+            this.Project.DisplayMember = "Name";
+            this.Project.HeaderText = "Project";
+            this.Project.Name = "Project";
+            this.Project.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Project.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // userConfigurationProjectBindingSource
             // 
             this.userConfigurationProjectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationProject);
+            // 
+            // SubProject
+            // 
+            this.SubProject.DataPropertyName = "SubProject";
+            this.SubProject.DataSource = this.userConfigurationSubprojectBindingSource;
+            this.SubProject.DisplayMember = "Name";
+            this.SubProject.HeaderText = "SubProject";
+            this.SubProject.Name = "SubProject";
+            this.SubProject.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SubProject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.SubProject.ValueMember = "Name";
+            // 
+            // userConfigurationSubprojectBindingSource
+            // 
+            this.userConfigurationSubprojectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationSubproject);
+            // 
+            // Task
+            // 
+            this.Task.DataPropertyName = "Task";
+            this.Task.DataSource = this.userConfigurationTaskBindingSource;
+            this.Task.DisplayMember = "Name";
+            this.Task.HeaderText = "Task";
+            this.Task.Name = "Task";
+            this.Task.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Task.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Task.ValueMember = "Name";
+            // 
+            // userConfigurationTaskBindingSource
+            // 
+            this.userConfigurationTaskBindingSource.DataSource = typeof(Timee.Models.UserConfigurationTask);
+            // 
+            // Location
+            // 
+            this.Location.DataPropertyName = "Location";
+            this.Location.DataSource = this.userConfigurationLocationBindingSource;
+            this.Location.DisplayMember = "Name";
+            this.Location.HeaderText = "Location";
+            this.Location.Name = "Location";
+            this.Location.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Location.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Location.ValueMember = "Name";
+            // 
+            // commentDataGridViewTextBoxColumn
+            // 
+            this.commentDataGridViewTextBoxColumn.DataPropertyName = "Comment";
+            this.commentDataGridViewTextBoxColumn.HeaderText = "Comment";
+            this.commentDataGridViewTextBoxColumn.Name = "commentDataGridViewTextBoxColumn";
             // 
             // timeeDataSet
             // 
@@ -157,10 +231,6 @@
             this.cmbSubProject.Size = new System.Drawing.Size(121, 21);
             this.cmbSubProject.TabIndex = 5;
             // 
-            // userConfigurationSubprojectBindingSource
-            // 
-            this.userConfigurationSubprojectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationSubproject);
-            // 
             // cmbTask
             // 
             this.cmbTask.DataSource = this.userConfigurationTaskBindingSource;
@@ -170,10 +240,6 @@
             this.cmbTask.Name = "cmbTask";
             this.cmbTask.Size = new System.Drawing.Size(121, 21);
             this.cmbTask.TabIndex = 6;
-            // 
-            // userConfigurationTaskBindingSource
-            // 
-            this.userConfigurationTaskBindingSource.DataSource = typeof(Timee.Models.UserConfigurationTask);
             // 
             // btnProject
             // 
@@ -275,53 +341,6 @@
             this.lblTask.TabIndex = 19;
             this.lblTask.Text = "Task";
             // 
-            // dateDataGridViewTextBoxColumn
-            // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            // 
-            // timeDataGridViewTextBoxColumn
-            // 
-            this.timeDataGridViewTextBoxColumn.DataPropertyName = "Time";
-            this.timeDataGridViewTextBoxColumn.HeaderText = "Time";
-            this.timeDataGridViewTextBoxColumn.Name = "timeDataGridViewTextBoxColumn";
-            // 
-            // Project
-            // 
-            this.Project.DataPropertyName = "Project";
-            this.Project.DataSource = this.userConfigurationProjectBindingSource;
-            this.Project.DisplayMember = "Name";
-            this.Project.HeaderText = "Project";
-            this.Project.Name = "Project";
-            this.Project.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Project.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Project.ValueMember = "Name";
-            // 
-            // subProjectDataGridViewTextBoxColumn
-            // 
-            this.subProjectDataGridViewTextBoxColumn.DataPropertyName = "SubProject";
-            this.subProjectDataGridViewTextBoxColumn.HeaderText = "SubProject";
-            this.subProjectDataGridViewTextBoxColumn.Name = "subProjectDataGridViewTextBoxColumn";
-            // 
-            // taskDataGridViewTextBoxColumn
-            // 
-            this.taskDataGridViewTextBoxColumn.DataPropertyName = "Task";
-            this.taskDataGridViewTextBoxColumn.HeaderText = "Task";
-            this.taskDataGridViewTextBoxColumn.Name = "taskDataGridViewTextBoxColumn";
-            // 
-            // locationDataGridViewTextBoxColumn
-            // 
-            this.locationDataGridViewTextBoxColumn.DataPropertyName = "Location";
-            this.locationDataGridViewTextBoxColumn.HeaderText = "Location";
-            this.locationDataGridViewTextBoxColumn.Name = "locationDataGridViewTextBoxColumn";
-            // 
-            // commentDataGridViewTextBoxColumn
-            // 
-            this.commentDataGridViewTextBoxColumn.DataPropertyName = "Comment";
-            this.commentDataGridViewTextBoxColumn.HeaderText = "Comment";
-            this.commentDataGridViewTextBoxColumn.Name = "commentDataGridViewTextBoxColumn";
-            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,9 +370,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,12 +404,12 @@
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.Label lblTask;
         private DAL.TimeeDataSet timeeDataSet;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
+        private Controls.CalendarColumn.CalendarColumn dateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn Project;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subProjectDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn taskDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn locationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn SubProject;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Task;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Location;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
     }
 }

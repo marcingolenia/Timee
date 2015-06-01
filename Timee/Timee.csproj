@@ -52,6 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CalendarColumn\CalendarCell.cs" />
+    <Compile Include="Controls\CalendarColumn\CalendarColumn.cs" />
+    <Compile Include="Controls\CalendarColumn\CalendarEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TimeeEditLocation.cs">
       <SubType>UserControl</SubType>
     </Compile>

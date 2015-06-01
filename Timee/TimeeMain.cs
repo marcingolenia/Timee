@@ -1,14 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using System.IO;
-using System.Xml.Serialization;
-using System.Xml.Linq;
-using Timee.Models;
-using System.Data;
-using Timee.Tools;
 using Timee.DAL;
+using Timee.Models;
+using Timee.Tools;
 
 namespace Timee
 {
@@ -19,16 +16,26 @@ namespace Timee
         {
             InitializeComponent();
             //Test purposes only:
-            this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(DateTime.Now, DateTime.Now, null, "testSP", "testT", "testL", "testC");
+            this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(2.25, DateTime.Now, null, null, null, null, null);
 
         }
         private void grdWorkSummaryInit()
         {
-            DataGridViewComboBoxColumn c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
+            DataGridViewComboBoxColumn c;
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
             c.DataSource = Context.Projects;
-            //grdWorkSummary.
-        }
 
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName];
+            c.DataSource = Context.Subprojects;
+
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName];
+            c.DataSource = Context.Tasks;
+
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
+            c.DataSource = Context.Locations;
+
+        }
+        //Events
         private void Timer_Load(object sender, EventArgs e)
         {
             this.Context = TimeeXMLService.Instance.LoadContext();
@@ -38,7 +45,7 @@ namespace Timee
             cmbSubProject.DataSource = Context.Subprojects;
             grdWorkSummaryInit();
         }
-        //Events
+
         private void btnConfigureComponent_Click(object sender, EventArgs e)
         {
             TimeeComponentType component = TimeeComponentType.Undefined;
@@ -77,36 +84,84 @@ namespace Timee
 
         private void grdWorkSummary_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (grdWorkSummary.CurrentCell.OwningColumn.Name == "Project")
+            if (grdWorkSummary.CurrentCell.OwningColumn.CellType == typeof(DataGridViewComboBoxCell))
             {
-                ComboBox combo = e.Control as ComboBox;
+                ComboBox cmb = e.Control as ComboBox;
 
-                if (combo == null)
+                if (cmb == null)
                     return;
 
-                combo.DropDownStyle = ComboBoxStyle.DropDown;
+                cmb.DropDownStyle = ComboBoxStyle.DropDown;
+                cmb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cmb.Leave -= new EventHandler(grdWorkSummaryCmb_SelectAutocomplete);
+                cmb.Leave += new EventHandler(grdWorkSummaryCmb_SelectAutocomplete);
             }
+        }
+
+        void grdWorkSummaryCmb_SelectAutocomplete(object sender, EventArgs e)
+        {
+            grdWorkSummary.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
         }
 
         private void grdWorkSummary_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            //MessageBox.Show("Val");
+            //Projects
             var cell = ((DataGridView)sender).CurrentCell;
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
                 && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
-                var newProject = new Models.UserConfigurationProject() 
-                { 
-                    Name= cell.EditedFormattedValue.ToString(), 
-                    Order = this.Context.Projects.Max(p=>p.Order) + 1,
+                var newProject = new Models.UserConfigurationProject()
+                {
+                    Name = cell.EditedFormattedValue.ToString(),
+                    Order = this.Context.Projects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
                 this.Context.Projects.Add(newProject);
-                this.Context.Projects.ResetBindings();
                 cell.Value = newProject.Name;
+            }
+            //Subprojects
+            if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
+                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+                && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            {
+                var newSubProject = new Models.UserConfigurationSubproject()
+                {
+                    Name = cell.EditedFormattedValue.ToString(),
+                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                this.Context.Subprojects.Add(newSubProject);
+                cell.Value = newSubProject.Name;
+            }
+            //Tasks
+            if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
+                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+                && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            {
+                var newTask = new Models.UserConfigurationTask()
+                {
+                    Name = cell.EditedFormattedValue.ToString(),
+                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                this.Context.Tasks.Add(newTask);
+                cell.Value = newTask.Name;
+            }
+            //Locations
+            if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
+                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+                && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            {
+                var newLocation = new Models.UserConfigurationLocation()
+                {
+                    Name = cell.EditedFormattedValue.ToString(),
+                    Order = this.Context.Locations.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                this.Context.Locations.Add(newLocation);
+                cell.Value = newLocation.Name;
             }
         }
     }
 }
-

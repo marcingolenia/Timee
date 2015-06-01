@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+﻿
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Timee.Controls
 {
@@ -15,6 +9,17 @@ namespace Timee.Controls
         public TimeeEditSubproject()
         {
             InitializeComponent();
+        }
+
+        protected override void btnAdd_Click(object sender, EventArgs e)
+        {
+            var subProject = new Models.UserConfigurationSubproject()
+            {
+                Name = this.NewItemText,
+                Order = this.BindingSourceList.Max(i => i.Order + 1),
+                OrderSpecified = true
+            };
+            this.BindingSourceList.Add(subProject);
         }
     }
 

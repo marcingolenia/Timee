@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Timee.Controls
@@ -13,6 +8,13 @@ namespace Timee.Controls
     public partial class TimeeEditComponent<T> : UserControl
         where T : class
     {
+        public string NewItemText
+        {
+            get
+            {
+                return this.txtNewItemName.Text;
+            }
+        }
         public BindingList<T> BindingSourceList { get; set; }
         public TimeeEditComponent()
         {
@@ -71,7 +73,7 @@ namespace Timee.Controls
                                         .OrderByDescending(c => c.RowIndex)
                                         .FirstOrDefault();
 
-            if (mostBottomCell != null && mostBottomCell.RowIndex < this.BindingSourceList.Count-1)
+            if (mostBottomCell != null && mostBottomCell.RowIndex < this.BindingSourceList.Count - 1)
             {
                 foreach (DataGridViewCell c in this.grdComponents.SelectedCells
                                                                 .Cast<DataGridViewCell>()
@@ -88,7 +90,7 @@ namespace Timee.Controls
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            foreach(DataGridViewCell c in grdComponents.SelectedCells)
+            foreach (DataGridViewCell c in grdComponents.SelectedCells)
             {
                 this.grdComponents.Rows.Remove(c.OwningRow);
             }

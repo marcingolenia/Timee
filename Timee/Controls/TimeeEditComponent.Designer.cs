@@ -30,7 +30,7 @@
         {
             this.grdComponents = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtNewItemName = new System.Windows.Forms.TextBox();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
@@ -59,12 +59,12 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // textBox1
+            // txtNewItemName
             // 
-            this.textBox1.Location = new System.Drawing.Point(87, 11);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(228, 20);
-            this.textBox1.TabIndex = 12;
+            this.txtNewItemName.Location = new System.Drawing.Point(87, 11);
+            this.txtNewItemName.Name = "txtNewItemName";
+            this.txtNewItemName.Size = new System.Drawing.Size(228, 20);
+            this.txtNewItemName.TabIndex = 12;
             // 
             // btnDown
             // 
@@ -103,7 +103,7 @@
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.grdComponents);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtNewItemName);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
             this.Name = "TimeeEditComponent";
@@ -117,7 +117,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNewItemName;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.DataGridView grdComponents;

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Timee.Controls
 {
@@ -18,8 +12,12 @@ namespace Timee.Controls
         }
         protected override void btnAdd_Click(object sender, EventArgs e)
         {
-            var location = new Models.UserConfigurationLocation();
-            location.Name = "Hello";
+            var location = new Models.UserConfigurationLocation()
+            {
+                Name = this.NewItemText,
+                Order = this.BindingSourceList.Max(i => i.Order + 1),
+                OrderSpecified = true
+            };
             this.BindingSourceList.Add(location);
         }
         
