@@ -93,14 +93,7 @@ namespace Timee
 
                 cmb.DropDownStyle = ComboBoxStyle.DropDown;
                 cmb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                cmb.Leave -= new EventHandler(grdWorkSummaryCmb_SelectAutocomplete);
-                cmb.Leave += new EventHandler(grdWorkSummaryCmb_SelectAutocomplete);
             }
-        }
-
-        void grdWorkSummaryCmb_SelectAutocomplete(object sender, EventArgs e)
-        {
-            grdWorkSummary.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
         }
 
         private void grdWorkSummary_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
