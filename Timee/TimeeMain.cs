@@ -17,6 +17,7 @@ namespace Timee
             InitializeComponent();
             //Test purposes only:
             this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(2.25, DateTime.Now, null, null, null, null, null);
+            this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(2.25, DateTime.Now, null, null, null, null, null);
 
         }
         private void grdWorkSummaryInit()
@@ -93,6 +94,17 @@ namespace Timee
 
                 cmb.DropDownStyle = ComboBoxStyle.DropDown;
                 cmb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cmb.PreviewKeyDown -= new PreviewKeyDownEventHandler(GridCmb_KeyPress);
+                cmb.PreviewKeyDown += new PreviewKeyDownEventHandler(GridCmb_KeyPress);
+            }
+        }
+
+        private void GridCmb_KeyPress(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                grdWorkSummary.EndEdit();
+                grdWorkSummary.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
             }
         }
 
