@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Timee.DAL;
@@ -11,36 +12,24 @@ namespace Timee
 {
     public partial class TimeeMain : Form
     {
+        //Fields + props
+        private DataGridViewCell CurrentTimeCell
+        {
+            get; set;
+        }
         public TimeeContext Context;
         public TimeeMain()
         {
             InitializeComponent();
-            //Test purposes only:
-            this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(2.25, DateTime.Now, null, null, null, null, null);
-            this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(2.25, DateTime.Now, null, null, null, null, null);
-
+            this.timeeDataSet.TimeSheetTable.DateColumn.DefaultValue = DateTime.Today;
+            this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = 0;
+            this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "0";
         }
-        private void grdWorkSummaryInit()
-        {
-            DataGridViewComboBoxColumn c;
-            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
-            c.DataSource = Context.Projects;
 
-            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName];
-            c.DataSource = Context.Subprojects;
-
-            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName];
-            c.DataSource = Context.Tasks;
-
-            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
-            c.DataSource = Context.Locations;
-
-        }
         //Events
         private void Timer_Load(object sender, EventArgs e)
         {
             this.Context = TimeeXMLService.Instance.LoadContext();
-            cmbLocations.DataSource = Context.Locations;
             cmbProject.DataSource = Context.Projects;
             cmbTask.DataSource = Context.Tasks;
             cmbSubProject.DataSource = Context.Subprojects;
@@ -91,11 +80,24 @@ namespace Timee
 
                 if (cmb == null)
                     return;
-
                 cmb.DropDownStyle = ComboBoxStyle.DropDown;
                 cmb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 cmb.PreviewKeyDown -= new PreviewKeyDownEventHandler(GridCmb_KeyPress);
                 cmb.PreviewKeyDown += new PreviewKeyDownEventHandler(GridCmb_KeyPress);
+            }
+            else if (grdWorkSummary.CurrentCell.RowIndex == grdWorkSummary.Rows.Count - 1 &&
+                grdWorkSummary.CurrentCell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.CommentColumn.ColumnName)
+            {
+                e.Control.PreviewKeyDown -= CommentCell_PreviewKeyDown;
+                e.Control.PreviewKeyDown += CommentCell_PreviewKeyDown;
+            }
+        }
+
+        private void CommentCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
+            {
+                AddNewRow();
             }
         }
 
@@ -166,6 +168,88 @@ namespace Timee
                 };
                 this.Context.Locations.Add(newLocation);
                 cell.Value = newLocation.Name;
+            }
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+
+            this.CurrentTimeCell.Value = (double)this.CurrentTimeCell.Value + ((double)timer.Interval / 1000);
+
+            //DateTime dt = DateTime.ParseExact("0800", "HHmm", CultureInfo.InvariantCulture);
+        }
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+            row.Comment = this.tbComment.Text;
+            row.Date = this.dpWorkDate.Value;
+            row.Project = this.cmbProject.Text;
+            row.SubProject = this.cmbSubProject.Text;
+            row.Task = this.cmbTask.Text;
+            row.Time = 0;
+            row.Location = this.cmbLocations.Text;
+            AddNewRow(row);
+            this.btnPause.Enabled = true;
+            this.btnPause.Text = "Pause";
+        }
+        private void grdWorkSummary_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.SwitchTimerToRow(e.RowIndex);
+        }
+
+        //Methods
+        private void grdWorkSummaryInit()
+        {
+            foreach (DataGridViewColumn column in this.grdWorkSummary.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            DataGridViewComboBoxColumn c;
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
+            c.DataSource = Context.Projects;
+
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName];
+            c.DataSource = Context.Subprojects;
+
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName];
+            c.DataSource = Context.Tasks;
+
+            c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
+            c.DataSource = Context.Locations;
+
+        }
+        private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
+        {
+            if (row == null)
+            {
+                row = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(row);
+            }
+            else
+            {
+                this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(row);
+            }
+            this.CurrentTimeCell = grdWorkSummary.Rows[this.grdWorkSummary.Rows.Count - 1]
+                                                 .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            this.timer.Start();
+
+        }
+        private void SwitchTimerToRow(int rowIndex)
+        {
+            this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (this.timer.Enabled)
+            {
+                this.timer.Stop();
+                this.btnPause.Text = "Resume";
+            }
+            else
+            {
+                this.timer.Start();
+                this.btnPause.Text = "Pause";
             }
         }
     }
