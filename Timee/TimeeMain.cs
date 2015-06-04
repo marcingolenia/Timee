@@ -25,7 +25,8 @@ namespace Timee
             this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = 0;
             this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "0";
         }
-
+        //cust event
+        public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
         //Events
         private void Timer_Load(object sender, EventArgs e)
         {
@@ -91,6 +92,11 @@ namespace Timee
                 e.Control.PreviewKeyDown -= CommentCell_PreviewKeyDown;
                 e.Control.PreviewKeyDown += CommentCell_PreviewKeyDown;
             }
+        }
+
+        private void btnGridRemoveRow(object sender, EventArgs e)
+        {
+            grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);            
         }
 
         private void CommentCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -197,6 +203,27 @@ namespace Timee
             this.SwitchTimerToRow(e.RowIndex);
         }
 
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (this.timer.Enabled)
+            {
+                this.timer.Stop();
+                this.btnPause.Text = "Resume";
+            }
+            else
+            {
+                this.timer.Start();
+                this.btnPause.Text = "Pause";
+            }
+        }
+
+        private void grdWorkSummary_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(grdWorkSummary.Columns[e.ColumnIndex].CellType == typeof(DataGridViewButtonCell))
+            {
+                btnDeleteRowClicked(sender, e);
+            }
+        }
         //Methods
         private void grdWorkSummaryInit()
         {
@@ -217,7 +244,18 @@ namespace Timee
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
             c.DataSource = Context.Locations;
 
+            btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
         }
+
+        private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            if(grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
+            {
+                timer.Stop();
+            }
+            grdWorkSummary.Rows.RemoveAt(e.RowIndex);
+        }
+
         private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
         {
             if (row == null)
@@ -237,19 +275,9 @@ namespace Timee
         private void SwitchTimerToRow(int rowIndex)
         {
             this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-        }
-
-        private void btnPause_Click(object sender, EventArgs e)
-        {
-            if (this.timer.Enabled)
+            if(!timer.Enabled)
             {
-                this.timer.Stop();
-                this.btnPause.Text = "Resume";
-            }
-            else
-            {
-                this.timer.Start();
-                this.btnPause.Text = "Pause";
+                timer.Enabled = true;
             }
         }
     }
