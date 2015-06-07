@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,11 +14,16 @@ namespace Timee
     public partial class TimeeMain : Form
     {
         //Fields + props
+        private int rowIndexFromMouseDown;
+
         private DataGridViewCell CurrentTimeCell
         {
             get; set;
         }
         public TimeeContext Context;
+        //Custom event for handling rows removal
+        public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+        //constructor
         public TimeeMain()
         {
             InitializeComponent();
@@ -25,8 +31,6 @@ namespace Timee
             this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = 0;
             this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "0";
         }
-        //Custom event for handling rows removal
-        public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
 
         //Events
         /// <summary>
@@ -63,7 +67,6 @@ namespace Timee
             this.btnPause.Enabled = true;
             this.btnPause.Text = "Pause";
         }
-
         /// <summary>
         /// Pause time counting.
         /// </summary>
@@ -82,7 +85,6 @@ namespace Timee
                 this.btnPause.Text = "Pause";
             }
         }
-
         /// <summary>
         /// Edit selected List.
         /// </summary>
@@ -116,7 +118,6 @@ namespace Timee
                 }
             }
         }
-
         /// <summary>
         /// Export grid data to Excel sheet.
         /// </summary>
@@ -128,7 +129,6 @@ namespace Timee
             XlsExportManager exporter = new XlsExportManager();
             exporter.ExportAllEntries(allEntries);
         }
-
         /// <summary>
         /// Update cell value while counting time.
         /// </summary>
@@ -168,7 +168,6 @@ namespace Timee
                 e.Control.PreviewKeyDown += CommentCell_PreviewKeyDown;
             }
         }
-
         /// <summary>
         /// Handling delete-button.
         /// </summary>
@@ -176,9 +175,8 @@ namespace Timee
         /// <param name="e"></param>
         private void btnGridRemoveRow(object sender, EventArgs e)
         {
-            grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);            
+            grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);
         }
-
         /// <summary>
         /// Comment is last column, so let's add new row after pressing Tab or Enter.
         /// </summary>
@@ -191,7 +189,6 @@ namespace Timee
                 AddNewRow();
             }
         }
-
         /// <summary>
         /// Handling editable comboboxes - Tab key.
         /// </summary>
@@ -205,7 +202,6 @@ namespace Timee
                 grdWorkSummary.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
             }
         }
-
         /// <summary>
         /// Handling editable comboboxes - Adding new values.
         /// </summary>
@@ -271,7 +267,6 @@ namespace Timee
                 cell.Value = newLocation.Name;
             }
         }
-
         /// <summary>
         /// Setting time counting on clicked row.
         /// </summary>
@@ -281,7 +276,6 @@ namespace Timee
         {
             this.SwitchTimerToRow(e.RowIndex);
         }
-
         /// <summary>
         /// Trigger btnDeleteRowClicked event if cell is button.
         /// </summary>
@@ -289,12 +283,11 @@ namespace Timee
         /// <param name="e"></param>
         private void grdWorkSummary_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(grdWorkSummary.Columns[e.ColumnIndex].Name == "Remove")
+            if (grdWorkSummary.Columns[e.ColumnIndex].Name == "Remove")
             {
                 btnDeleteRowClicked(sender, e);
             }
         }
-
         /// <summary>
         /// Handle btnDeleteRowClicked custom event for deleting rows.
         /// </summary>
@@ -308,6 +301,64 @@ namespace Timee
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
         }
+
+        //--Grid drag and drop
+        /// <summary>
+        /// Imitates left mouse hold left button, passes data to drag argruments.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && grdWorkSummary.SelectedRows.Count == 1)
+            {
+                rowIndexFromMouseDown = grdWorkSummary.SelectedRows[0].Index;
+                grdWorkSummary.DoDragDrop(grdWorkSummary.SelectedRows[0], DragDropEffects.Move);
+            }
+        }
+        /// <summary>
+        /// Defines what should happen on drag start
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_DragEnter(object sender, DragEventArgs e)
+        {
+            if (grdWorkSummary.SelectedRows.Count > 0)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+        /// <summary>
+        /// Copies time from source row to destination row, removes source row.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_DragDrop(object sender, DragEventArgs e)
+        {
+            DataGridViewRow dragSourceGridRow = (DataGridViewRow)e.Data.GetData(typeof(DataGridViewRow));
+            TimeeDataSet.TimeSheetTableRow dragSourceTypedRow =
+                (TimeeDataSet.TimeSheetTableRow)(dragSourceGridRow.DataBoundItem as DataRowView).Row;
+
+            Point clientPoint = grdWorkSummary.PointToClient(new Point(e.X, e.Y));
+            int rowIndexOfItemUnderMouseToDrop = grdWorkSummary.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+            //No, drag to self is not possible :)
+            if (rowIndexOfItemUnderMouseToDrop != dragSourceGridRow.Index)
+            {
+                //Stop timer if user is draging row in which time is counting
+                if (rowIndexFromMouseDown == CurrentTimeCell.RowIndex)
+                {
+                    btnPause_Click(null, EventArgs.Empty);
+                }
+                //Just check against possible another future drag effects.
+                if (e.Effect == DragDropEffects.Move)
+                {
+                    ((TimeeDataSet.TimeSheetTableRow)(grdWorkSummary.Rows[rowIndexOfItemUnderMouseToDrop].DataBoundItem as DataRowView).Row).Time +=
+                    dragSourceTypedRow.Time;
+                    grdWorkSummary.Rows.RemoveAt(rowIndexFromMouseDown);
+                }
+            }
+        }
+
         //Methods
         /// <summary>
         /// Init grid comboboxes, set handlers for custom events, change behaviour.
@@ -333,7 +384,6 @@ namespace Timee
 
             btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
         }
-
         /// <summary>
         /// Add new row with default values or a predefined one.
         /// </summary>
@@ -354,7 +404,6 @@ namespace Timee
             this.timer.Start();
 
         }
-
         /// <summary>
         /// Set time counting to specific row (used in deleting/adding/double click row).
         /// </summary>
@@ -362,7 +411,7 @@ namespace Timee
         private void SwitchTimerToRow(int rowIndex)
         {
             this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-            if(!timer.Enabled)
+            if (!timer.Enabled)
             {
                 timer.Enabled = true;
             }
