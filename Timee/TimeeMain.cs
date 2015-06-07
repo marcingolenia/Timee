@@ -25,10 +25,16 @@ namespace Timee
             this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = 0;
             this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "0";
         }
-        //cust event
+        //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+
         //Events
-        private void Timer_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Main form loaded -> get data, init grid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timee_Load(object sender, EventArgs e)
         {
             this.Context = TimeeXMLService.Instance.LoadContext();
             cmbProject.DataSource = Context.Projects;
@@ -37,6 +43,51 @@ namespace Timee
             grdWorkSummaryInit();
         }
 
+        //--GUI besides grid
+        /// <summary>
+        /// Start counting time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+            row.Comment = this.tbComment.Text;
+            row.Date = this.dpWorkDate.Value;
+            row.Project = this.cmbProject.Text;
+            row.SubProject = this.cmbSubProject.Text;
+            row.Task = this.cmbTask.Text;
+            row.Time = 0;
+            row.Location = this.cmbLocations.Text;
+            AddNewRow(row);
+            this.btnPause.Enabled = true;
+            this.btnPause.Text = "Pause";
+        }
+
+        /// <summary>
+        /// Pause time counting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (this.timer.Enabled)
+            {
+                this.timer.Stop();
+                this.btnPause.Text = "Resume";
+            }
+            else
+            {
+                this.timer.Start();
+                this.btnPause.Text = "Pause";
+            }
+        }
+
+        /// <summary>
+        /// Edit selected List.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfigureComponent_Click(object sender, EventArgs e)
         {
             TimeeComponentType component = TimeeComponentType.Undefined;
@@ -66,6 +117,11 @@ namespace Timee
             }
         }
 
+        /// <summary>
+        /// Export grid data to Excel sheet.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exportToXlsButton_Click(object sender, EventArgs e)
         {
             DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
@@ -73,6 +129,25 @@ namespace Timee
             exporter.ExportAllEntries(allEntries);
         }
 
+        /// <summary>
+        /// Update cell value while counting time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer_Tick(object sender, EventArgs e)
+        {
+
+            this.CurrentTimeCell.Value = (double)this.CurrentTimeCell.Value + ((double)timer.Interval / 1000);
+
+            //DateTime dt = DateTime.ParseExact("0800", "HHmm", CultureInfo.InvariantCulture);
+        }
+
+        //--Grid events
+        /// <summary>
+        /// Attaching events for controls placed in the grid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdWorkSummary_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if (grdWorkSummary.CurrentCell.OwningColumn.CellType == typeof(DataGridViewComboBoxCell))
@@ -94,11 +169,21 @@ namespace Timee
             }
         }
 
+        /// <summary>
+        /// Handling delete-button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGridRemoveRow(object sender, EventArgs e)
         {
             grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);            
         }
 
+        /// <summary>
+        /// Comment is last column, so let's add new row after pressing Tab or Enter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommentCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
@@ -107,6 +192,11 @@ namespace Timee
             }
         }
 
+        /// <summary>
+        /// Handling editable comboboxes - Tab key.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GridCmb_KeyPress(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
@@ -116,6 +206,11 @@ namespace Timee
             }
         }
 
+        /// <summary>
+        /// Handling editable comboboxes - Adding new values.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdWorkSummary_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             //Projects
@@ -177,54 +272,46 @@ namespace Timee
             }
         }
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-
-            this.CurrentTimeCell.Value = (double)this.CurrentTimeCell.Value + ((double)timer.Interval / 1000);
-
-            //DateTime dt = DateTime.ParseExact("0800", "HHmm", CultureInfo.InvariantCulture);
-        }
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-            row.Comment = this.tbComment.Text;
-            row.Date = this.dpWorkDate.Value;
-            row.Project = this.cmbProject.Text;
-            row.SubProject = this.cmbSubProject.Text;
-            row.Task = this.cmbTask.Text;
-            row.Time = 0;
-            row.Location = this.cmbLocations.Text;
-            AddNewRow(row);
-            this.btnPause.Enabled = true;
-            this.btnPause.Text = "Pause";
-        }
+        /// <summary>
+        /// Setting time counting on clicked row.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdWorkSummary_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             this.SwitchTimerToRow(e.RowIndex);
         }
 
-        private void btnPause_Click(object sender, EventArgs e)
-        {
-            if (this.timer.Enabled)
-            {
-                this.timer.Stop();
-                this.btnPause.Text = "Resume";
-            }
-            else
-            {
-                this.timer.Start();
-                this.btnPause.Text = "Pause";
-            }
-        }
-
+        /// <summary>
+        /// Trigger btnDeleteRowClicked event if cell is button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdWorkSummary_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(grdWorkSummary.Columns[e.ColumnIndex].CellType == typeof(DataGridViewButtonCell))
+            if(grdWorkSummary.Columns[e.ColumnIndex].Name == "Remove")
             {
                 btnDeleteRowClicked(sender, e);
             }
         }
+
+        /// <summary>
+        /// Handle btnDeleteRowClicked custom event for deleting rows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
+            {
+                timer.Stop();
+            }
+            grdWorkSummary.Rows.RemoveAt(e.RowIndex);
+        }
         //Methods
+        /// <summary>
+        /// Init grid comboboxes, set handlers for custom events, change behaviour.
+        /// </summary>
         private void grdWorkSummaryInit()
         {
             foreach (DataGridViewColumn column in this.grdWorkSummary.Columns)
@@ -247,15 +334,10 @@ namespace Timee
             btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
         }
 
-        private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
-        {
-            if(grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
-            {
-                timer.Stop();
-            }
-            grdWorkSummary.Rows.RemoveAt(e.RowIndex);
-        }
-
+        /// <summary>
+        /// Add new row with default values or a predefined one.
+        /// </summary>
+        /// <param name="row">TimeSheetTableRow</param>
         private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
         {
             if (row == null)
@@ -272,6 +354,11 @@ namespace Timee
             this.timer.Start();
 
         }
+
+        /// <summary>
+        /// Set time counting to specific row (used in deleting/adding/double click row).
+        /// </summary>
+        /// <param name="rowIndex"></param>
         private void SwitchTimerToRow(int rowIndex)
         {
             this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
