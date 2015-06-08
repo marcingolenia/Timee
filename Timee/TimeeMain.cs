@@ -27,9 +27,6 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
-            this.timeeDataSet.TimeSheetTable.DateColumn.DefaultValue = DateTime.Today;
-            this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = 0;
-            this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "0";
         }
 
         //Events
@@ -61,7 +58,7 @@ namespace Timee
             row.Project = this.cmbProject.Text;
             row.SubProject = this.cmbSubProject.Text;
             row.Task = this.cmbTask.Text;
-            row.Time = 0;
+            row.Time = TimeSpan.Zero;
             row.Location = this.cmbLocations.Text;
             AddNewRow(row);
             this.btnPause.Enabled = true;
@@ -137,9 +134,8 @@ namespace Timee
         private void timer_Tick(object sender, EventArgs e)
         {
 
-            this.CurrentTimeCell.Value = (double)this.CurrentTimeCell.Value + ((double)timer.Interval / 1000);
+            this.CurrentTimeCell.Value = ((TimeSpan) this.CurrentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
 
-            //DateTime dt = DateTime.ParseExact("0800", "HHmm", CultureInfo.InvariantCulture);
         }
 
         //--Grid events
@@ -365,6 +361,11 @@ namespace Timee
         /// </summary>
         private void grdWorkSummaryInit()
         {
+            this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "hh\\:mm\\:ss";
+            this.timeeDataSet.TimeSheetTable.DateColumn.DefaultValue = DateTime.Today;
+            this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = TimeSpan.Zero;
+           
+
             foreach (DataGridViewColumn column in this.grdWorkSummary.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
