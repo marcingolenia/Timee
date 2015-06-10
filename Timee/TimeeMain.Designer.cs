@@ -38,7 +38,6 @@
             this.userConfigurationTaskBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.timeeDataSet = new Timee.DAL.TimeeDataSet();
             this.btnStart = new System.Windows.Forms.Button();
-            this.exportToXlsButton = new System.Windows.Forms.Button();
             this.cmbProject = new System.Windows.Forms.ComboBox();
             this.cmbSubProject = new System.Windows.Forms.ComboBox();
             this.cmbTask = new System.Windows.Forms.ComboBox();
@@ -55,14 +54,22 @@
             this.lblLocation = new System.Windows.Forms.Label();
             this.lblTask = new System.Windows.Forms.Label();
             this.btnPause = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.mnu = new System.Windows.Forms.MenuStrip();
+            this.mnuTimee = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
+            this.lGBSExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExcelExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.comingSoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dateDataGridViewTextBoxColumn = new Timee.Controls.CalendarColumn.CalendarColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Project = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.SubProject = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Task = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Remove = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
@@ -70,6 +77,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
+            this.mnu.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmbLocations
@@ -77,7 +85,7 @@
             this.cmbLocations.DataSource = this.userConfigurationLocationBindingSource;
             this.cmbLocations.DisplayMember = "name";
             this.cmbLocations.FormattingEnabled = true;
-            this.cmbLocations.Location = new System.Drawing.Point(644, 26);
+            this.cmbLocations.Location = new System.Drawing.Point(644, 49);
             this.cmbLocations.Name = "cmbLocations";
             this.cmbLocations.Size = new System.Drawing.Size(121, 21);
             this.cmbLocations.TabIndex = 0;
@@ -91,7 +99,8 @@
             this.grdWorkSummary.AllowDrop = true;
             this.grdWorkSummary.AllowUserToAddRows = false;
             this.grdWorkSummary.AllowUserToResizeRows = false;
-            this.grdWorkSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grdWorkSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grdWorkSummary.AutoGenerateColumns = false;
             this.grdWorkSummary.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -105,15 +114,15 @@
             this.Project,
             this.SubProject,
             this.Task,
-            this.Location,
             this.Comment,
+            this.Location,
             this.Remove});
             this.grdWorkSummary.DataMember = "TimeSheetTable";
             this.grdWorkSummary.DataSource = this.timeeDataSet;
             this.grdWorkSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.grdWorkSummary.Location = new System.Drawing.Point(13, 107);
+            this.grdWorkSummary.Location = new System.Drawing.Point(13, 115);
             this.grdWorkSummary.Name = "grdWorkSummary";
-            this.grdWorkSummary.Size = new System.Drawing.Size(880, 153);
+            this.grdWorkSummary.Size = new System.Drawing.Size(880, 176);
             this.grdWorkSummary.TabIndex = 1;
             this.grdWorkSummary.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellContentClick);
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
@@ -142,7 +151,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(813, 16);
+            this.btnStart.Location = new System.Drawing.Point(813, 39);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(80, 31);
             this.btnStart.TabIndex = 2;
@@ -150,22 +159,12 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // exportToXlsButton
-            // 
-            this.exportToXlsButton.Location = new System.Drawing.Point(813, 265);
-            this.exportToXlsButton.Name = "exportToXlsButton";
-            this.exportToXlsButton.Size = new System.Drawing.Size(79, 26);
-            this.exportToXlsButton.TabIndex = 3;
-            this.exportToXlsButton.Text = "Export to *.xls";
-            this.exportToXlsButton.UseVisualStyleBackColor = true;
-            this.exportToXlsButton.Click += new System.EventHandler(this.exportToXlsButton_Click);
-            // 
             // cmbProject
             // 
             this.cmbProject.DataSource = this.userConfigurationProjectBindingSource;
             this.cmbProject.DisplayMember = "name";
             this.cmbProject.FormattingEnabled = true;
-            this.cmbProject.Location = new System.Drawing.Point(170, 26);
+            this.cmbProject.Location = new System.Drawing.Point(170, 49);
             this.cmbProject.Name = "cmbProject";
             this.cmbProject.Size = new System.Drawing.Size(121, 21);
             this.cmbProject.TabIndex = 4;
@@ -175,7 +174,7 @@
             this.cmbSubProject.DataSource = this.userConfigurationSubprojectBindingSource;
             this.cmbSubProject.DisplayMember = "name";
             this.cmbSubProject.FormattingEnabled = true;
-            this.cmbSubProject.Location = new System.Drawing.Point(328, 26);
+            this.cmbSubProject.Location = new System.Drawing.Point(328, 49);
             this.cmbSubProject.Name = "cmbSubProject";
             this.cmbSubProject.Size = new System.Drawing.Size(121, 21);
             this.cmbSubProject.TabIndex = 5;
@@ -185,14 +184,14 @@
             this.cmbTask.DataSource = this.userConfigurationTaskBindingSource;
             this.cmbTask.DisplayMember = "name";
             this.cmbTask.FormattingEnabled = true;
-            this.cmbTask.Location = new System.Drawing.Point(486, 26);
+            this.cmbTask.Location = new System.Drawing.Point(486, 49);
             this.cmbTask.Name = "cmbTask";
             this.cmbTask.Size = new System.Drawing.Size(121, 21);
             this.cmbTask.TabIndex = 6;
             // 
             // btnProject
             // 
-            this.btnProject.Location = new System.Drawing.Point(297, 26);
+            this.btnProject.Location = new System.Drawing.Point(297, 49);
             this.btnProject.Name = "btnProject";
             this.btnProject.Size = new System.Drawing.Size(25, 21);
             this.btnProject.TabIndex = 9;
@@ -202,7 +201,7 @@
             // 
             // btnSubProject
             // 
-            this.btnSubProject.Location = new System.Drawing.Point(455, 26);
+            this.btnSubProject.Location = new System.Drawing.Point(455, 49);
             this.btnSubProject.Name = "btnSubProject";
             this.btnSubProject.Size = new System.Drawing.Size(25, 21);
             this.btnSubProject.TabIndex = 10;
@@ -212,7 +211,7 @@
             // 
             // btnTask
             // 
-            this.btnTask.Location = new System.Drawing.Point(613, 26);
+            this.btnTask.Location = new System.Drawing.Point(613, 49);
             this.btnTask.Name = "btnTask";
             this.btnTask.Size = new System.Drawing.Size(25, 21);
             this.btnTask.TabIndex = 11;
@@ -222,7 +221,7 @@
             // 
             // btnLocation
             // 
-            this.btnLocation.Location = new System.Drawing.Point(771, 26);
+            this.btnLocation.Location = new System.Drawing.Point(771, 49);
             this.btnLocation.Name = "btnLocation";
             this.btnLocation.Size = new System.Drawing.Size(25, 21);
             this.btnLocation.TabIndex = 12;
@@ -232,7 +231,7 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(12, 53);
+            this.tbComment.Location = new System.Drawing.Point(12, 76);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(753, 20);
             this.tbComment.TabIndex = 13;
@@ -244,7 +243,7 @@
             // 
             // dpWorkDate
             // 
-            this.dpWorkDate.Location = new System.Drawing.Point(13, 27);
+            this.dpWorkDate.Location = new System.Drawing.Point(13, 50);
             this.dpWorkDate.Name = "dpWorkDate";
             this.dpWorkDate.Size = new System.Drawing.Size(151, 20);
             this.dpWorkDate.TabIndex = 14;
@@ -252,7 +251,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(12, 9);
+            this.lblDate.Location = new System.Drawing.Point(12, 32);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 15;
@@ -261,7 +260,7 @@
             // lblProject
             // 
             this.lblProject.AutoSize = true;
-            this.lblProject.Location = new System.Drawing.Point(167, 9);
+            this.lblProject.Location = new System.Drawing.Point(167, 32);
             this.lblProject.Name = "lblProject";
             this.lblProject.Size = new System.Drawing.Size(40, 13);
             this.lblProject.TabIndex = 16;
@@ -270,7 +269,7 @@
             // lblSubProject
             // 
             this.lblSubProject.AutoSize = true;
-            this.lblSubProject.Location = new System.Drawing.Point(325, 9);
+            this.lblSubProject.Location = new System.Drawing.Point(325, 32);
             this.lblSubProject.Name = "lblSubProject";
             this.lblSubProject.Size = new System.Drawing.Size(61, 13);
             this.lblSubProject.TabIndex = 17;
@@ -279,7 +278,7 @@
             // lblLocation
             // 
             this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(641, 9);
+            this.lblLocation.Location = new System.Drawing.Point(641, 32);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(48, 13);
             this.lblLocation.TabIndex = 18;
@@ -288,7 +287,7 @@
             // lblTask
             // 
             this.lblTask.AutoSize = true;
-            this.lblTask.Location = new System.Drawing.Point(483, 9);
+            this.lblTask.Location = new System.Drawing.Point(483, 32);
             this.lblTask.Name = "lblTask";
             this.lblTask.Size = new System.Drawing.Size(31, 13);
             this.lblTask.TabIndex = 19;
@@ -297,7 +296,7 @@
             // btnPause
             // 
             this.btnPause.Enabled = false;
-            this.btnPause.Location = new System.Drawing.Point(813, 53);
+            this.btnPause.Location = new System.Drawing.Point(813, 76);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(80, 20);
             this.btnPause.TabIndex = 20;
@@ -305,14 +304,76 @@
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
-            // label1
+            // mnu
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 281);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "[CTRL + X] to delete row.";
+            this.mnu.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTimee,
+            this.menuPlugins});
+            this.mnu.Location = new System.Drawing.Point(0, 0);
+            this.mnu.Name = "mnu";
+            this.mnu.Size = new System.Drawing.Size(904, 24);
+            this.mnu.TabIndex = 22;
+            this.mnu.Text = "menuStrip1";
+            // 
+            // mnuTimee
+            // 
+            this.mnuTimee.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator1,
+            this.aboutToolStripMenuItem});
+            this.mnuTimee.Name = "mnuTimee";
+            this.mnuTimee.Size = new System.Drawing.Size(52, 20);
+            this.mnuTimee.Text = "Timee";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // menuPlugins
+            // 
+            this.menuPlugins.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lGBSExcelToolStripMenuItem,
+            this.comingSoonToolStripMenuItem});
+            this.menuPlugins.Name = "menuPlugins";
+            this.menuPlugins.Size = new System.Drawing.Size(58, 20);
+            this.menuPlugins.Text = "Plugins";
+            // 
+            // lGBSExcelToolStripMenuItem
+            // 
+            this.lGBSExcelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuSettings,
+            this.mnuExcelExport});
+            this.lGBSExcelToolStripMenuItem.Name = "lGBSExcelToolStripMenuItem";
+            this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.lGBSExcelToolStripMenuItem.Text = "LGBS Excel";
+            // 
+            // mnuSettings
+            // 
+            this.mnuSettings.Name = "mnuSettings";
+            this.mnuSettings.Size = new System.Drawing.Size(116, 22);
+            this.mnuSettings.Text = "Settings";
+            this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
+            // 
+            // mnuExcelExport
+            // 
+            this.mnuExcelExport.Name = "mnuExcelExport";
+            this.mnuExcelExport.Size = new System.Drawing.Size(116, 22);
+            this.mnuExcelExport.Text = "Export";
+            this.mnuExcelExport.Click += new System.EventHandler(this.mnuExcelExport_Click);
+            // 
+            // comingSoonToolStripMenuItem
+            // 
+            this.comingSoonToolStripMenuItem.Name = "comingSoonToolStripMenuItem";
+            this.comingSoonToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.comingSoonToolStripMenuItem.Text = "Coming Soon...";
             // 
             // dateDataGridViewTextBoxColumn
             // 
@@ -367,6 +428,13 @@
             this.Task.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Task.ValueMember = "Name";
             // 
+            // Comment
+            // 
+            this.Comment.DataPropertyName = "Comment";
+            this.Comment.FillWeight = 99.78245F;
+            this.Comment.HeaderText = "Comment";
+            this.Comment.Name = "Comment";
+            // 
             // Location
             // 
             this.Location.DataPropertyName = "Location";
@@ -379,13 +447,6 @@
             this.Location.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Location.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Location.ValueMember = "Name";
-            // 
-            // Comment
-            // 
-            this.Comment.DataPropertyName = "Comment";
-            this.Comment.FillWeight = 99.78245F;
-            this.Comment.HeaderText = "Comment";
-            this.Comment.Name = "Comment";
             // 
             // Remove
             // 
@@ -403,7 +464,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 303);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.lblTask);
             this.Controls.Add(this.lblLocation);
@@ -419,10 +479,12 @@
             this.Controls.Add(this.cmbTask);
             this.Controls.Add(this.cmbSubProject);
             this.Controls.Add(this.cmbProject);
-            this.Controls.Add(this.exportToXlsButton);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.grdWorkSummary);
             this.Controls.Add(this.cmbLocations);
+            this.Controls.Add(this.mnu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.mnu;
             this.Name = "TimeeMain";
             this.Text = "Timer";
             this.Load += new System.EventHandler(this.Timee_Load);
@@ -432,6 +494,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).EndInit();
+            this.mnu.ResumeLayout(false);
+            this.mnu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,7 +506,6 @@
         private System.Windows.Forms.ComboBox cmbLocations;
         private System.Windows.Forms.DataGridView grdWorkSummary;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button exportToXlsButton;
         private System.Windows.Forms.ComboBox cmbProject;
         private System.Windows.Forms.ComboBox cmbSubProject;
         private System.Windows.Forms.ComboBox cmbTask;
@@ -464,14 +527,22 @@
         private System.Windows.Forms.Label lblTask;
         private DAL.TimeeDataSet timeeDataSet;
         private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MenuStrip mnu;
+        private System.Windows.Forms.ToolStripMenuItem mnuTimee;
+        private System.Windows.Forms.ToolStripMenuItem menuPlugins;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lGBSExcelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuSettings;
+        private System.Windows.Forms.ToolStripMenuItem mnuExcelExport;
+        private System.Windows.Forms.ToolStripMenuItem comingSoonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private Controls.CalendarColumn.CalendarColumn dateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewComboBoxColumn Project;
         private System.Windows.Forms.DataGridViewComboBoxColumn SubProject;
         private System.Windows.Forms.DataGridViewComboBoxColumn Task;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Location;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Location;
         private System.Windows.Forms.DataGridViewImageColumn Remove;
     }
 }

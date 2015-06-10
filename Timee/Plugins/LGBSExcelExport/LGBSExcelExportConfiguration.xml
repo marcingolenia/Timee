@@ -1,0 +1,12 @@
+<LGBSExcelExportConfiguration>
+  <Settings>
+    <IsCreative value="n/a"/>
+    <Person value="Chop z Mazur"/>
+    <LastOutputPath value =""/>
+  </Settings>
+  <IsCreative>
+    <option value="yes"></option>
+    <option value="no"></option>
+    <option value="n/a"></option>
+  </IsCreative>
+</LGBSExcelExportConfiguration>

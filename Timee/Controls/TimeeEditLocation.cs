@@ -12,19 +12,22 @@ namespace Timee.Controls
         }
         protected override void btnAdd_Click(object sender, EventArgs e)
         {
-            var location = new Models.UserConfigurationLocation()
+            if (this.BindingSourceList.Where(i => i.Name == this.NewItemText).Count() == 0)
             {
-                Name = this.NewItemText,
-                Order = this.BindingSourceList.Max(i => i.Order + 1),
-                OrderSpecified = true
-            };
-            this.BindingSourceList.Add(location);
+                var location = new Models.UserConfigurationLocation()
+                {
+                    Name = this.NewItemText,
+                    Order = this.BindingSourceList.Count == 0 ? 1 : this.BindingSourceList.Max(i => i.Order + 1),
+                    OrderSpecified = true
+                };
+                this.BindingSourceList.Add(location);
+            }
         }
-        
+
     }
     /// <summary>
     /// Empty class - workaround for designer. Control normaly can inherit directly the generic class but crashes designer.
     /// </summary>
     public class TimeEditLocationNonGeneric : TimeeEditComponent<Models.UserConfigurationLocation>
-    {}
+    { }
 }

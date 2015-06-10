@@ -12,13 +12,16 @@ namespace Timee.Controls
 
         protected override void btnAdd_Click(object sender, EventArgs e)
         {
-            var task = new Models.UserConfigurationTask()
+            if (this.BindingSourceList.Where(i => i.Name == this.NewItemText).Count() == 0)
             {
-                Name = this.NewItemText,
-                Order = this.BindingSourceList.Max(i => i.Order + 1),
-                OrderSpecified = true
-            };
-            this.BindingSourceList.Add(task);
+                var task = new Models.UserConfigurationTask()
+                {
+                    Name = this.NewItemText,
+                    Order = this.BindingSourceList.Max(i => i.Order + 1),
+                    OrderSpecified = true
+                };
+                this.BindingSourceList.Add(task);
+            }
         }
     }
     /// <summary>

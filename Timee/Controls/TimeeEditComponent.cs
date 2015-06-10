@@ -96,6 +96,12 @@ namespace Timee.Controls
             }
         }
 
-
+        private void txtNewItemName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAdd_Click(sender, e);
+            }
+        }
     }
 }

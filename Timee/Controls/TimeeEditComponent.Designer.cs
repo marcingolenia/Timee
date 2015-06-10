@@ -65,6 +65,7 @@
             this.txtNewItemName.Name = "txtNewItemName";
             this.txtNewItemName.Size = new System.Drawing.Size(228, 20);
             this.txtNewItemName.TabIndex = 12;
+            this.txtNewItemName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtNewItemName_KeyDown);
             // 
             // btnDown
             // 

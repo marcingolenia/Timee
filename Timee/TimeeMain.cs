@@ -7,7 +7,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Timee.DAL;
 using Timee.Models;
-using Timee.Tools;
+
+using Timee.Plugins.LGBSExcelExport;
 
 namespace Timee
 {
@@ -41,6 +42,7 @@ namespace Timee
             cmbProject.DataSource = Context.Projects;
             cmbTask.DataSource = Context.Tasks;
             cmbSubProject.DataSource = Context.Subprojects;
+            cmbLocations.DataSource = Context.Locations;
             grdWorkSummaryInit();
         }
 
@@ -115,17 +117,7 @@ namespace Timee
                 }
             }
         }
-        /// <summary>
-        /// Export grid data to Excel sheet.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void exportToXlsButton_Click(object sender, EventArgs e)
-        {
-            DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
-            XlsExportManager exporter = new XlsExportManager();
-            exporter.ExportAllEntries(allEntries);
-        }
+ 
         /// <summary>
         /// Update cell value while counting time.
         /// </summary>
@@ -353,6 +345,27 @@ namespace Timee
                     grdWorkSummary.Rows.RemoveAt(rowIndexFromMouseDown);
                 }
             }
+        }
+
+        //Menu
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutDialog().Show();
+        }
+        //TODO: In version 2 handle this with some general plugin mechanism
+        private void mnuExcelExport_Click(object sender, EventArgs e)
+        {
+            grdWorkSummary.EndEdit();
+            DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
+            if (allEntries.Count > 0)
+            {
+                XlsExportManager exporter = new XlsExportManager();
+                exporter.ExportAllEntries(allEntries);
+            }
+        }
+        private void mnuSettings_Click(object sender, EventArgs e)
+        {
+            new ExcelExportSettings().ShowDialog();
         }
 
         //Methods

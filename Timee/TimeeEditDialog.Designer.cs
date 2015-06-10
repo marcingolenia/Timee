@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeeEditDialog));
             this.tabsComponents = new System.Windows.Forms.TabControl();
             this.tabProject = new System.Windows.Forms.TabPage();
             this.compProjectControl = new Timee.Controls.TimeeEditProject();
@@ -160,6 +161,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tabsComponents);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TimeeEditDialog";
             this.Text = "Edit positions";
             this.tabsComponents.ResumeLayout(false);
