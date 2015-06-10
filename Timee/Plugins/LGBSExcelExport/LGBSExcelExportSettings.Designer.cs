@@ -73,6 +73,7 @@
             // 
             // cmbIsCreative
             // 
+            this.cmbIsCreative.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbIsCreative.FormattingEnabled = true;
             this.cmbIsCreative.Location = new System.Drawing.Point(99, 82);
             this.cmbIsCreative.Name = "cmbIsCreative";
