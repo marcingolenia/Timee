@@ -6,31 +6,60 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using Timee.DAL;
+using Timee.Hotkeys;
 using Timee.Models;
-
 using Timee.Plugins.LGBSExcelExport;
 
 namespace Timee
 {
     public partial class TimeeMain : Form
     {
-        //Fields + props
-        private int rowIndexFromMouseDown;
+        #region Fields & properties
 
-        private DataGridViewCell CurrentTimeCell
-        {
-            get; set;
-        }
-        public TimeeContext Context;
+        private int rowIndexFromMouseDown { get; set; }
+        private TimeeContext context { get; set; }
+        private DataGridViewCell currentTimeCell { get; set; }
+        private NotifyIcon trayIcon;
+        private ContextMenu trayMenu;
+
+        private readonly KeyboardHook hook = new KeyboardHook();
+
+        #endregion
+
         //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+
         //constructor
         public TimeeMain()
         {
             InitializeComponent();
+            this.InitializeTrayElements();
+            this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
         }
 
-        //Events
+        /// <summary>
+        /// Initializes tray control.
+        /// </summary>
+        private void InitializeTrayElements()
+        {
+            // Create a simple tray menu with only one item.
+            trayMenu = new ContextMenu();
+            trayMenu.MenuItems.Add("Exit", trayMenu_OnExitSelected);
+
+            // Create a tray icon. In this example we use a
+            // standard system icon for simplicity, but you
+            // can of course use your own custom icon too.
+            trayIcon = new NotifyIcon();
+            trayIcon.Text = Application.ProductName;
+            trayIcon.Icon = new Icon("Resources/timee.ico", 40, 40);
+
+            // Add menu to tray icon and show it.
+            trayIcon.ContextMenu = trayMenu;
+            trayIcon.Visible = false;
+        }
+
+        // Events
+
         /// <summary>
         /// Main form loaded -> get data, init grid.
         /// </summary>
@@ -38,12 +67,78 @@ namespace Timee
         /// <param name="e"></param>
         private void Timee_Load(object sender, EventArgs e)
         {
-            this.Context = TimeeXMLService.Instance.LoadContext();
-            cmbProject.DataSource = Context.Projects;
-            cmbTask.DataSource = Context.Tasks;
-            cmbSubProject.DataSource = Context.Subprojects;
-            cmbLocations.DataSource = Context.Locations;
+            this.context = TimeeXMLService.Instance.LoadContext();
+            cmbProject.DataSource = context.Projects;
+            cmbTask.DataSource = context.Tasks;
+            cmbSubProject.DataSource = context.Subprojects;
+            cmbLocations.DataSource = context.Locations;
             grdWorkSummaryInit();
+        }
+
+        /// <summary>
+        /// Handle hotkey combination press.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyPressedEventArgs.</param>
+        void hook_KeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            int? row = null;
+
+            switch (e.Key)
+            {
+                case Keys.F1:
+                    row = 0;
+                    break;
+                case Keys.F2:
+                    row = 1;
+                    break;
+                case Keys.F3:
+                    row = 2;
+                    break;
+                case Keys.F4:
+                    row = 3;
+                    break;
+                case Keys.F5:
+                    row = 4;
+                    break;
+                case Keys.F6:
+                    row = 5;
+                    break;
+                case Keys.F7:
+                    row = 6;
+                    break;
+                case Keys.F8:
+                    row = 7;
+                    break;
+                case Keys.F9:
+                    row = 8;
+                    break;
+                case Keys.F10:
+                    row = 9;
+                    break;
+                case Keys.F11:
+                    row = 10;
+                    break;
+                case Keys.F12:
+                    row = 11;
+                    break;
+            }
+
+            if (row.HasValue)
+            {
+                this.SwitchTimerToRow(row.Value);
+                this.ShowTimerSwitchNotification(row.Value);
+            }
+        }
+
+        /// <summary>
+        /// Handling application exit via tray menu.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">EventArgs.</param>
+        private void trayMenu_OnExitSelected(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         //--GUI besides grid
@@ -66,6 +161,7 @@ namespace Timee
             this.btnPause.Enabled = true;
             this.btnPause.Text = "Pause";
         }
+
         /// <summary>
         /// Pause time counting.
         /// </summary>
@@ -108,16 +204,16 @@ namespace Timee
             {
                 component = TimeeComponentType.Location;
             }
-            using (var dlgEdit = new TimeeEditDialog(this.Context, component))
+            using (var dlgEdit = new TimeeEditDialog(this.context, component))
             {
                 dlgEdit.ShowDialog();
                 if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
-                    TimeeXMLService.Instance.SaveContext(this.Context);
+                    TimeeXMLService.Instance.SaveContext(this.context);
                 }
             }
         }
- 
+
         /// <summary>
         /// Update cell value while counting time.
         /// </summary>
@@ -126,7 +222,7 @@ namespace Timee
         private void timer_Tick(object sender, EventArgs e)
         {
 
-            this.CurrentTimeCell.Value = ((TimeSpan) this.CurrentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
+            this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
 
         }
 
@@ -201,57 +297,57 @@ namespace Timee
             var cell = ((DataGridView)sender).CurrentCell;
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newProject = new Models.UserConfigurationProject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Projects.Max(p => p.Order) + 1,
+                    Order = this.context.Projects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.Context.Projects.Add(newProject);
+                this.context.Projects.Add(newProject);
                 cell.Value = newProject.Name;
             }
             //Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newSubProject = new Models.UserConfigurationSubproject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
+                    Order = this.context.Subprojects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.Context.Subprojects.Add(newSubProject);
+                this.context.Subprojects.Add(newSubProject);
                 cell.Value = newSubProject.Name;
             }
             //Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newTask = new Models.UserConfigurationTask()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
+                    Order = this.context.Tasks.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.Context.Tasks.Add(newTask);
+                this.context.Tasks.Add(newTask);
                 cell.Value = newTask.Name;
             }
             //Locations
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newLocation = new Models.UserConfigurationLocation()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Locations.Max(p => p.Order) + 1,
+                    Order = this.context.Locations.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.Context.Locations.Add(newLocation);
+                this.context.Locations.Add(newLocation);
                 cell.Value = newLocation.Name;
             }
         }
@@ -283,7 +379,7 @@ namespace Timee
         /// <param name="e"></param>
         private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
         {
-            if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
+            if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(currentTimeCell))
             {
                 timer.Stop();
             }
@@ -333,7 +429,7 @@ namespace Timee
             if (rowIndexOfItemUnderMouseToDrop != dragSourceGridRow.Index)
             {
                 //Stop timer if user is draging row in which time is counting
-                if (rowIndexFromMouseDown == CurrentTimeCell.RowIndex)
+                if (rowIndexFromMouseDown == currentTimeCell.RowIndex)
                 {
                     btnPause_Click(null, EventArgs.Empty);
                 }
@@ -377,7 +473,7 @@ namespace Timee
             this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "hh\\:mm\\:ss";
             this.timeeDataSet.TimeSheetTable.DateColumn.DefaultValue = DateTime.Today;
             this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = TimeSpan.Zero;
-           
+
 
             foreach (DataGridViewColumn column in this.grdWorkSummary.Columns)
             {
@@ -385,16 +481,16 @@ namespace Timee
             }
             DataGridViewComboBoxColumn c;
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
-            c.DataSource = Context.Projects;
+            c.DataSource = context.Projects;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName];
-            c.DataSource = Context.Subprojects;
+            c.DataSource = context.Subprojects;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName];
-            c.DataSource = Context.Tasks;
+            c.DataSource = context.Tasks;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
-            c.DataSource = Context.Locations;
+            c.DataSource = context.Locations;
 
             btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
         }
@@ -413,21 +509,128 @@ namespace Timee
             {
                 this.timeeDataSet.TimeSheetTable.AddTimeSheetTableRow(row);
             }
-            this.CurrentTimeCell = grdWorkSummary.Rows[this.grdWorkSummary.Rows.Count - 1]
-                                                 .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-            this.timer.Start();
 
+            int currentRowIndex = this.grdWorkSummary.Rows.Count - 1;
+            this.currentTimeCell = grdWorkSummary.Rows[currentRowIndex]
+                                                 .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+
+            // Register key
+            Keys keyToRegister = this.GetKeyByRowNumber(currentRowIndex);
+            if (keyToRegister != Keys.None)
+            {
+                this.hook.RegisterHotKey(Timee.Hotkeys.ModifierKeys.Control, keyToRegister);
+            }
+
+            this.timer.Start();
         }
+
+        /// <summary>
+        /// Returns key (keyboard) representing given row number.
+        /// </summary>
+        /// <param name="rowNumber">Row index.</param>
+        /// <returns>Keys.</returns>
+        private Keys GetKeyByRowNumber(int rowNumber)
+        {
+            Keys key = Keys.None;
+            switch (rowNumber)
+            {
+                case 0:
+                    key = Keys.F1;
+                    break;
+                case 1:
+                    key = Keys.F2;
+                    break;
+                case 2:
+                    key = Keys.F3;
+                    break;
+                case 3:
+                    key = Keys.F4;
+                    break;
+                case 4:
+                    key = Keys.F5;
+                    break;
+                case 5:
+                    key = Keys.F6;
+                    break;
+                case 6:
+                    key = Keys.F7;
+                    break;
+                case 7:
+                    key = Keys.F8;
+                    break;
+                case 8:
+                    key = Keys.F9;
+                    break;
+                case 9:
+                    key = Keys.F10;
+                    break;
+                case 10:
+                    key = Keys.F11;
+                    break;
+                case 11:
+                    key = Keys.F12;
+                    break;
+            }
+            return key;
+        }
+
         /// <summary>
         /// Set time counting to specific row (used in deleting/adding/double click row).
         /// </summary>
         /// <param name="rowIndex"></param>
         private void SwitchTimerToRow(int rowIndex)
         {
-            this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            this.currentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
             if (!timer.Enabled)
             {
                 timer.Enabled = true;
+            }
+        }
+
+        private void ShowTimerSwitchNotification(int rowIndex)
+        {
+            var currentRow = grdWorkSummary.Rows[rowIndex];
+            if (currentRow != null)
+            {
+                string projectName = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName].Value;
+                string subProjectName = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName].Value;
+                string comment = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.CommentColumn.ColumnName].Value;
+                TimeSpan time = (TimeSpan)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].Value;
+                string notificationText = string.Format("Timer has been switched to:{0} {1} - {2} - '{3}' ({4:hh\\:mm\\:ss}).", new object[] { Environment.NewLine, projectName, subProjectName, comment, time });
+                this.ShowNotification("Timee", notificationText, ToolTipIcon.Info, 500);
+            }
+        }
+
+        /// <summary>
+        /// Shows baloon tooltip in system tray.
+        /// </summary>
+        /// <param name="title">Tooltip title.</param>
+        /// <param name="text">Tooltip text.</param>
+        /// <param name="icon">Tooltip icon.</param>
+        /// <param name="showTime">Time to show.</param>
+        private void ShowNotification(string title, string text, ToolTipIcon icon, int showTime)
+        {
+            this.trayIcon.BalloonTipTitle = title;
+            this.trayIcon.BalloonTipText = text;
+            this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
+            this.trayIcon.ShowBalloonTip(showTime);
+        }
+
+        /// <summary>
+        /// Handle application resize.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">EventArgs.</param>
+        private void TimeeMain_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                this.trayIcon.Visible = true;
+                this.ShowNotification("Timee", "Timee has been minimized to system tray", ToolTipIcon.Info, 500);
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                this.trayIcon.Visible = false;
             }
         }
     }
