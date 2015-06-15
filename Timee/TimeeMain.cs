@@ -14,17 +14,20 @@ namespace Timee
 {
     public partial class TimeeMain : Form
     {
-        #region Fields & properties
-
+        /// <summary>
+        /// Used in drag&drop
+        /// </summary>
         private int rowIndexFromMouseDown { get; set; }
+        /// <summary>
+        /// Hold context data
+        /// </summary>
         private TimeeContext context { get; set; }
+        /// <summary>
+        /// Current cell in which time is being counted.
+        /// </summary>
         private DataGridViewCell currentTimeCell { get; set; }
-        private NotifyIcon trayIcon;
-        private ContextMenu trayMenu;
-
         private readonly KeyboardHook hook = new KeyboardHook();
 
-        #endregion
 
         //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
@@ -42,24 +45,16 @@ namespace Timee
         /// </summary>
         private void InitializeTrayElements()
         {
-            // Create a simple tray menu with only one item.
-            trayMenu = new ContextMenu();
-            trayMenu.MenuItems.Add("Exit", trayMenu_OnExitSelected);
-
-            // Create a tray icon. In this example we use a
-            // standard system icon for simplicity, but you
-            // can of course use your own custom icon too.
-            trayIcon = new NotifyIcon();
+            // Create a tray icon.
             trayIcon.Text = Application.ProductName;
             trayIcon.Icon = new Icon("Resources/timee.ico", 40, 40);
 
             // Add menu to tray icon and show it.
-            trayIcon.ContextMenu = trayMenu;
+            trayIcon.ContextMenuStrip = trayMenu;
             trayIcon.Visible = false;
         }
 
         // Events
-
         /// <summary>
         /// Main form loaded -> get data, init grid.
         /// </summary>
@@ -74,7 +69,6 @@ namespace Timee
             cmbLocations.DataSource = context.Locations;
             grdWorkSummaryInit();
         }
-
         /// <summary>
         /// Handle hotkey combination press.
         /// </summary>
@@ -127,10 +121,9 @@ namespace Timee
             if (row.HasValue)
             {
                 this.SwitchTimerToRow(row.Value);
-                this.ShowTimerSwitchNotification(row.Value);
+                this.ShowTimerSwitchNotification();
             }
         }
-
         /// <summary>
         /// Handling application exit via tray menu.
         /// </summary>
@@ -140,7 +133,51 @@ namespace Timee
         {
             Application.Exit();
         }
-
+        /// <summary>
+        /// Bring back UI
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void trayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+        /// <summary>
+        /// Exit App from menu or tray icon.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exit_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to exit? All data will be lost.",
+    "Exit", MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+        /// <summary>
+        /// Handle application resize.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">EventArgs.</param>
+        private void TimeeMain_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                this.trayIcon.Visible = true;
+                this.ShowNotification("Timee", "Timee has been minimized to system tray", ToolTipIcon.Info, 500);
+                this.Hide();
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                this.trayIcon.Visible = false;
+            }
+        }
         //--GUI besides grid
         /// <summary>
         /// Start counting time.
@@ -161,7 +198,6 @@ namespace Timee
             this.btnPause.Enabled = true;
             this.btnPause.Text = "Pause";
         }
-
         /// <summary>
         /// Pause time counting.
         /// </summary>
@@ -213,7 +249,6 @@ namespace Timee
                 }
             }
         }
-
         /// <summary>
         /// Update cell value while counting time.
         /// </summary>
@@ -463,7 +498,6 @@ namespace Timee
         {
             new ExcelExportSettings().ShowDialog();
         }
-
         //Methods
         /// <summary>
         /// Init grid comboboxes, set handlers for custom events, change behaviour.
@@ -523,7 +557,6 @@ namespace Timee
 
             this.timer.Start();
         }
-
         /// <summary>
         /// Returns key (keyboard) representing given row number.
         /// </summary>
@@ -573,7 +606,6 @@ namespace Timee
             }
             return key;
         }
-
         /// <summary>
         /// Set time counting to specific row (used in deleting/adding/double click row).
         /// </summary>
@@ -586,9 +618,13 @@ namespace Timee
                 timer.Enabled = true;
             }
         }
-
-        private void ShowTimerSwitchNotification(int rowIndex)
+        /// <summary>
+        /// Show notification message
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        private void ShowTimerSwitchNotification()
         {
+            var rowIndex = this.currentTimeCell.RowIndex;
             var currentRow = grdWorkSummary.Rows[rowIndex];
             if (currentRow != null)
             {
@@ -600,7 +636,6 @@ namespace Timee
                 this.ShowNotification("Timee", notificationText, ToolTipIcon.Info, 500);
             }
         }
-
         /// <summary>
         /// Shows baloon tooltip in system tray.
         /// </summary>
@@ -614,24 +649,6 @@ namespace Timee
             this.trayIcon.BalloonTipText = text;
             this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
             this.trayIcon.ShowBalloonTip(showTime);
-        }
-
-        /// <summary>
-        /// Handle application resize.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">EventArgs.</param>
-        private void TimeeMain_Resize(object sender, EventArgs e)
-        {
-            if (FormWindowState.Minimized == this.WindowState)
-            {
-                this.trayIcon.Visible = true;
-                this.ShowNotification("Timee", "Timee has been minimized to system tray", ToolTipIcon.Info, 500);
-            }
-            else if (FormWindowState.Normal == this.WindowState)
-            {
-                this.trayIcon.Visible = false;
-            }
         }
     }
 }

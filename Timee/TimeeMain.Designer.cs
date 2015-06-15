@@ -31,11 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeeMain));
             this.cmbLocations = new System.Windows.Forms.ComboBox();
+            this.userConfigurationLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdWorkSummary = new System.Windows.Forms.DataGridView();
             this.Project = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userConfigurationProjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SubProject = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userConfigurationSubprojectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Task = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userConfigurationTaskBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Location = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dateDataGridViewTextBoxColumn = new Timee.Controls.CalendarColumn.CalendarColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remove = new System.Windows.Forms.DataGridViewImageColumn();
             this.timeeDataSet = new Timee.DAL.TimeeDataSet();
             this.btnStart = new System.Windows.Forms.Button();
@@ -59,6 +66,7 @@
             this.mnuTimee = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.lGBSExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,20 +75,17 @@
             this.calendarColumn1 = new Timee.Controls.CalendarColumn.CalendarColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userConfigurationTaskBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userConfigurationSubprojectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userConfigurationProjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dateDataGridViewTextBoxColumn = new Timee.Controls.CalendarColumn.CalendarColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userConfigurationLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
             this.mnu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
+            this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmbLocations
@@ -92,6 +97,10 @@
             this.cmbLocations.Name = "cmbLocations";
             this.cmbLocations.Size = new System.Drawing.Size(121, 21);
             this.cmbLocations.TabIndex = 0;
+            // 
+            // userConfigurationLocationBindingSource
+            // 
+            this.userConfigurationLocationBindingSource.DataSource = typeof(Timee.Models.UserConfigurationLocation);
             // 
             // grdWorkSummary
             // 
@@ -144,6 +153,10 @@
             this.Project.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Project.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // userConfigurationProjectBindingSource
+            // 
+            this.userConfigurationProjectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationProject);
+            // 
             // SubProject
             // 
             this.SubProject.DataPropertyName = "SubProject";
@@ -156,6 +169,10 @@
             this.SubProject.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.SubProject.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.SubProject.ValueMember = "Name";
+            // 
+            // userConfigurationSubprojectBindingSource
+            // 
+            this.userConfigurationSubprojectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationSubproject);
             // 
             // Task
             // 
@@ -170,6 +187,10 @@
             this.Task.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Task.ValueMember = "Name";
             // 
+            // userConfigurationTaskBindingSource
+            // 
+            this.userConfigurationTaskBindingSource.DataSource = typeof(Timee.Models.UserConfigurationTask);
+            // 
             // Location
             // 
             this.Location.DataPropertyName = "Location";
@@ -182,6 +203,28 @@
             this.Location.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Location.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Location.ValueMember = "Name";
+            // 
+            // dateDataGridViewTextBoxColumn
+            // 
+            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            this.dateDataGridViewTextBoxColumn.FillWeight = 99.78245F;
+            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            this.dateDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dateDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Time
+            // 
+            this.Time.DataPropertyName = "Time";
+            this.Time.HeaderText = "Time";
+            this.Time.Name = "Time";
+            // 
+            // Comment
+            // 
+            this.Comment.DataPropertyName = "Comment";
+            this.Comment.FillWeight = 99.78245F;
+            this.Comment.HeaderText = "Comment";
+            this.Comment.Name = "Comment";
             // 
             // Remove
             // 
@@ -370,7 +413,8 @@
             // 
             this.mnuTimee.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.mnuTimee.Name = "mnuTimee";
             this.mnuTimee.Size = new System.Drawing.Size(52, 20);
             this.mnuTimee.Text = "Timee";
@@ -386,6 +430,13 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exit_Click);
             // 
             // menuPlugins
             // 
@@ -450,43 +501,24 @@
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 116;
             // 
-            // userConfigurationTaskBindingSource
+            // trayIcon
             // 
-            this.userConfigurationTaskBindingSource.DataSource = typeof(Timee.Models.UserConfigurationTask);
+            this.trayIcon.Visible = true;
+            this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
             // 
-            // userConfigurationSubprojectBindingSource
+            // trayMenu
             // 
-            this.userConfigurationSubprojectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationSubproject);
+            this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.trayMenuExit});
+            this.trayMenu.Name = "contextMenuStrip1";
+            this.trayMenu.Size = new System.Drawing.Size(93, 26);
             // 
-            // userConfigurationProjectBindingSource
+            // trayMenuExit
             // 
-            this.userConfigurationProjectBindingSource.DataSource = typeof(Timee.Models.UserConfigurationProject);
-            // 
-            // dateDataGridViewTextBoxColumn
-            // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
-            this.dateDataGridViewTextBoxColumn.FillWeight = 99.78245F;
-            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            this.dateDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dateDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Time
-            // 
-            this.Time.DataPropertyName = "Time";
-            this.Time.HeaderText = "Time";
-            this.Time.Name = "Time";
-            // 
-            // Comment
-            // 
-            this.Comment.DataPropertyName = "Comment";
-            this.Comment.FillWeight = 99.78245F;
-            this.Comment.HeaderText = "Comment";
-            this.Comment.Name = "Comment";
-            // 
-            // userConfigurationLocationBindingSource
-            // 
-            this.userConfigurationLocationBindingSource.DataSource = typeof(Timee.Models.UserConfigurationLocation);
+            this.trayMenuExit.Name = "trayMenuExit";
+            this.trayMenuExit.Size = new System.Drawing.Size(92, 22);
+            this.trayMenuExit.Text = "Exit";
+            this.trayMenuExit.Click += new System.EventHandler(this.exit_Click);
             // 
             // TimeeMain
             // 
@@ -518,14 +550,15 @@
             this.Text = "Timer";
             this.Load += new System.EventHandler(this.Timee_Load);
             this.Resize += new System.EventHandler(this.TimeeMain_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).EndInit();
             this.mnu.ResumeLayout(false);
             this.mnu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationTaskBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationSubprojectBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).EndInit();
+            this.trayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -577,6 +610,10 @@
         private Controls.CalendarColumn.CalendarColumn calendarColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon trayIcon;
+        private System.Windows.Forms.ContextMenuStrip trayMenu;
+        private System.Windows.Forms.ToolStripMenuItem trayMenuExit;
     }
 }
 

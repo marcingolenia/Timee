@@ -16,5 +16,10 @@ namespace Timee
         {
             InitializeComponent();
         }
+
+        private void linkToProject_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(this.linkToProject.Text);
+        }
     }
 }
