@@ -586,6 +586,7 @@ namespace Timee
             }
 
             this.timer.Start();
+            this.btnPause.Text = "Pause";
         }
         /// <summary>
         /// Returns key (keyboard) representing given row number.
@@ -642,6 +643,7 @@ namespace Timee
             if (!timer.Enabled)
             {
                 timer.Enabled = true;
+                this.btnPause.Text = "Pause";
             }
         }
         /// <summary>
