@@ -4,7 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using Timee.Controls;
 using Timee.DAL;
 using Timee.Hotkeys;
 using Timee.Models;
@@ -37,6 +39,10 @@ namespace Timee
             InitializeComponent();
             this.InitializeTrayElements();
             this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+            //Show all records + shortcuts(or numbers)
+            hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F11);
+            //Add new row
+            hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F12);
         }
 
         /// <summary>
@@ -109,18 +115,23 @@ namespace Timee
                 case Keys.F10:
                     row = 9;
                     break;
-                case Keys.F11:
-                    row = 10;
-                    break;
-                case Keys.F12:
-                    row = 11;
-                    break;
             }
-
             if (row.HasValue)
             {
                 this.SwitchTimerToRow(row.Value);
                 this.ShowTimerSwitchNotification();
+            }
+            else
+            {
+                switch (e.Key)
+                {
+                    case Keys.F11:
+                        ShowTimerSummaryNotification();
+                        break;
+                    case Keys.F12:
+                        QuickNewRow();
+                        break;
+                }
             }
         }
         /// <summary>
@@ -175,7 +186,7 @@ namespace Timee
         private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             var result = MessageBox.Show("All data will be lost, are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
-            if(result == System.Windows.Forms.DialogResult.No)
+            if (result == System.Windows.Forms.DialogResult.No)
             {
                 e.Cancel = true;
             }
@@ -563,7 +574,10 @@ namespace Timee
             int currentRowIndex = this.grdWorkSummary.Rows.Count - 1;
             this.currentTimeCell = grdWorkSummary.Rows[currentRowIndex]
                                                  .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-
+            //Enter edit mode on Project by default
+            grdWorkSummary.CurrentCell = grdWorkSummary.Rows[currentTimeCell.RowIndex]
+                                         .Cells[timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
+            grdWorkSummary.BeginEdit(true);
             // Register key
             Keys keyToRegister = this.GetKeyByRowNumber(currentRowIndex);
             if (keyToRegister != Keys.None)
@@ -613,11 +627,7 @@ namespace Timee
                 case 9:
                     key = Keys.F10;
                     break;
-                case 10:
-                    key = Keys.F11;
-                    break;
-                case 11:
-                    key = Keys.F12;
+                default:
                     break;
             }
             return key;
@@ -651,6 +661,33 @@ namespace Timee
                 string notificationText = string.Format("Timer has been switched to:{0} {1} - {2} - '{3}' ({4:hh\\:mm\\:ss}).", new object[] { Environment.NewLine, projectName, subProjectName, comment, time });
                 this.ShowNotification("Timee", notificationText, ToolTipIcon.Info, 500);
             }
+        }
+        /// <summary>
+        /// Show possible switches
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        private void ShowTimerSummaryNotification()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DataGridViewRow row in grdWorkSummary.Rows)
+            {
+                var typedRow = (TimeeDataSet.TimeSheetTableRow)(row.DataBoundItem as DataRowView).Row;
+                sb.AppendFormat("{0}. {1} | {2} | {3}", row.Index, typedRow.Project, typedRow.Task, typedRow.Comment);
+                sb.AppendLine();
+            }
+            this.ShowNotification("Timee", sb.ToString(), ToolTipIcon.Info, 1500);
+        }
+        /// <summary>
+        /// Show possible switches
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        private void QuickNewRow()
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+            row.Date = DateTime.Today;
+            AddNewRow(row);
         }
         /// <summary>
         /// Shows baloon tooltip in system tray.
