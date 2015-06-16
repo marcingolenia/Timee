@@ -152,12 +152,7 @@ namespace Timee
         /// <param name="e"></param>
         private void exit_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to exit? All data will be lost.",
-    "Exit", MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes)
-            {
-                this.Close();
-            }
+            this.Close();
         }
         /// <summary>
         /// Handle application resize.
@@ -175,6 +170,14 @@ namespace Timee
             else if (FormWindowState.Normal == this.WindowState)
             {
                 this.trayIcon.Visible = false;
+            }
+        }
+        private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("All data will be lost, are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
+            if(result == System.Windows.Forms.DialogResult.No)
+            {
+                e.Cancel = true;
             }
         }
 
@@ -421,6 +424,15 @@ namespace Timee
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
             hook.UnregisterLastHotKey();
         }
+        /// <summary>
+        /// Neglect invalid data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+        }
 
         //--Grid drag and drop
         /// <summary>
@@ -517,6 +529,7 @@ namespace Timee
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             DataGridViewComboBoxColumn c;
+
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
             c.DataSource = context.Projects;
 
@@ -652,12 +665,6 @@ namespace Timee
             this.trayIcon.BalloonTipText = text;
             this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
             this.trayIcon.ShowBalloonTip(showTime);
-        }
-
-        private void grdWorkSummary_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            //Just neglect invalid data.
-            e.Cancel = true;
         }
     }
 }
