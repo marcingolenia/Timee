@@ -1,4 +1,4 @@
-﻿namespace Timee
+﻿namespace Timee.Dialogs
 {
     partial class AboutDialog
     {
@@ -79,6 +79,7 @@
             this.MaximizeBox = false;
             this.Name = "AboutDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
             ((System.ComponentModel.ISupportInitialize)(this.picTimee)).EndInit();
             this.ResumeLayout(false);

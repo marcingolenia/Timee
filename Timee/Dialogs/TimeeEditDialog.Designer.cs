@@ -1,4 +1,4 @@
-﻿namespace Timee
+﻿namespace Timee.Dialogs
 {
     partial class TimeeEditDialog
     {
@@ -31,15 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeeEditDialog));
             this.tabsComponents = new System.Windows.Forms.TabControl();
             this.tabProject = new System.Windows.Forms.TabPage();
+            this.compProjectControl = new Timee.Controls.TimeeEditProject();
             this.tabSubProject = new System.Windows.Forms.TabPage();
+            this.compSubprojectControl = new Timee.Controls.TimeeEditSubproject();
             this.tabTask = new System.Windows.Forms.TabPage();
+            this.compTaskControl = new Timee.Controls.TimeeEditTask();
             this.tabLocation = new System.Windows.Forms.TabPage();
+            this.compLocationControl = new Timee.Controls.TimeeEditLocation();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.compProjectControl = new Timee.Controls.TimeeEditProject();
-            this.compSubprojectControl = new Timee.Controls.TimeeEditSubproject();
-            this.compTaskControl = new Timee.Controls.TimeeEditTask();
-            this.compLocationControl = new Timee.Controls.TimeeEditLocation();
             this.tabsComponents.SuspendLayout();
             this.tabProject.SuspendLayout();
             this.tabSubProject.SuspendLayout();
@@ -70,6 +70,14 @@
             this.tabProject.Text = "Project";
             this.tabProject.UseVisualStyleBackColor = true;
             // 
+            // compProjectControl
+            // 
+            this.compProjectControl.BindingSourceList = null;
+            this.compProjectControl.Location = new System.Drawing.Point(0, 0);
+            this.compProjectControl.Name = "compProjectControl";
+            this.compProjectControl.Size = new System.Drawing.Size(391, 215);
+            this.compProjectControl.TabIndex = 0;
+            // 
             // tabSubProject
             // 
             this.tabSubProject.Controls.Add(this.compSubprojectControl);
@@ -79,6 +87,14 @@
             this.tabSubProject.TabIndex = 2;
             this.tabSubProject.Text = "Sub-project";
             this.tabSubProject.UseVisualStyleBackColor = true;
+            // 
+            // compSubprojectControl
+            // 
+            this.compSubprojectControl.BindingSourceList = null;
+            this.compSubprojectControl.Location = new System.Drawing.Point(0, 0);
+            this.compSubprojectControl.Name = "compSubprojectControl";
+            this.compSubprojectControl.Size = new System.Drawing.Size(391, 215);
+            this.compSubprojectControl.TabIndex = 0;
             // 
             // tabTask
             // 
@@ -90,6 +106,14 @@
             this.tabTask.Text = "Task";
             this.tabTask.UseVisualStyleBackColor = true;
             // 
+            // compTaskControl
+            // 
+            this.compTaskControl.BindingSourceList = null;
+            this.compTaskControl.Location = new System.Drawing.Point(0, 0);
+            this.compTaskControl.Name = "compTaskControl";
+            this.compTaskControl.Size = new System.Drawing.Size(391, 215);
+            this.compTaskControl.TabIndex = 0;
+            // 
             // tabLocation
             // 
             this.tabLocation.Controls.Add(this.compLocationControl);
@@ -100,6 +124,14 @@
             this.tabLocation.TabIndex = 0;
             this.tabLocation.Text = "Location";
             this.tabLocation.UseVisualStyleBackColor = true;
+            // 
+            // compLocationControl
+            // 
+            this.compLocationControl.BindingSourceList = null;
+            this.compLocationControl.Location = new System.Drawing.Point(0, 0);
+            this.compLocationControl.Name = "compLocationControl";
+            this.compLocationControl.Size = new System.Drawing.Size(391, 215);
+            this.compLocationControl.TabIndex = 0;
             // 
             // btnOK
             // 
@@ -121,38 +153,6 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // compProjectControl
-            // 
-            this.compProjectControl.BindingSourceList = null;
-            this.compProjectControl.Location = new System.Drawing.Point(0, 0);
-            this.compProjectControl.Name = "compProjectControl";
-            this.compProjectControl.Size = new System.Drawing.Size(391, 215);
-            this.compProjectControl.TabIndex = 0;
-            // 
-            // compSubprojectControl
-            // 
-            this.compSubprojectControl.BindingSourceList = null;
-            this.compSubprojectControl.Location = new System.Drawing.Point(0, 0);
-            this.compSubprojectControl.Name = "compSubprojectControl";
-            this.compSubprojectControl.Size = new System.Drawing.Size(391, 215);
-            this.compSubprojectControl.TabIndex = 0;
-            // 
-            // compTaskControl
-            // 
-            this.compTaskControl.BindingSourceList = null;
-            this.compTaskControl.Location = new System.Drawing.Point(0, 0);
-            this.compTaskControl.Name = "compTaskControl";
-            this.compTaskControl.Size = new System.Drawing.Size(391, 215);
-            this.compTaskControl.TabIndex = 0;
-            // 
-            // compLocationControl
-            // 
-            this.compLocationControl.BindingSourceList = null;
-            this.compLocationControl.Location = new System.Drawing.Point(0, 0);
-            this.compLocationControl.Name = "compLocationControl";
-            this.compLocationControl.Size = new System.Drawing.Size(391, 215);
-            this.compLocationControl.TabIndex = 0;
-            // 
             // TimeeEditDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,6 +166,7 @@
             this.MinimizeBox = false;
             this.Name = "TimeeEditDialog";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit positions";
             this.tabsComponents.ResumeLayout(false);
             this.tabProject.ResumeLayout(false);

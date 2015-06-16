@@ -11,6 +11,8 @@ using Timee.DAL;
 using Timee.Hotkeys;
 using Timee.Models;
 using Timee.Plugins.LGBSExcelExport;
+using Timee.Dialogs;
+using System.Configuration;
 
 namespace Timee
 {
@@ -43,6 +45,7 @@ namespace Timee
             hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F11);
             //Add new row
             hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F12);
+            //Hints
         }
 
         /// <summary>
@@ -73,6 +76,19 @@ namespace Timee
             cmbSubProject.DataSource = context.Subprojects;
             cmbLocations.DataSource = context.Locations;
             grdWorkSummaryInit();
+            //Show help
+        }
+        /// <summary>
+        /// Show hints
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimeeMain_Shown(object sender, EventArgs e)
+        {
+            if (ConfigurationManager.AppSettings.Get("HideHints") == Boolean.FalseString)
+            {
+                new Dialogs.Help().ShowDialog();
+            }
         }
         /// <summary>
         /// Handle hotkey combination press.
@@ -183,6 +199,11 @@ namespace Timee
                 this.trayIcon.Visible = false;
             }
         }
+        /// <summary>
+        /// Confirm Exit.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             var result = MessageBox.Show("All data will be lost, are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
@@ -680,7 +701,7 @@ namespace Timee
             this.ShowNotification("Timee", sb.ToString(), ToolTipIcon.Info, 1500);
         }
         /// <summary>
-        /// Show possible switches
+        /// CTRL + F12 by default -> Quickly create new empty row.
         /// </summary>
         /// <param name="rowIndex"></param>
         private void QuickNewRow()

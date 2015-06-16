@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using Timee.Models;
 
-namespace Timee
+namespace Timee.Dialogs
 {
     public partial class TimeeEditDialog : Form
     {

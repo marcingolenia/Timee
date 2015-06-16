@@ -551,6 +551,7 @@
             this.Text = "Timee";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimeeMain_FormClosing);
             this.Load += new System.EventHandler(this.Timee_Load);
+            this.Shown += new System.EventHandler(this.TimeeMain_Shown);
             this.Resize += new System.EventHandler(this.TimeeMain_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).EndInit();
