@@ -59,7 +59,7 @@ Just start a drag by holding left mouse on row header. (Left side of the grid)")
 
 
             this.Hints.Add(@"There are shortcuts which can help you work with Timee faster.
-CTRL + F1 (F2,F3 till F10) Will switch time counting to corresponding row number.
+CTRL + F1 (F2,F3 till F10) Will switch time counting to corresponding row number, even if Timee is in system tray.
 
 CTRL + F11 will show you some summary with rows number. This will help you to switch between tasks without even opening Timee from system tray.
 
