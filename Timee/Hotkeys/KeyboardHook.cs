@@ -95,6 +95,14 @@ namespace Timee.Hotkeys
                 throw new InvalidOperationException("Couldn’t register the hot key.");
         }
 
+        public void UnregisterLastHotKey()
+        {
+            // Unregister the hot key.
+            if (!UnregisterHotKey(_window.Handle, _currentId))
+                throw new InvalidOperationException("Couldn’t Unegister the hot key.");
+            _currentId = _currentId - 1;
+        }
+
         /// <summary>
         /// A hot key has been pressed.
         /// </summary>

@@ -28,7 +28,6 @@ namespace Timee
         private DataGridViewCell currentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
 
-
         //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
 
@@ -46,7 +45,7 @@ namespace Timee
         private void InitializeTrayElements()
         {
             // Create a tray icon.
-            trayIcon.Text = Application.ProductName;
+            trayIcon.Text = this.Text;
             trayIcon.Icon = new Icon("Resources/timee.ico", 40, 40);
 
             // Add menu to tray icon and show it.
@@ -178,6 +177,7 @@ namespace Timee
                 this.trayIcon.Visible = false;
             }
         }
+
         //--GUI besides grid
         /// <summary>
         /// Start counting time.
@@ -419,6 +419,7 @@ namespace Timee
                 timer.Stop();
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
+            hook.UnregisterLastHotKey();
         }
 
         //--Grid drag and drop
@@ -461,7 +462,7 @@ namespace Timee
             Point clientPoint = grdWorkSummary.PointToClient(new Point(e.X, e.Y));
             int rowIndexOfItemUnderMouseToDrop = grdWorkSummary.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
             //No, drag to self is not possible :)
-            if (rowIndexOfItemUnderMouseToDrop != dragSourceGridRow.Index)
+            if (rowIndexOfItemUnderMouseToDrop != dragSourceGridRow.Index && rowIndexOfItemUnderMouseToDrop > -1)
             {
                 //Stop timer if user is draging row in which time is counting
                 if (rowIndexFromMouseDown == currentTimeCell.RowIndex)
@@ -474,6 +475,7 @@ namespace Timee
                     ((TimeeDataSet.TimeSheetTableRow)(grdWorkSummary.Rows[rowIndexOfItemUnderMouseToDrop].DataBoundItem as DataRowView).Row).Time +=
                     dragSourceTypedRow.Time;
                     grdWorkSummary.Rows.RemoveAt(rowIndexFromMouseDown);
+                    hook.UnregisterLastHotKey();
                 }
             }
         }
@@ -498,6 +500,7 @@ namespace Timee
         {
             new ExcelExportSettings().ShowDialog();
         }
+
         //Methods
         /// <summary>
         /// Init grid comboboxes, set handlers for custom events, change behaviour.
@@ -649,6 +652,12 @@ namespace Timee
             this.trayIcon.BalloonTipText = text;
             this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
             this.trayIcon.ShowBalloonTip(showTime);
+        }
+
+        private void grdWorkSummary_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            //Just neglect invalid data.
+            e.Cancel = true;
         }
     }
 }
