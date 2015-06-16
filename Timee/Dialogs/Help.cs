@@ -73,7 +73,8 @@ Also we wanted to make the grid quickly editable. Try to switch between column u
 
             this.Hints.Add(@"All data (Locations, Projects etc...) edited in dialog will be saved if you'll press OK button. All additional data which you will enter into grid will be lost upon exiting the Application. Feel free to be fast, but remember to add all values which you want to keep via edit dialog.");
 
-            this.Hints.Add(@"Please go to about dialog and open github project page and go to ''Issues'' to see what you should expect in next version.
+            this.Hints.Add(@"Please go to about dialog and open github project page and go to ''Issues'' to see what you should expect in next version (Look vor Version2 Milestone).
+You can also see this on our board - https://waffle.io/marcingolenia/timee
 
 Meanwhile you can let me know about your ideas by sending me an e-mail: ma.golenia@lgbs.pl");
             txtHint.Text = Hints[selectedHint];
