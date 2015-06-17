@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Product Id="26F2D3B3-3F44-48D0-ACD9-C601CDEF628C" Name="Timee" Language="1033" Version="1.0.0.0" Manufacturer="Marcin" UpgradeCode="a825d3df-1c57-4617-9ecc-4deb3569bc36">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Product Id="26F2D3B3-3F44-48D0-ACD9-C601CDEF628C" Name="Timee" Language="1033" Version="1.0.0.0" Manufacturer="Marcin" UpgradeCode="a825d3df-1c57-4617-9ecc-4deb3569bc36">
+        <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-    <Media Id="1" Cabinet="ExampleInstaller.cab" EmbedCab="yes" />
+        <Media Id="1" Cabinet="ExampleInstaller.cab" EmbedCab="yes" />
 
-    <Feature Id="ProductFeature" Title="Timee" Level="1">
-      <ComponentGroupRef Id="ProductComponents" />
-    </Feature>
+        <Feature Id="ProductFeature" Title="Timee" Level="1">
+            <ComponentGroupRef Id="ProductComponents" />
+        </Feature>
 
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"></Property>
-    <UIRef Id="WixUI_InstallDir"/>
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"></Property>
+        <UIRef Id="WixUI_InstallDir"/>
 
-  </Product>
+    </Product>
 
-  <Fragment>
-    <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="Timee">
-          <Directory Id="RessourcesFolder" Name="Resources">
-          </Directory>
-          <Directory Id="PluginsFolder" Name="Plugins">
-            <Directory Id="LGBSExcelExportFolder" Name="LGBSExcelExport">
+    <Fragment>
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLFOLDER" Name="Timee">
+                    <Directory Id="ResourcesFolder" Name="Resources">
+                    </Directory>
+                    <Directory Id="PluginsFolder" Name="Plugins">
+                        <Directory Id="LGBSExcelExportFolder" Name="LGBSExcelExport">
+                        </Directory>
+                    </Directory>
+                </Directory>
             </Directory>
-          </Directory>
         </Directory>
-      </Directory>
-    </Directory>
-  </Fragment>
+    </Fragment>
 
-  <Fragment>
-    <Directory Id="AppDataFolder" Name="AppDataFolder">
-      <Directory Id="TimeeDataFolder" Name="TimeeData">
-      </Directory>
-    </Directory>
-  </Fragment>
+    <Fragment>
+        <Directory Id="AppDataFolder" Name="AppDataFolder">
+            <Directory Id="TimeeDataFolder" Name="TimeeData">
+            </Directory>
+        </Directory>
+    </Fragment>
 
-  <Fragment>
-    <ComponentGroup Id="ProductComponents">
-      <Component Directory="INSTALLFOLDER">
-        <File Source="$(var.Timee.TargetDir)\Timee.exe" />
-      </Component>
-      <Component Directory="INSTALLFOLDER">
-        <File Source="$(var.Timee.TargetDir)\Timee.exe.config" />
-      </Component>
-      <Component Directory="INSTALLFOLDER">
-        <File Source="$(var.Timee.TargetDir)\userConfiguration.xml" />
-      </Component>
-      <Component Directory="INSTALLFOLDER">
-        <File Source="$(var.Timee.TargetDir)\ClosedXML.dll" />
-      </Component>
-      <Component Directory="TimeeDataFolder">
-        <File Source="$(var.Timee.TargetDir)\Resources\timee.ico"/>
-      </Component>
-      <Component Directory="LGBSExcelExportFolder">
-        <File Source="$(var.Timee.TargetDir)\Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml" />
-      </Component>
+    <Fragment>
+        <ComponentGroup Id="ProductComponents">
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\Timee.exe" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\Timee.exe.config" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\userConfiguration.xml" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\ClosedXML.dll" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\DocumentFormat.OpenXml.dll" />
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\timee.ico"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\timee-transparent_347x358.png"/>
+            </Component>
+            <Component Directory="LGBSExcelExportFolder">
+                <File Source="$(var.Timee.TargetDir)\Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml" />
+            </Component>
 
-    </ComponentGroup>
-  </Fragment>
+        </ComponentGroup>
+    </Fragment>
 
 </Wix>

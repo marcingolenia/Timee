@@ -121,4 +121,10 @@
   <data name="TimeeIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\timee.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TimeeLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\timee_347x358.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TimeeTransparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\timee-transparent_347x358.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

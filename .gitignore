@@ -43,9 +43,11 @@ Temporary Items
 .apdisk
 
 # Custom ignores
-Timee.v11.suo
 *.suo
+*.user
 Timee/bin
 Timee/obj
+Timee.Setup/bin
+Timee.Setup/obj
 packages
 Timee/Timee.csproj.user
