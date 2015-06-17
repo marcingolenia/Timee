@@ -241,11 +241,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Properties\DataSources\zegar-2_318-11614.jpg" />
+    <Content Include="Resources\timee-transparent_347x358.png" />
     <Content Include="Resources\timee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="timee.png" />
-    <Content Include="timeeT.png" />
+    <Content Include="Resources\timee_347x358.png" />
     <Content Include="userConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
