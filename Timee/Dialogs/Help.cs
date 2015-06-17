@@ -28,7 +28,7 @@ namespace Timee.Dialogs
         {
             configuration.AppSettings.Settings["HideHints"].Value = chkGoAway.Checked ? Boolean.TrueString : Boolean.FalseString;
             configuration.Save();
-            ConfigurationManager.RefreshSection("appSettings");
+            //ConfigurationManager.RefreshSection("appSettings");
         }
         private void linkNext_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

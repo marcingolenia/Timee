@@ -56,7 +56,8 @@ namespace Timee.Plugins.LGBSExcelExport
                 var row = (TimeeDataSet.TimeSheetTableRow)entries[i];
                 dataRange.Cell(i + 1, 1).Value = row.Date;
                 dataRange.Cell(i + 1, 2).Value = conf.Settings.Person.value;
-                dataRange.Cell(i + 1, 3).Value = Math.Round(row.Time.TotalMinutes / 60, 2);
+                //Round to Quarters
+                dataRange.Cell(i + 1, 3).Value = Math.Round(Math.Round(row.Time.TotalMinutes / 60, 2) * 4, MidpointRounding.ToEven) / 4;
                 dataRange.Cell(i + 1, 4).Value = row.Project;
                 dataRange.Cell(i + 1, 5).Value = row.SubProject;
                 dataRange.Cell(i + 1, 6).Value = row.Task;
