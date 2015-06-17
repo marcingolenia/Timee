@@ -97,6 +97,7 @@
             this.cmbLocations.Name = "cmbLocations";
             this.cmbLocations.Size = new System.Drawing.Size(121, 21);
             this.cmbLocations.TabIndex = 0;
+            this.cmbLocations.Validating += new System.ComponentModel.CancelEventHandler(this.cmbLocations_Validating);
             // 
             // userConfigurationLocationBindingSource
             // 
@@ -262,6 +263,7 @@
             this.cmbProject.Name = "cmbProject";
             this.cmbProject.Size = new System.Drawing.Size(121, 21);
             this.cmbProject.TabIndex = 4;
+            this.cmbProject.Validating += new System.ComponentModel.CancelEventHandler(this.cmbProject_Validating);
             // 
             // cmbSubProject
             // 
@@ -272,6 +274,7 @@
             this.cmbSubProject.Name = "cmbSubProject";
             this.cmbSubProject.Size = new System.Drawing.Size(121, 21);
             this.cmbSubProject.TabIndex = 5;
+            this.cmbSubProject.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSubProject_Validating);
             // 
             // cmbTask
             // 
@@ -282,6 +285,7 @@
             this.cmbTask.Name = "cmbTask";
             this.cmbTask.Size = new System.Drawing.Size(121, 21);
             this.cmbTask.TabIndex = 6;
+            this.cmbTask.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTask_Validating);
             // 
             // btnProject
             // 

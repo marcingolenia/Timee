@@ -79,7 +79,10 @@ namespace Timee.Plugins.LGBSExcelExport
                 dlg.ShowDialog();
                 try
                 {
-                    workbook.SaveAs(dlg.FileName);
+                    if (!String.IsNullOrWhiteSpace(dlg.FileName))
+                    {
+                        workbook.SaveAs(dlg.FileName);
+                    }
                 }
                 catch(IOException ex)
                 {

@@ -48,21 +48,7 @@ namespace Timee
             //Hints
         }
 
-        /// <summary>
-        /// Initializes tray control.
-        /// </summary>
-        private void InitializeTrayElements()
-        {
-            // Create a tray icon.
-            trayIcon.Text = this.Text;
-            trayIcon.Icon = new Icon("Resources/timee.ico", 40, 40);
-
-            // Add menu to tray icon and show it.
-            trayIcon.ContextMenuStrip = trayMenu;
-            trayIcon.Visible = false;
-        }
-
-        // Events
+        //Events
         /// <summary>
         /// Main form loaded -> get data, init grid.
         /// </summary>
@@ -190,13 +176,8 @@ namespace Timee
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                this.trayIcon.Visible = true;
                 this.ShowNotification("Timee", "Timee has been minimized to system tray", ToolTipIcon.Info, 500);
                 this.Hide();
-            }
-            else if (FormWindowState.Normal == this.WindowState)
-            {
-                this.trayIcon.Visible = false;
             }
         }
         /// <summary>
@@ -291,9 +272,87 @@ namespace Timee
         /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
-
             this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
-
+        }
+        /// <summary>
+        /// Allow users to add Project at edit-time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbProject_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmbProject.Text) &&
+                !context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
+            {
+                var newProject = new Models.UserConfigurationProject()
+                {
+                    Name = cmbProject.Text.ToString(),
+                    Order = this.context.Projects.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                context.Projects.Add(newProject);
+                cmbProject.SelectedItem = newProject;
+            }
+        }
+        /// <summary>
+        /// Allow users to add SubProject at edit-time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbSubProject_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmbSubProject.Text) &&
+                !context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
+            {
+                var newSubProject = new Models.UserConfigurationSubproject()
+                {
+                    Name = cmbSubProject.Text.ToString(),
+                    Order = this.context.Subprojects.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                context.Subprojects.Add(newSubProject);
+                cmbSubProject.SelectedItem = newSubProject;
+            }
+        }
+        /// <summary>
+        /// Allow users to add Task at edit-time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbTask_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmbTask.Text) &&
+                !context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
+            {
+                var newTask = new Models.UserConfigurationTask()
+                {
+                    Name = cmbSubProject.Text.ToString(),
+                    Order = this.context.Tasks.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                context.Tasks.Add(newTask);
+                cmbSubProject.SelectedItem = newTask;
+            }
+        }
+        /// <summary>
+        /// Allow users to add Location at edit-time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbLocations_Validating(object sender, CancelEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cmbLocations.Text) &&
+    !context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
+            {
+                var newLocation = new Models.UserConfigurationLocation()
+                {
+                    Name = cmbSubProject.Text.ToString(),
+                    Order = this.context.Locations.Max(p => p.Order) + 1,
+                    OrderSpecified = true
+                };
+                context.Locations.Add(newLocation);
+                cmbSubProject.SelectedItem = newLocation;
+            }
         }
 
         //--Grid events
@@ -304,6 +363,7 @@ namespace Timee
         /// <param name="e"></param>
         private void grdWorkSummary_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
+            e.Control.PreviewKeyDown -= LastCell_PreviewKeyDown;
             if (grdWorkSummary.CurrentCell.OwningColumn.CellType == typeof(DataGridViewComboBoxCell))
             {
                 ComboBox cmb = e.Control as ComboBox;
@@ -315,11 +375,10 @@ namespace Timee
                 cmb.PreviewKeyDown -= new PreviewKeyDownEventHandler(GridCmb_KeyPress);
                 cmb.PreviewKeyDown += new PreviewKeyDownEventHandler(GridCmb_KeyPress);
             }
-            else if (grdWorkSummary.CurrentCell.RowIndex == grdWorkSummary.Rows.Count - 1 &&
-                grdWorkSummary.CurrentCell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.CommentColumn.ColumnName)
+            if (grdWorkSummary.CurrentCell.RowIndex == grdWorkSummary.Rows.Count - 1 &&
+                grdWorkSummary.CurrentCell.OwningColumn.DisplayIndex == grdWorkSummary.Columns.Count-2)
             {
-                e.Control.PreviewKeyDown -= CommentCell_PreviewKeyDown;
-                e.Control.PreviewKeyDown += CommentCell_PreviewKeyDown;
+                e.Control.PreviewKeyDown += LastCell_PreviewKeyDown;
             }
         }
         /// <summary>
@@ -336,7 +395,7 @@ namespace Timee
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CommentCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void LastCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
             {
@@ -419,6 +478,16 @@ namespace Timee
                 };
                 this.context.Locations.Add(newLocation);
                 cell.Value = newLocation.Name;
+            }
+             //Time
+            if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
+            {
+                TimeSpan dumb;
+                if(TimeSpan.TryParse(cell.Value.ToString(), out dumb) == false)
+                {
+                    cell.Value = new TimeSpan();
+                }
+                //cell.EditedFormattedValue
             }
         }
         /// <summary>
@@ -511,7 +580,7 @@ namespace Timee
                 //Stop timer if user is draging row in which time is counting
                 if (rowIndexFromMouseDown == currentTimeCell.RowIndex)
                 {
-                    btnPause_Click(null, EventArgs.Empty);
+                    SwitchTimerToRow(rowIndexOfItemUnderMouseToDrop);
                 }
                 //Just check against possible another future drag effects.
                 if (e.Effect == DragDropEffects.Move)
@@ -524,7 +593,7 @@ namespace Timee
             }
         }
 
-        //Menu
+        //--Menu
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutDialog().Show();
@@ -532,7 +601,15 @@ namespace Timee
         //TODO: In version 2 handle this with some general plugin mechanism
         private void mnuExcelExport_Click(object sender, EventArgs e)
         {
-            grdWorkSummary.EndEdit();
+            //Check time validity, if some bullshit set 00:00:00.
+            if(grdWorkSummary.CurrentCell.OwningColumn.Name == timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
+            {
+                TimeSpan dumb;
+                if (TimeSpan.TryParse(grdWorkSummary.CurrentCell.EditedFormattedValue.ToString(), out dumb) == false)
+                {
+                    grdWorkSummary.CurrentCell.Value = new TimeSpan();
+                }
+            }
             DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
             if (allEntries.Count > 0)
             {
@@ -597,7 +674,7 @@ namespace Timee
                                                  .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
             //Enter edit mode on Project by default
             grdWorkSummary.CurrentCell = grdWorkSummary.Rows[currentTimeCell.RowIndex]
-                                         .Cells[timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
+                                         .Cells[0];
             grdWorkSummary.BeginEdit(true);
             // Register key
             Keys keyToRegister = this.GetKeyByRowNumber(currentRowIndex);
@@ -695,7 +772,7 @@ namespace Timee
             foreach (DataGridViewRow row in grdWorkSummary.Rows)
             {
                 var typedRow = (TimeeDataSet.TimeSheetTableRow)(row.DataBoundItem as DataRowView).Row;
-                sb.AppendFormat("{0}. {1} | {2} | {3}", row.Index, typedRow.Project, typedRow.Task, typedRow.Comment);
+                sb.AppendFormat("{0}. {1} | {2} | {3} | {4}", row.Index + 1, typedRow.Project, typedRow.Task, typedRow.Comment, typedRow.Time.ToString("hh':'mm':'ss"));
                 sb.AppendLine();
             }
             this.ShowNotification("Timee", sb.ToString(), ToolTipIcon.Info, 1500);
@@ -721,10 +798,25 @@ namespace Timee
         /// <param name="showTime">Time to show.</param>
         private void ShowNotification(string title, string text, ToolTipIcon icon, int showTime)
         {
-            this.trayIcon.BalloonTipTitle = title;
-            this.trayIcon.BalloonTipText = text;
-            this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
-            this.trayIcon.ShowBalloonTip(showTime);
+            if (!String.IsNullOrWhiteSpace(text))
+            {
+                this.trayIcon.BalloonTipTitle = title;
+                this.trayIcon.BalloonTipText = text;
+                this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
+                this.trayIcon.ShowBalloonTip(showTime);
+            }
+        }
+        /// <summary>
+        /// Initializes tray control.
+        /// </summary>
+        private void InitializeTrayElements()
+        {
+            // Create a tray icon.
+            trayIcon.Text = this.Text;
+            trayIcon.Icon = new Icon("Resources/timee.ico", 40, 40);
+
+            // Add menu to tray icon and show it.
+            trayIcon.ContextMenuStrip = trayMenu;
         }
     }
 }
