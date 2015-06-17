@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Timee
+namespace Timee.Dialogs
 {
     public partial class AboutDialog : Form
     {
         public AboutDialog()
         {
             InitializeComponent();
+        }
+
+        private void linkToProject_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(this.linkToProject.Text);
         }
     }
 }

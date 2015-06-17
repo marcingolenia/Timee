@@ -1,4 +1,4 @@
-﻿namespace Timee
+﻿namespace Timee.Dialogs
 {
     partial class TimeeEditDialog
     {
@@ -161,8 +161,12 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.tabsComponents);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "TimeeEditDialog";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit positions";
             this.tabsComponents.ResumeLayout(false);
             this.tabProject.ResumeLayout(false);

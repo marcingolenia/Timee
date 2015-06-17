@@ -18,7 +18,7 @@ namespace Timee.Controls
                 var subProject = new Models.UserConfigurationSubproject()
                 {
                     Name = this.NewItemText,
-                    Order = this.BindingSourceList.Max(i => i.Order + 1),
+                    Order = this.BindingSourceList.Count > 0 ? this.BindingSourceList.Max(i => i.Order + 1) : 1,
                     OrderSpecified = true
                 };
                 this.BindingSourceList.Add(subProject);
