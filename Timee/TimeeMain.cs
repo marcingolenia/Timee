@@ -483,9 +483,10 @@ namespace Timee
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
             {
                 TimeSpan dumb;
-                if(TimeSpan.TryParse(cell.Value.ToString(), out dumb) == false)
+                if(TimeSpan.TryParse(cell.EditedFormattedValue.ToString(), out dumb) == false)
                 {
                     cell.Value = new TimeSpan();
+                    grdWorkSummary.CancelEdit();
                 }
                 //cell.EditedFormattedValue
             }
@@ -672,7 +673,7 @@ namespace Timee
             int currentRowIndex = this.grdWorkSummary.Rows.Count - 1;
             this.currentTimeCell = grdWorkSummary.Rows[currentRowIndex]
                                                  .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-            //Enter edit mode on Project by default
+            //Enter edit mode on first cell by default
             grdWorkSummary.CurrentCell = grdWorkSummary.Rows[currentTimeCell.RowIndex]
                                          .Cells[0];
             grdWorkSummary.BeginEdit(true);
@@ -758,7 +759,7 @@ namespace Timee
                 string subProjectName = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName].Value;
                 string comment = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.CommentColumn.ColumnName].Value;
                 TimeSpan time = (TimeSpan)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].Value;
-                string notificationText = string.Format("Timer has been switched to:{0} {1} - {2} - '{3}' ({4:hh\\:mm\\:ss}).", new object[] { Environment.NewLine, projectName, subProjectName, comment, time });
+                string notificationText = string.Format("Timer has been switched to:{0}{1}. {2} - {3} - '{4}' ({5:hh\\:mm\\:ss}).", new object[] {Environment.NewLine, rowIndex + 1 , projectName, subProjectName, comment, time});
                 this.ShowNotification("Timee", notificationText, ToolTipIcon.Info, 500);
             }
         }
