@@ -22,5 +22,42 @@ namespace Timee.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowHints {
+            get {
+                return ((bool)(this["ShowHints"]));
+            }
+            set {
+                this["ShowHints"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<UserConfiguration>
+  <Location>
+    <Location Order=""0"" Name=""Gliwice""/>
+  </Location>
+  <Project>
+    <Project Order=""0"" Name=""Sample Project""/>
+  </Project>
+  <Sub-project>
+    <Sub-project Order=""0"" Name=""Sample Subproject""/>
+  </Sub-project>
+  <Task>
+    <Task Order=""0"" Name=""Sample task""/>
+  </Task>
+</UserConfiguration>")]
+        public string UserConfiguration {
+            get {
+                return ((string)(this["UserConfiguration"]));
+            }
+            set {
+                this["UserConfiguration"] = value;
+            }
+        }
     }
 }

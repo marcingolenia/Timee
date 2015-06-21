@@ -47,9 +47,6 @@
                 <File Source="$(var.Timee.TargetDir)\Timee.exe.config" />
             </Component>
             <Component Directory="INSTALLFOLDER">
-                <File Source="$(var.Timee.TargetDir)\userConfiguration.xml" />
-            </Component>
-            <Component Directory="INSTALLFOLDER">
                 <File Source="$(var.Timee.TargetDir)\ClosedXML.dll" />
             </Component>
             <Component Directory="INSTALLFOLDER">

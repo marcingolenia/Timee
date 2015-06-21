@@ -27,27 +27,39 @@ namespace Timee.Plugins.LGBSExcelExport
 
         public LGBSExcelExportConfiguration LoadConfiguration()
         {
-            XmlSerializer s = new XmlSerializer(typeof(LGBSExcelExportConfiguration));
+            if (Properties.Settings.Default.Properties["LGBSExcelExportConfiguration"] == null)
+            {
+                System.Configuration.SettingsProperty property =
+                new System.Configuration.SettingsProperty("LGBSExcelExportConfiguration");
 
+                //Load xml doc into it
+                property.IsReadOnly = false;
+                property.PropertyType = typeof(string);
+                property.DefaultValue = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Plugins",
+                                        "LGBSExcelExport", "LGBSExcelExportConfiguration.xml"));
+                property.Provider = Properties.Settings.Default.Providers["LocalFileSettingsProvider"];
+                property.Attributes.Add(typeof(System.Configuration.UserScopedSettingAttribute), new System.Configuration.UserScopedSettingAttribute());
+                Properties.Settings.Default.Properties.Add(property);
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+            }
+            XmlSerializer s = new XmlSerializer(typeof(LGBSExcelExportConfiguration));
             XDocument doc =
-            XDocument.Load(Path.Combine(Environment.CurrentDirectory, "Plugins",
-            "LGBSExcelExport", "LGBSExcelExportConfiguration.xml"));
+            XDocument.Parse((string)Properties.Settings.Default["LGBSExcelExportConfiguration"]);
             return (LGBSExcelExportConfiguration)s.Deserialize(doc.CreateReader());
+
         }
         public void SaveConfiguration(LGBSExcelExportConfiguration configuration)
         {
-            try
+
+            var xmlSerializer = new XmlSerializer(typeof(LGBSExcelExportConfiguration));
+            using (StringWriter textWriter = new StringWriter())
             {
-            var writer = new XmlSerializer(typeof(LGBSExcelExportConfiguration));
-            var file = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Plugins",
-            "LGBSExcelExport", "LGBSExcelExportConfiguration.xml"));
-            writer.Serialize(file, configuration);
-            file.Close();
+                xmlSerializer.Serialize(textWriter, configuration);
+                Properties.Settings.Default["LGBSExcelExportConfiguration"] = textWriter.ToString();
+                Properties.Settings.Default.Save();
             }
-                        catch(IOException ex)
-            {
-                throw ex;
-            }
+            Properties.Settings.Default.Save();
         }
     }
 }

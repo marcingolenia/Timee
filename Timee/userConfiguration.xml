@@ -1,18 +1,14 @@
 <UserConfiguration>
   <Location>
-    <Location Order="0" Name="Katowice"/>
-    <Location Order="1" Name="GLiwice"/>
+    <Location Order="0" Name="Gliwice"/>
   </Location>
   <Project>
-    <Project Order="0" Name="Name of project"/>
-    <Project Order="1" Name="Name of project2"/>
+    <Project Order="0" Name="Sample Project"/>
   </Project>
   <Sub-project>
-    <Sub-project Order="0" Name="Name of sub-project"/>
-    <Sub-project Order="1" Name="Name of sub-project2"/>
+    <Sub-project Order="0" Name="Sample Subproject"/>
   </Sub-project>
   <Task>
-    <Task Order="0" Name="Name of task"/>
-    <Task Order="1" Name="Name of task2"/>
+    <Task Order="0" Name="Sample task"/>
   </Task>
 </UserConfiguration>

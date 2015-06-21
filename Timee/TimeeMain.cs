@@ -71,7 +71,7 @@ namespace Timee
         /// <param name="e"></param>
         private void TimeeMain_Shown(object sender, EventArgs e)
         {
-            if (ConfigurationManager.AppSettings.Get("HideHints") == Boolean.FalseString)
+            if (Properties.Settings.Default.ShowHints)
             {
                 new Dialogs.Help().ShowDialog();
             }

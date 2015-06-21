@@ -1,7 +1,25 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Timee.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ShowHints" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UserConfiguration" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;UserConfiguration&gt;
+  &lt;Location&gt;
+    &lt;Location Order="0" Name="Gliwice"/&gt;
+  &lt;/Location&gt;
+  &lt;Project&gt;
+    &lt;Project Order="0" Name="Sample Project"/&gt;
+  &lt;/Project&gt;
+  &lt;Sub-project&gt;
+    &lt;Sub-project Order="0" Name="Sample Subproject"/&gt;
+  &lt;/Sub-project&gt;
+  &lt;Task&gt;
+    &lt;Task Order="0" Name="Sample task"/&gt;
+  &lt;/Task&gt;
+&lt;/UserConfiguration&gt;</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

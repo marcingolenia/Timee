@@ -20,15 +20,14 @@ namespace Timee.Dialogs
         {
             InitializeComponent();
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            this.chkGoAway.Checked = Boolean.Parse(configuration.AppSettings.Settings["HideHints"].Value);
+            this.chkGoAway.Checked = !Properties.Settings.Default.ShowHints;
             InitHints();
         }
 
         private void Help_FormClosing(object sender, FormClosingEventArgs e)
         {
-            configuration.AppSettings.Settings["HideHints"].Value = chkGoAway.Checked ? Boolean.TrueString : Boolean.FalseString;
-            configuration.Save();
-            //ConfigurationManager.RefreshSection("appSettings");
+            Properties.Settings.Default.ShowHints = !chkGoAway.Checked;
+            Properties.Settings.Default.Save();
         }
         private void linkNext_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
