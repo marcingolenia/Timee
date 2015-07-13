@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Windows.Forms;
+using Timee.DAL;
 using Timee.Models;
 
 namespace Timee.Dialogs
@@ -11,10 +13,13 @@ namespace Timee.Dialogs
             ConfigurationManager.AppSettings.Get("DefaultDisplayMember");
 
         private TimeeContext context;
+        private TimeeContext originalContext;
         public TimeeEditDialog(TimeeContext context, TimeeComponentType component)
         {
             InitializeComponent();
             this.context = context;
+            
+            this.originalContext = (TimeeContext)Extensions.Clone<TimeeContext>(context);
 
             switch (component)
             {
@@ -38,10 +43,13 @@ namespace Timee.Dialogs
             this.compProjectControl.BindData(context.Projects, DISPLAY_MEMBER);
             this.compSubprojectControl.BindData(context.Subprojects, DISPLAY_MEMBER);
             this.compTaskControl.BindData(context.Tasks, DISPLAY_MEMBER);
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            
+
             context.ResetAllBindings();
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
@@ -49,6 +57,7 @@ namespace Timee.Dialogs
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            TimeeXMLService.Instance.SaveContext(this.originalContext);
             this.Close();
         }
     }

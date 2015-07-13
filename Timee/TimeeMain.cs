@@ -254,6 +254,7 @@ namespace Timee
             }
             else if (sender.Equals(btnLocation))
             {
+
                 component = TimeeComponentType.Location;
             }
             using (var dlgEdit = new TimeeEditDialog(this.context, component))
@@ -262,6 +263,14 @@ namespace Timee
                 if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
                     TimeeXMLService.Instance.SaveContext(this.context);
+                }
+                else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    this.context = TimeeXMLService.Instance.LoadContext();
+                    cmbProject.DataSource = context.Projects;
+                    cmbTask.DataSource = context.Tasks;
+                    cmbSubProject.DataSource = context.Subprojects;
+                    cmbLocations.DataSource = context.Locations;
                 }
             }
         }
