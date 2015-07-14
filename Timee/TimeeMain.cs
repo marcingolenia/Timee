@@ -285,7 +285,7 @@ namespace Timee
             this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
 
             //Update Time Summary.
-            var tmpSummary = timeeDataSet.TimeSheetTable.Sum(r => r.Time.Duration().Ticks);
+            TimeSpan tmpSummary = new TimeSpan(timeeDataSet.TimeSheetTable.Sum(r => r.Time.Duration().Ticks));
             lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
         }
         /// <summary>
