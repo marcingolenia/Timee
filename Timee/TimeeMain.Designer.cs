@@ -80,6 +80,7 @@
             this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTimeSummary1 = new System.Windows.Forms.Label();
             this.lblTimeSummaryResult = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -544,11 +545,21 @@
             this.lblTimeSummaryResult.Size = new System.Drawing.Size(0, 13);
             this.lblTimeSummaryResult.TabIndex = 24;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(819, 281);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(81, 13);
+            this.lblVersion.TabIndex = 25;
+            this.lblVersion.Text = "Version: 0.9.1.6";
+            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 303);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblTimeSummaryResult);
             this.Controls.Add(this.lblTimeSummary1);
             this.Controls.Add(this.btnPause);
@@ -644,6 +655,7 @@
         private System.Windows.Forms.DataGridViewImageColumn Remove;
         private System.Windows.Forms.Label lblTimeSummary1;
         private System.Windows.Forms.Label lblTimeSummaryResult;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

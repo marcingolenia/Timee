@@ -52,3 +52,6 @@ Timee.Setup/obj
 packages
 Timee/Timee.csproj.user
 UpgradeLog.htm
+
+# Click-Once directory
+publish/

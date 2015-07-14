@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Deployment.Application;
 
 namespace Timee
 {
@@ -24,5 +25,7 @@ namespace Timee
             var serialized = JsonConvert.SerializeObject(source);
             return JsonConvert.DeserializeObject<T>(serialized);
         }
+
+ 
     }
 }
