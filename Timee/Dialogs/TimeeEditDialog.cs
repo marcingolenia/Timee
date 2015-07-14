@@ -19,8 +19,8 @@ namespace Timee.Dialogs
             InitializeComponent();
             this.context = context;
             
-            this.originalContext = (TimeeContext)Extensions.Clone<TimeeContext>(context);
-
+          
+            this.originalContext = TimeeXMLService.Instance.LoadContext();
             switch (component)
             {
                 case TimeeComponentType.Project:

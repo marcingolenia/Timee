@@ -78,6 +78,8 @@
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblTimeSummary1 = new System.Windows.Forms.Label();
+            this.lblTimeSummaryResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -132,7 +134,7 @@
             this.grdWorkSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.grdWorkSummary.Location = new System.Drawing.Point(13, 115);
             this.grdWorkSummary.Name = "grdWorkSummary";
-            this.grdWorkSummary.Size = new System.Drawing.Size(880, 176);
+            this.grdWorkSummary.Size = new System.Drawing.Size(880, 149);
             this.grdWorkSummary.TabIndex = 1;
             this.grdWorkSummary.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellContentClick);
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
@@ -525,11 +527,30 @@
             this.trayMenuExit.Text = "Exit";
             this.trayMenuExit.Click += new System.EventHandler(this.exit_Click);
             // 
+            // lblTimeSummary1
+            // 
+            this.lblTimeSummary1.AutoSize = true;
+            this.lblTimeSummary1.Location = new System.Drawing.Point(12, 281);
+            this.lblTimeSummary1.Name = "lblTimeSummary1";
+            this.lblTimeSummary1.Size = new System.Drawing.Size(77, 13);
+            this.lblTimeSummary1.TabIndex = 23;
+            this.lblTimeSummary1.Text = "Time summary:";
+            // 
+            // lblTimeSummaryResult
+            // 
+            this.lblTimeSummaryResult.AutoSize = true;
+            this.lblTimeSummaryResult.Location = new System.Drawing.Point(95, 281);
+            this.lblTimeSummaryResult.Name = "lblTimeSummaryResult";
+            this.lblTimeSummaryResult.Size = new System.Drawing.Size(0, 13);
+            this.lblTimeSummaryResult.TabIndex = 24;
+            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 303);
+            this.Controls.Add(this.lblTimeSummaryResult);
+            this.Controls.Add(this.lblTimeSummary1);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.lblTask);
             this.Controls.Add(this.lblLocation);
@@ -621,6 +642,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
         private System.Windows.Forms.DataGridViewComboBoxColumn Location;
         private System.Windows.Forms.DataGridViewImageColumn Remove;
+        private System.Windows.Forms.Label lblTimeSummary1;
+        private System.Windows.Forms.Label lblTimeSummaryResult;
     }
 }
 

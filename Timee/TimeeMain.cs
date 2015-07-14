@@ -267,6 +267,7 @@ namespace Timee
                 else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
                 {
                     this.context = TimeeXMLService.Instance.LoadContext();
+
                     cmbProject.DataSource = context.Projects;
                     cmbTask.DataSource = context.Tasks;
                     cmbSubProject.DataSource = context.Subprojects;
@@ -282,6 +283,18 @@ namespace Timee
         private void timer_Tick(object sender, EventArgs e)
         {
             this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
+
+            
+
+            //Update Time Summary.
+            TimeSpan tmpSummary = new TimeSpan(0, 0, 0, 0);
+
+            foreach (TimeeDataSet.TimeSheetTableRow row in timeeDataSet.TimeSheetTable)
+            {
+
+                tmpSummary += row.Time;
+                lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
+            }
         }
         /// <summary>
         /// Allow users to add Project at edit-time.
@@ -509,6 +522,7 @@ namespace Timee
         {
             this.SwitchTimerToRow(e.RowIndex);
         }
+
         /// <summary>
         /// Trigger btnDeleteRowClicked event if cell is button.
         /// </summary>
@@ -641,7 +655,6 @@ namespace Timee
             this.grdWorkSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].DefaultCellStyle.Format = "hh\\:mm\\:ss";
             this.timeeDataSet.TimeSheetTable.DateColumn.DefaultValue = DateTime.Today;
             this.timeeDataSet.TimeSheetTable.TimeColumn.DefaultValue = TimeSpan.Zero;
-
 
             foreach (DataGridViewColumn column in this.grdWorkSummary.Columns)
             {
