@@ -284,17 +284,9 @@ namespace Timee
         {
             this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
 
-            
-
             //Update Time Summary.
-            TimeSpan tmpSummary = new TimeSpan(0, 0, 0, 0);
-
-            foreach (TimeeDataSet.TimeSheetTableRow row in timeeDataSet.TimeSheetTable)
-            {
-
-                tmpSummary += row.Time;
-                lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
-            }
+            var tmpSummary = timeeDataSet.TimeSheetTable.Sum(r => r.Time.Duration().Ticks);
+            lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
         }
         /// <summary>
         /// Allow users to add Project at edit-time.
