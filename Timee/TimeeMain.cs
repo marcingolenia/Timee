@@ -188,19 +188,7 @@ namespace Timee
                 this.Hide();
             }
         }
-        /// <summary>
-        /// Confirm Exit.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            var result = MessageBox.Show("All data will be lost, are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.No)
-            {
-                e.Cancel = true;
-            }
-        }
+
 
         //--GUI besides grid
         /// <summary>

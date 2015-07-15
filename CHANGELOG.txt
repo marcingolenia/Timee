@@ -1,0 +1,11 @@
+v.0.9.1.0
+-------------------
+Added:
+update mechanism
+
+Fixed:
+
+Changed:
+version information location
+
+-------------------

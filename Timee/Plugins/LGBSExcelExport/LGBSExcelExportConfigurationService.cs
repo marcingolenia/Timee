@@ -57,7 +57,6 @@ namespace Timee.Plugins.LGBSExcelExport
             {
                 xmlSerializer.Serialize(textWriter, configuration);
                 Properties.Settings.Default["LGBSExcelExportConfiguration"] = textWriter.ToString();
-                Properties.Settings.Default.Save();
             }
             Properties.Settings.Default.Save();
         }

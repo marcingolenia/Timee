@@ -573,7 +573,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnu;
             this.Name = "TimeeMain";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimeeMain_FormClosing);
             this.Load += new System.EventHandler(this.Timee_Load);
             this.Shown += new System.EventHandler(this.TimeeMain_Shown);
             this.Resize += new System.EventHandler(this.TimeeMain_Resize);
