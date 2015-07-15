@@ -80,8 +80,6 @@
             this.trayMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTimeSummary1 = new System.Windows.Forms.Label();
             this.lblTimeSummaryResult = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.lblVersionResult = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -546,30 +544,11 @@
             this.lblTimeSummaryResult.Size = new System.Drawing.Size(0, 13);
             this.lblTimeSummaryResult.TabIndex = 24;
             // 
-            // lblVersion
-            // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(810, 281);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(45, 13);
-            this.lblVersion.TabIndex = 25;
-            this.lblVersion.Text = "Version:";
-            // 
-            // lblVersionResult
-            // 
-            this.lblVersionResult.AutoSize = true;
-            this.lblVersionResult.Location = new System.Drawing.Point(862, 281);
-            this.lblVersionResult.Name = "lblVersionResult";
-            this.lblVersionResult.Size = new System.Drawing.Size(0, 13);
-            this.lblVersionResult.TabIndex = 26;
-            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 303);
-            this.Controls.Add(this.lblVersionResult);
-            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblTimeSummaryResult);
             this.Controls.Add(this.lblTimeSummary1);
             this.Controls.Add(this.btnPause);
@@ -594,7 +573,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnu;
             this.Name = "TimeeMain";
-            this.Text = "Timee";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimeeMain_FormClosing);
             this.Load += new System.EventHandler(this.Timee_Load);
             this.Shown += new System.EventHandler(this.TimeeMain_Shown);
@@ -665,8 +643,6 @@
         private System.Windows.Forms.DataGridViewImageColumn Remove;
         private System.Windows.Forms.Label lblTimeSummary1;
         private System.Windows.Forms.Label lblTimeSummaryResult;
-        private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.Label lblVersionResult;
     }
 }
 
