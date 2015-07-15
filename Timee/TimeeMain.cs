@@ -69,7 +69,7 @@ namespace Timee
             this.Text = "Timee v."+ mainAssembly.GetName().Version.ToString();
 
             AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
-            AutoUpdater.Start("http://localhost/timee/timee.xml");
+            AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
             //Show help
         }
         /// <summary>
