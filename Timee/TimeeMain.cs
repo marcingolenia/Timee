@@ -13,6 +13,8 @@ using Timee.Models;
 using Timee.Plugins.LGBSExcelExport;
 using Timee.Dialogs;
 using System.Configuration;
+using AutoUpdaterDotNET;
+using System.Reflection;
 
 namespace Timee
 {
@@ -56,12 +58,18 @@ namespace Timee
         /// <param name="e"></param>
         private void Timee_Load(object sender, EventArgs e)
         {
+            Assembly mainAssembly = Assembly.GetEntryAssembly();
+           // TimeeMain main = new TimeeMain();
             this.context = TimeeXMLService.Instance.LoadContext();
             cmbProject.DataSource = context.Projects;
             cmbTask.DataSource = context.Tasks;
             cmbSubProject.DataSource = context.Subprojects;
             cmbLocations.DataSource = context.Locations;
             grdWorkSummaryInit();
+            this.Text = "Timee v."+ mainAssembly.GetName().Version.ToString();
+
+            AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
+            AutoUpdater.Start("http://localhost/timee/timee.xml");
             //Show help
         }
         /// <summary>
