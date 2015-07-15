@@ -21,5 +21,8 @@
   &lt;/Task&gt;
 &lt;/UserConfiguration&gt;</Value>
     </Setting>
+    <Setting Name="dataSet" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

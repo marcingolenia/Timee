@@ -15,6 +15,8 @@ using Timee.Dialogs;
 using System.Configuration;
 using AutoUpdaterDotNET;
 using System.Reflection;
+using System.IO;
+using System.Xml;
 
 namespace Timee
 {
@@ -37,6 +39,7 @@ namespace Timee
         //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
 
+        //xmlDataset location
         //constructor
         public TimeeMain()
         {
@@ -58,6 +61,7 @@ namespace Timee
         /// <param name="e"></param>
         private void Timee_Load(object sender, EventArgs e)
         {
+            
             Assembly mainAssembly = Assembly.GetEntryAssembly();
            // TimeeMain main = new TimeeMain();
             this.context = TimeeXMLService.Instance.LoadContext();
@@ -68,6 +72,12 @@ namespace Timee
             grdWorkSummaryInit();
             this.Text = "Timee v."+ mainAssembly.GetName().Version.ToString();
 
+            StringReader datasetXml = new StringReader(Properties.Settings.Default.dataSet);
+            if (!(Properties.Settings.Default.dataSet.Length == 0))
+            {
+               timeeDataSet.ReadXml(datasetXml);
+            
+            }
             AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
             AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
             //Show help
@@ -188,6 +198,31 @@ namespace Timee
                 this.Hide();
             }
         }
+        /// <summary>
+        /// Confirm Exit without saving.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if ((timeeDataSet.Tables.Count > 0) && (timeeDataSet.Tables[0].Rows.Count > 0))
+            {
+                var result = MessageBox.Show("Save your data?", "Exit", MessageBoxButtons.YesNo);
+
+                if (result == System.Windows.Forms.DialogResult.Yes)
+                {
+                    Properties.Settings.Default.dataSet = timeeDataSet.GetXml();
+                    Properties.Settings.Default.Save();
+                }
+                else if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    Properties.Settings.Default.dataSet = null;
+                    Properties.Settings.Default.Save();
+
+                }
+            }
+ 
+        }
 
 
         //--GUI besides grid
@@ -219,6 +254,8 @@ namespace Timee
         {
             if (this.timer.Enabled)
             {
+               
+                
                 this.timer.Stop();
                 this.btnPause.Text = "Resume";
             }
@@ -283,6 +320,12 @@ namespace Timee
             //Update Time Summary.
             TimeSpan tmpSummary = new TimeSpan(timeeDataSet.TimeSheetTable.Sum(r => r.Time.Duration().Ticks));
             lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
+            if (tmpSummary.Minutes % 5 == 0)
+            {
+                Properties.Settings.Default.dataSet = timeeDataSet.GetXml();
+                Properties.Settings.Default.Save();
+            }
+
         }
         /// <summary>
         /// Allow users to add Project at edit-time.

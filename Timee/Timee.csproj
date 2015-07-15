@@ -295,6 +295,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dataSet.xml" />
     <Content Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

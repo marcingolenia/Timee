@@ -576,6 +576,7 @@
             this.Load += new System.EventHandler(this.Timee_Load);
             this.Shown += new System.EventHandler(this.TimeeMain_Shown);
             this.Resize += new System.EventHandler(this.TimeeMain_Resize);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimeeMain_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).EndInit();

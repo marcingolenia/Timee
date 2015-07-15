@@ -59,5 +59,17 @@ namespace Timee.Properties {
                 this["UserConfiguration"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string dataSet {
+            get {
+                return ((string)(this["dataSet"]));
+            }
+            set {
+                this["dataSet"] = value;
+            }
+        }
     }
 }
