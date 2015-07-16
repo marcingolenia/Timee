@@ -17,6 +17,8 @@ using AutoUpdaterDotNET;
 using System.Reflection;
 using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace Timee
 {
@@ -72,14 +74,32 @@ namespace Timee
             grdWorkSummaryInit();
             this.Text = "Timee v."+ mainAssembly.GetName().Version.ToString();
 
+            //checking if there is new version
+            AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
+            AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
+
+            //Load saved tasks
             StringReader datasetXml = new StringReader(Properties.Settings.Default.dataSet);
             if (!(Properties.Settings.Default.dataSet.Length == 0))
             {
                timeeDataSet.ReadXml(datasetXml);
-            
+               grdWorkSummary.DataSource = timeeDataSet;
+               grdWorkSummary.DataMember = "TimeSheetTable";
+               btnPause.Enabled = true;
+               this.btnPause.Text = "Resume";
+
+
+            //register hotkeys to previous saved tasks
+                for (int row = 0; row < grdWorkSummary.Rows.Count; row++)
+			    {
+			      Keys keyToRegister = this.GetKeyByRowNumber(row);
+                       if (keyToRegister != Keys.None)
+                       {
+                           this.hook.RegisterHotKey(Timee.Hotkeys.ModifierKeys.Control, keyToRegister);
+                       }
+			    }
             }
-            AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
-            AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
+           
             //Show help
         }
         /// <summary>

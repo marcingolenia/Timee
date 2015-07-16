@@ -248,6 +248,7 @@
     </None>
     <None Include="DAL\TimeeDataSet.xss">
       <DependentUpon>TimeeDataSet.xsd</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Models\UserConfiguration.xsd">
       <SubType>Designer</SubType>
@@ -295,7 +296,6 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dataSet.xml" />
     <Content Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
