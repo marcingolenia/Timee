@@ -167,6 +167,12 @@
     <Compile Include="Dialogs\AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PredefinedTasks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PredefinedTasks.Designer.cs">
+      <DependentUpon>PredefinedTasks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Dialogs\Help.cs">
       <SubType>Form</SubType>
@@ -219,6 +225,9 @@
     <EmbeddedResource Include="Dialogs\Help.resx">
       <DependentUpon>Help.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PredefinedTasks.resx">
+      <DependentUpon>PredefinedTasks.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plugins\LGBSExcelExport\LGBSExcelExportSettings.resx">
       <DependentUpon>LGBSExcelExportSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -227,6 +236,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TimeeMain.resx">
       <DependentUpon>TimeeMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -300,6 +310,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Properties\DataSources\zegar-2_318-11614.jpg" />
+    <None Include="Resources\new.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\save.png" />
     <Content Include="Resources\timee-transparent_347x358.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

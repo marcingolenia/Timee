@@ -1,3 +1,16 @@
+v.0.9.2.0
+-------------------
+Added:
+possibility to start predefined tasks
+
+Fixed:
+
+Changed:
+
+Known bugs:
+
+-------------------
+
 v.0.9.1.2
 -------------------
 Added:

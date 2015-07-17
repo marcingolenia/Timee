@@ -24,5 +24,10 @@
     <Setting Name="dataSet" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="PredefinedTasks" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;Root&gt;
+&lt;/Root&gt;
+</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

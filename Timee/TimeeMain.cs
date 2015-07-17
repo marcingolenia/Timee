@@ -40,6 +40,7 @@ namespace Timee
 
         //Custom event for handling rows removal
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+        public event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
 
         //xmlDataset location
         //constructor
@@ -61,9 +62,16 @@ namespace Timee
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Timee_Load(object sender, EventArgs e)
+        /// 
+
+        private void PredefinedRow(object sender, EventArgs e)
         {
-            
+            StringReader datasetXml = new StringReader(Properties.Settings.Default.dataSet);
+            timeeDataSet.ReadXml(datasetXml);
+            grdWorkSummary.Refresh();
+        }
+        private void Timee_Load(object sender, EventArgs e)
+        {          
             Assembly mainAssembly = Assembly.GetEntryAssembly();
            // TimeeMain main = new TimeeMain();
             this.context = TimeeXMLService.Instance.LoadContext();
@@ -585,6 +593,10 @@ namespace Timee
             {
                 btnDeleteRowClicked(sender, e);
             }
+            else if (grdWorkSummary.Columns[e.ColumnIndex].Name == "Save")
+            {
+                btnSaveRowClicked(sender, e);
+            }
         }
         /// <summary>
         /// Handle btnDeleteRowClicked custom event for deleting rows.
@@ -599,6 +611,52 @@ namespace Timee
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
             hook.UnregisterLastHotKey();
+        }
+
+        private void TimeeMain_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            //var row = (TimeeDataSet.TimeSheetTableRow)grdWorkSummary.Rows[e.RowIndex].DataGridVie;
+            string predefinedTasksXml = Properties.Settings.Default.PredefinedTasks;
+            XDocument prefXml =  XDocument.Parse(predefinedTasksXml);
+            var predefinedTask = from t in grdWorkSummary.Rows.Cast<DataGridViewRow>()
+                                 where t.Index == e.RowIndex
+                                 select new
+                                 {
+                                     Project = t.Cells[2].Value,
+                                     SubProject = t.Cells[3].Value,
+                                     Task = t.Cells[4].Value,
+                                     Comment = t.Cells[5].Value,
+                                     Location = t.Cells[6].Value   
+                                 };
+
+            prefXml.Element("Root").Add
+                (
+                    new XElement
+                        (
+                        "PredefinedTask",
+                        new XElement
+                            (
+                            "Project", predefinedTask.First().Project.ToString()
+                            ),
+                        new XElement
+                            (
+                            "SubProject", predefinedTask.First().SubProject.ToString()
+                            ),
+                        new XElement
+                            (
+                            "Task", predefinedTask.First().Task.ToString()
+                            ),
+                        new XElement
+                            (
+                            "Comment", predefinedTask.First().Comment.ToString()
+                            ),
+                        new XElement
+                            (
+                            "Location", predefinedTask.First().Location.ToString()
+                            )
+                        )
+                );
+            Properties.Settings.Default.PredefinedTasks = prefXml.ToString();
         }
         /// <summary>
         /// Neglect invalid data.
@@ -726,12 +784,13 @@ namespace Timee
             c.DataSource = context.Locations;
 
             btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
+            btnSaveRowClicked += TimeeMain_btnSaveRowClicked;
         }
         /// <summary>
         /// Add new row with default values or a predefined one.
         /// </summary>
         /// <param name="row">TimeSheetTableRow</param>
-        private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
+        public void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
         {
             if (row == null)
             {
@@ -891,6 +950,27 @@ namespace Timee
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenuStrip = trayMenu;
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            //var dlg = new PredefinedTasks();
+            using (var dlg = new PredefinedTasks())
+            {
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    TimeeDataSet.TimeSheetTableRow row = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                    row.Comment = dlg.row.Comment;
+                    row.Date = dlg.row.Date;
+                    row.Project = dlg.row.Project;
+                    row.SubProject = dlg.row.SubProject;
+                    row.Task = dlg.row.Task;
+                    row.Time = dlg.row.Time;
+                    row.Location = dlg.row.Location;
+                    AddNewRow(row);
+                }
+            }
         }
     }
 }

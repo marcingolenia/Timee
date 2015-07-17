@@ -71,5 +71,17 @@ namespace Timee.Properties {
                 this["dataSet"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<Root>\r\n</Root>\r\n")]
+        public string PredefinedTasks {
+            get {
+                return ((string)(this["PredefinedTasks"]));
+            }
+            set {
+                this["PredefinedTasks"] = value;
+            }
+        }
     }
 }
