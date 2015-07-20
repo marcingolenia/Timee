@@ -13,13 +13,13 @@ using Timee.DAL;
 
 namespace Timee.Dialogs
 {
-    public partial class PredefinedTasks : Form
+    public partial class PredefinedTasksDialog : Form
     {
 
         public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
         public event EventHandler<DataGridViewCellEventArgs> btnAddRowClicked;
         public TimeeDataSet.TimeSheetTableRow row { get; set; }
-        public PredefinedTasks()
+        public PredefinedTasksDialog()
         {
             InitializeComponent();
         }

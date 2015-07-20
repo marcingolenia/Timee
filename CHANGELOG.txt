@@ -1,3 +1,18 @@
+v.0.9.3.0
+-------------------
+Added:
+Configurable Alarm
+
+Fixed:
+error when pressing "Resume" button when saved task were loaded
+not loading saved tasks after update
+
+Changed:
+
+Known bugs:
+
+-------------------
+
 v.0.9.2.0
 -------------------
 Added:

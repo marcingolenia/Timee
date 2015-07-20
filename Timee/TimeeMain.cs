@@ -28,6 +28,9 @@ namespace Timee
         /// Used in drag&drop
         /// </summary>
         private int rowIndexFromMouseDown { get; set; }
+        private DateTime alarm { get; set; }
+        private List<int> alarmOptions { get; set; }
+
         /// <summary>
         /// Hold context data
         /// </summary>
@@ -56,6 +59,7 @@ namespace Timee
             //Hints
         }
 
+
         //Events
         /// <summary>
         /// Main form loaded -> get data, init grid.
@@ -71,9 +75,14 @@ namespace Timee
             grdWorkSummary.Refresh();
         }
         private void Timee_Load(object sender, EventArgs e)
-        {          
+        {
+            if (Properties.Settings.Default.UpgradeRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
             Assembly mainAssembly = Assembly.GetEntryAssembly();
-           // TimeeMain main = new TimeeMain();
             this.context = TimeeXMLService.Instance.LoadContext();
             cmbProject.DataSource = context.Projects;
             cmbTask.DataSource = context.Tasks;
@@ -93,6 +102,7 @@ namespace Timee
                timeeDataSet.ReadXml(datasetXml);
                grdWorkSummary.DataSource = timeeDataSet;
                grdWorkSummary.DataMember = "TimeSheetTable";
+               this.currentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
 
@@ -353,7 +363,6 @@ namespace Timee
                 Properties.Settings.Default.dataSet = timeeDataSet.GetXml();
                 Properties.Settings.Default.Save();
             }
-
         }
         /// <summary>
         /// Allow users to add Project at edit-time.
@@ -940,6 +949,31 @@ namespace Timee
             }
         }
         /// <summary>
+        /// Show choosen alarm notification
+        /// </summary>
+        /// <param name="options">List of selected alarm notifications.</param>
+        private void AlarmNotification(List<int> options)
+        {
+            foreach (var option in options)
+            {
+                switch (option)
+                {
+                    case 0:
+                        this.Show();
+                        WindowState = FormWindowState.Normal;
+                        alarmTimer.Enabled = false;
+                        MessageBox.Show("Time to go home", "Alarm Notification", MessageBoxButtons.OK);
+                        alarmTimer.Enabled = true;
+                        break;
+                    case 1:
+                        this.Show();
+                        WindowState = FormWindowState.Normal;
+                        System.Media.SystemSounds.Asterisk.Play();
+                        break;
+                }
+            }
+        }
+        /// <summary>
         /// Initializes tray control.
         /// </summary>
         private void InitializeTrayElements()
@@ -955,7 +989,7 @@ namespace Timee
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             //var dlg = new PredefinedTasks();
-            using (var dlg = new PredefinedTasks())
+            using (var dlg = new PredefinedTasksDialog())
             {
                 dlg.ShowDialog();
                 if (dlg.DialogResult == DialogResult.OK)
@@ -971,6 +1005,40 @@ namespace Timee
                     AddNewRow(row);
                 }
             }
+        }
+
+        private void countdownAlertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new AlarmDialog())
+            {
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    this.alarm = DateTime.Now;
+                    this.alarm = this.alarm.AddHours(dlg.alarmDuration.Hour);
+                    this.alarm = this.alarm.AddMinutes(dlg.alarmDuration.Minute);
+                    this.alarm = this.alarm.AddSeconds(dlg.alarmDuration.Second);
+                    this.alarmOptions = dlg.alarmOptions;
+                    alarmTimer.Enabled = true;
+                    
+                }
+            }
+        }
+
+        private void lGBSExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void alarmTimer_Tick(object sender, EventArgs e)
+        {
+                TimeSpan alarmLeft = this.alarm - DateTime.Now;
+                lblAlarmValue.Text = alarmLeft.ToString(@"hh\:mm\:ss");
+                if (alarmLeft < TimeSpan.Zero)
+                {
+                    AlarmNotification(alarmOptions);
+                    alarmTimer.Enabled = false;
+                }
         }
     }
 }

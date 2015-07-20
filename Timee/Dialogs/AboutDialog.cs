@@ -21,5 +21,10 @@ namespace Timee.Dialogs
         {
             System.Diagnostics.Process.Start(this.linkToProject.Text);
         }
+
+        private void AboutDialog_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

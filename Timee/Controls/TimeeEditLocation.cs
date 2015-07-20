@@ -24,6 +24,11 @@ namespace Timee.Controls
             }
         }
 
+        private void TimeeEditLocation_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
     /// <summary>
     /// Empty class - workaround for designer. Control normaly can inherit directly the generic class but crashes designer.
