@@ -13,7 +13,7 @@ namespace Timee.Dialogs
     public partial class AlarmDialog : Form
     {
         public DateTime alarmDuration { get; set; }
-        public List<int> alarmOptions { get; set; }
+        public List<AlarmOption> alarmOptions = new List<AlarmOption>();
         public AlarmDialog()
         {
             InitializeComponent();         
@@ -32,7 +32,18 @@ namespace Timee.Dialogs
                           select(option.TabIndex));
             if (options.Any())
             {
-                alarmOptions = options.ToList();
+
+                foreach (var cb in options)
+                {
+                    if (cb == 0)
+                    {
+                        alarmOptions.Add(AlarmOption.ShowMessage);
+                    }
+                    else if (cb == 1)
+                    {
+                        alarmOptions.Add(AlarmOption.SoundOnly);
+                    }
+                }
                 DialogResult = DialogResult.OK;
             }
                 
@@ -49,6 +60,5 @@ namespace Timee.Dialogs
     {
         SoundOnly,
         ShowMessage,
-        SoundWithMessage
     }
 }

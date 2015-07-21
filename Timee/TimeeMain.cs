@@ -29,7 +29,7 @@ namespace Timee
         /// </summary>
         private int rowIndexFromMouseDown { get; set; }
         private DateTime alarm { get; set; }
-        private List<int> alarmOptions { get; set; }
+        private List<AlarmOption> alarmOptions { get; set; }
         public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
 
         /// <summary>
@@ -964,20 +964,20 @@ namespace Timee
         /// Show choosen alarm notification
         /// </summary>
         /// <param name="options">List of selected alarm notifications.</param>
-        private void AlarmNotification(List<int> options)
+        private void AlarmNotification(List<AlarmOption> options)
         {
             foreach (var option in options)
             {
                 switch (option)
                 {
-                    case 0:
+                    case AlarmOption.ShowMessage:
                         this.Show();
                         WindowState = FormWindowState.Normal;
                         alarmTimer.Enabled = false;
                         MessageBox.Show("Time to go home", "Alarm Notification", MessageBoxButtons.OK);
                         alarmTimer.Enabled = true;
                         break;
-                    case 1:
+                    case AlarmOption.SoundOnly:
                         this.Show();
                         WindowState = FormWindowState.Normal;
                         System.Media.SystemSounds.Asterisk.Play();
