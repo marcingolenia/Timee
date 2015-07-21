@@ -18,13 +18,18 @@ namespace Timee.Dialogs
 
         private event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
         private event EventHandler<DataGridViewCellEventArgs> btnAddRowClicked;
-        public TimeeDataSet.TimeSheetTableRow row { get; set; }
+        public TimeeDataSet.TimeSheetTableRow Row { get; set; }
 
         private DataSet predefinedSet = new PredefinedTasksDataSet();
         public PredefinedTasksDialog()
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Initialize PredefinedTasks Table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PredefinedTasks_Load(object sender, EventArgs e)
         {
            
@@ -53,6 +58,11 @@ namespace Timee.Dialogs
                 btnDeleteRowClicked += PredefinedTasks_btnDeleteRowClicked;
                 btnAddRowClicked += PredefinedTasks_btnAddRowClicked;
         }
+        /// <summary>
+        /// Trigger btnDeleteRowClicked/btnAddRowClicked event if cell is button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdPredefinedSummary_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (grdPredefinedSummary.Columns[e.ColumnIndex].Name == "Remove")
@@ -65,15 +75,23 @@ namespace Timee.Dialogs
                 btnAddRowClicked(sender, e);
             }
         }
-
+        /// <summary>
+        /// Handle btnSaveRowClicked custom event for deleting rows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
          private void PredefinedTasks_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
         {
                  grdPredefinedSummary.Rows.RemoveAt(e.RowIndex);
                  Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();
         }
 
-            
 
+         /// <summary>
+         /// Handle btnAddRowClicked custom event for adding predefinedTask to Main Table.
+         /// </summary>
+         /// <param name="sender"></param>
+         /// <param name="e"></param>
         private void PredefinedTasks_btnAddRowClicked(object sender, DataGridViewCellEventArgs e)
         {
             TimeeDataSet tmpDataSet = new TimeeDataSet();
@@ -84,12 +102,13 @@ namespace Timee.Dialogs
             
             
             
-            this.row = row;
+            this.Row = row;
 
             Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
         private void PredefinedTasks_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();

@@ -63,12 +63,12 @@ namespace Timee.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string dataSet {
+        public string MainTasks {
             get {
-                return ((string)(this["dataSet"]));
+                return ((string)(this["MainTasks"]));
             }
             set {
-                this["dataSet"] = value;
+                this["MainTasks"] = value;
             }
         }
         

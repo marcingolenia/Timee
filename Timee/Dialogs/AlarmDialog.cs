@@ -12,7 +12,7 @@ namespace Timee.Dialogs
 {
     public partial class AlarmDialog : Form
     {
-        public DateTime alarmDuration { get; set; }
+        public DateTime AlarmDuration { get; set; }
         public List<AlarmOption> alarmOptions = new List<AlarmOption>();
         public AlarmDialog()
         {
@@ -23,10 +23,14 @@ namespace Timee.Dialogs
             dateTimePicker1.CustomFormat = "HH,mm,ss";
             dateTimePicker1.Value = new DateTime(DateTime.Now.Year,DateTime.Now.Month, DateTime.Now.Day, 08, 00, 00);
         }
-
+        /// <summary>
+        /// Checking if any checkbox were checked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            alarmDuration = dateTimePicker1.Value;
+            AlarmDuration = dateTimePicker1.Value;
             var options = (from option in grbAlarmOptions.Controls.OfType<CheckBox>()
                           where (option.Checked)
                           select(option.TabIndex));

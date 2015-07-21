@@ -21,7 +21,7 @@
   &lt;/Task&gt;
 &lt;/UserConfiguration&gt;</Value>
     </Setting>
-    <Setting Name="dataSet" Type="System.String" Scope="User">
+    <Setting Name="MainTasks" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PredefinedTasks" Type="System.String" Scope="User">

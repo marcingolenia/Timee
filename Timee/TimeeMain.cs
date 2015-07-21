@@ -27,19 +27,19 @@ namespace Timee
         /// <summary>
         /// Used in drag&drop
         /// </summary>
-        private int rowIndexFromMouseDown { get; set; }
-        private DateTime alarm { get; set; }
-        private List<AlarmOption> alarmOptions { get; set; }
+        private int RowIndexFromMouseDown { get; set; }
+        private DateTime Alarm { get; set; }
+        private List<AlarmOption> AlarmOptions { get; set; }
         public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
 
         /// <summary>
         /// Hold context data
         /// </summary>
-        private TimeeContext context { get; set; }
+        private TimeeContext Context { get; set; }
         /// <summary>
         /// Current cell in which time is being counted.
         /// </summary>
-        private DataGridViewCell currentTimeCell { get; set; }
+        private DataGridViewCell CurrentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
 
         //Custom event for handling rows removal
@@ -68,13 +68,6 @@ namespace Timee
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// 
-
-        private void PredefinedRow(object sender, EventArgs e)
-        {
-            StringReader datasetXml = new StringReader(Properties.Settings.Default.dataSet);
-            timeeDataSet.ReadXml(datasetXml);
-            grdWorkSummary.Refresh();
-        }
         private void Timee_Load(object sender, EventArgs e)
         {
             newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
@@ -86,11 +79,11 @@ namespace Timee
                 Properties.Settings.Default.Save();
             }
             Assembly mainAssembly = Assembly.GetEntryAssembly();
-            this.context = TimeeXMLService.Instance.LoadContext();
-            cmbProject.DataSource = context.Projects;
-            cmbTask.DataSource = context.Tasks;
-            cmbSubProject.DataSource = context.Subprojects;
-            cmbLocations.DataSource = context.Locations;
+            this.Context = TimeeXMLService.Instance.LoadContext();
+            cmbProject.DataSource = Context.Projects;
+            cmbTask.DataSource = Context.Tasks;
+            cmbSubProject.DataSource = Context.Subprojects;
+            cmbLocations.DataSource = Context.Locations;
             grdWorkSummaryInit();
             this.Text = "Timee v."+ mainAssembly.GetName().Version.ToString();
 
@@ -99,13 +92,13 @@ namespace Timee
             AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
 
             //Load saved tasks
-            StringReader datasetXml = new StringReader(Properties.Settings.Default.dataSet);
-            if (!(Properties.Settings.Default.dataSet.Length == 0))
+            StringReader mainTasksXml = new StringReader(Properties.Settings.Default.MainTasks);
+            if (!(Properties.Settings.Default.MainTasks.Length == 0))
             {
-               timeeDataSet.ReadXml(datasetXml);
+               timeeDataSet.ReadXml(mainTasksXml);
                grdWorkSummary.DataSource = timeeDataSet;
                grdWorkSummary.DataMember = "TimeSheetTable";
-               this.currentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+               this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
 
@@ -252,12 +245,12 @@ namespace Timee
 
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    Properties.Settings.Default.dataSet = timeeDataSet.GetXml();
+                    Properties.Settings.Default.MainTasks = timeeDataSet.GetXml();
                     Properties.Settings.Default.Save();
                 }
                 else if (result == System.Windows.Forms.DialogResult.No)
                 {
-                    Properties.Settings.Default.dataSet = null;
+                    Properties.Settings.Default.MainTasks = null;
                     Properties.Settings.Default.Save();
 
                 }
@@ -285,6 +278,30 @@ namespace Timee
             AddNewRow(row);
             this.btnPause.Enabled = true;
             this.btnPause.Text = "Pause";
+        }
+        /// <summary>
+        /// Open table with PredefinedTasks.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new PredefinedTasksDialog())
+            {
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    TimeeDataSet.TimeSheetTableRow row = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                    row.Comment = dlg.Row.Comment;
+                    row.Date = DateTime.Today;
+                    row.Project = dlg.Row.Project;
+                    row.SubProject = dlg.Row.SubProject;
+                    row.Task = dlg.Row.Task;
+                    row.Time = TimeSpan.Zero;
+                    row.Location = dlg.Row.Location;
+                    AddNewRow(row);
+                }
+            }
         }
         /// <summary>
         /// Pause time counting.
@@ -331,21 +348,21 @@ namespace Timee
 
                 component = TimeeComponentType.Location;
             }
-            using (var dlgEdit = new TimeeEditDialog(this.context, component))
+            using (var dlgEdit = new TimeeEditDialog(this.Context, component))
             {
                 dlgEdit.ShowDialog();
                 if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
-                    TimeeXMLService.Instance.SaveContext(this.context);
+                    TimeeXMLService.Instance.SaveContext(this.Context);
                 }
                 else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
                 {
-                    this.context = TimeeXMLService.Instance.LoadContext();
+                    this.Context = TimeeXMLService.Instance.LoadContext();
 
-                    cmbProject.DataSource = context.Projects;
-                    cmbTask.DataSource = context.Tasks;
-                    cmbSubProject.DataSource = context.Subprojects;
-                    cmbLocations.DataSource = context.Locations;
+                    cmbProject.DataSource = Context.Projects;
+                    cmbTask.DataSource = Context.Tasks;
+                    cmbSubProject.DataSource = Context.Subprojects;
+                    cmbLocations.DataSource = Context.Locations;
                 }
             }
         }
@@ -356,15 +373,30 @@ namespace Timee
         /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
-            this.currentTimeCell.Value = ((TimeSpan)this.currentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
+            this.CurrentTimeCell.Value = ((TimeSpan)this.CurrentTimeCell.Value).Add(new TimeSpan(0, 0, 0, 0, timer.Interval));
 
             //Update Time Summary.
             TimeSpan tmpSummary = new TimeSpan(timeeDataSet.TimeSheetTable.Sum(r => r.Time.Duration().Ticks));
             lblTimeSummaryResult.Text = tmpSummary.ToString(@"hh\:mm\:ss");
             if (tmpSummary.Minutes % 5 == 0)
             {
-                Properties.Settings.Default.dataSet = timeeDataSet.GetXml();
+                Properties.Settings.Default.MainTasks = timeeDataSet.GetXml();
                 Properties.Settings.Default.Save();
+            }
+        }
+        /// <summary>
+        /// Counting time left till alarm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void alarmTimer_Tick(object sender, EventArgs e)
+        {
+            TimeSpan alarmLeft = this.Alarm - DateTime.Now;
+            lblAlarmValue.Text = alarmLeft.ToString(@"hh\:mm\:ss");
+            if (alarmLeft < TimeSpan.Zero)
+            {
+                AlarmNotification(AlarmOptions);
+                alarmTimer.Enabled = false;
             }
         }
         /// <summary>
@@ -375,15 +407,15 @@ namespace Timee
         private void cmbProject_Validating(object sender, CancelEventArgs e)
         {
             if (!String.IsNullOrEmpty(cmbProject.Text) &&
-                !context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
+                !Context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
             {
                 var newProject = new Models.UserConfigurationProject()
                 {
                     Name = cmbProject.Text.ToString(),
-                    Order = this.context.Projects.Max(p => p.Order) + 1,
+                    Order = this.Context.Projects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                context.Projects.Add(newProject);
+                Context.Projects.Add(newProject);
                 cmbProject.SelectedItem = newProject;
             }
         }
@@ -395,15 +427,15 @@ namespace Timee
         private void cmbSubProject_Validating(object sender, CancelEventArgs e)
         {
             if (!String.IsNullOrEmpty(cmbSubProject.Text) &&
-                !context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
+                !Context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
             {
                 var newSubProject = new Models.UserConfigurationSubproject()
                 {
                     Name = cmbSubProject.Text.ToString(),
-                    Order = this.context.Subprojects.Max(p => p.Order) + 1,
+                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                context.Subprojects.Add(newSubProject);
+                Context.Subprojects.Add(newSubProject);
                 cmbSubProject.SelectedItem = newSubProject;
             }
         }
@@ -415,15 +447,15 @@ namespace Timee
         private void cmbTask_Validating(object sender, CancelEventArgs e)
         {
             if (!String.IsNullOrEmpty(cmbTask.Text) &&
-                !context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
+                !Context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
             {
                 var newTask = new Models.UserConfigurationTask()
                 {
                     Name = cmbSubProject.Text.ToString(),
-                    Order = this.context.Tasks.Max(p => p.Order) + 1,
+                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                context.Tasks.Add(newTask);
+                Context.Tasks.Add(newTask);
                 cmbSubProject.SelectedItem = newTask;
             }
         }
@@ -435,15 +467,15 @@ namespace Timee
         private void cmbLocations_Validating(object sender, CancelEventArgs e)
         {
             if (!String.IsNullOrEmpty(cmbLocations.Text) &&
-    !context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
+    !Context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
             {
                 var newLocation = new Models.UserConfigurationLocation()
                 {
                     Name = cmbSubProject.Text.ToString(),
-                    Order = this.context.Locations.Max(p => p.Order) + 1,
+                    Order = this.Context.Locations.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                context.Locations.Add(newLocation);
+                Context.Locations.Add(newLocation);
                 cmbSubProject.SelectedItem = newLocation;
             }
         }
@@ -519,57 +551,57 @@ namespace Timee
             var cell = ((DataGridView)sender).CurrentCell;
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newProject = new Models.UserConfigurationProject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.context.Projects.Max(p => p.Order) + 1,
+                    Order = this.Context.Projects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.context.Projects.Add(newProject);
+                this.Context.Projects.Add(newProject);
                 cell.Value = newProject.Name;
             }
             //Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newSubProject = new Models.UserConfigurationSubproject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.context.Subprojects.Max(p => p.Order) + 1,
+                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.context.Subprojects.Add(newSubProject);
+                this.Context.Subprojects.Add(newSubProject);
                 cell.Value = newSubProject.Name;
             }
             //Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newTask = new Models.UserConfigurationTask()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.context.Tasks.Max(p => p.Order) + 1,
+                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.context.Tasks.Add(newTask);
+                this.Context.Tasks.Add(newTask);
                 cell.Value = newTask.Name;
             }
             //Locations
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
                 && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
             {
                 var newLocation = new Models.UserConfigurationLocation()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.context.Locations.Max(p => p.Order) + 1,
+                    Order = this.Context.Locations.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
-                this.context.Locations.Add(newLocation);
+                this.Context.Locations.Add(newLocation);
                 cell.Value = newLocation.Name;
             }
              //Time
@@ -595,7 +627,7 @@ namespace Timee
         }
 
         /// <summary>
-        /// Trigger btnDeleteRowClicked event if cell is button.
+        /// Trigger btnDeleteRowClicked/btnSaveRowClicked event if cell is button.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -617,14 +649,18 @@ namespace Timee
         /// <param name="e"></param>
         private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
         {
-            if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(currentTimeCell))
+            if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
             {
                 timer.Stop();
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
             hook.UnregisterLastHotKey();
         }
-
+        /// <summary>
+        /// Handle btnSaveRowClicked custom event for saving rows (adding them to predefinedTasks Table).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimeeMain_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
         {
             TimeeDataSet.TimeSheetTableRow tmpPredefinedTask = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
@@ -635,49 +671,7 @@ namespace Timee
             tmpPredefinedTask.Location = grdWorkSummary["Location", e.RowIndex].Value.ToString();
 
             newPredefinedTasks.Add(tmpPredefinedTask);
-            //var row = (TimeeDataSet.TimeSheetTableRow)grdWorkSummary.Rows[e.RowIndex].DataGridVie;
-            //string predefinedTasksXml = Properties.Settings.Default.PredefinedTasks;
-            //XDocument prefXml =  XDocument.Parse(predefinedTasksXml);
            
-            //var predefinedTask = from t in grdWorkSummary.Rows.Cast<DataGridViewRow>()
-            //                     where t.Index == e.RowIndex
-            //                     select new
-            //                     {
-            //                         Project = t.Cells[2].Value,
-            //                         SubProject = t.Cells[3].Value,
-            //                         Task = t.Cells[4].Value,
-            //                         Comment = t.Cells[5].Value,
-            //                         Location = t.Cells[6].Value   
-            //                     };
-
-            //prefXml.Element("Root").Add
-            //    (
-            //        new XElement
-            //            (
-            //            "PredefinedTask",
-            //            new XElement
-            //                (
-            //                "Project", predefinedTask.First().Project.ToString()
-            //                ),
-            //            new XElement
-            //                (
-            //                "SubProject", predefinedTask.First().SubProject.ToString()
-            //                ),
-            //            new XElement
-            //                (
-            //                "Task", predefinedTask.First().Task.ToString()
-            //                ),
-            //            new XElement
-            //                (
-            //                "Comment", predefinedTask.First().Comment.ToString()
-            //                ),
-            //            new XElement
-            //                (
-            //                "Location", predefinedTask.First().Location.ToString()
-            //                )
-            //            )
-            //    );
-            //Properties.Settings.Default.PredefinedTasks = prefXml.ToString();
         }
         /// <summary>
         /// Neglect invalid data.
@@ -699,7 +693,7 @@ namespace Timee
         {
             if (e.Button == MouseButtons.Left && grdWorkSummary.SelectedRows.Count == 1)
             {
-                rowIndexFromMouseDown = grdWorkSummary.SelectedRows[0].Index;
+                RowIndexFromMouseDown = grdWorkSummary.SelectedRows[0].Index;
                 grdWorkSummary.DoDragDrop(grdWorkSummary.SelectedRows[0], DragDropEffects.Move);
             }
         }
@@ -732,7 +726,7 @@ namespace Timee
             if (rowIndexOfItemUnderMouseToDrop != dragSourceGridRow.Index && rowIndexOfItemUnderMouseToDrop > -1)
             {
                 //Stop timer if user is draging row in which time is counting
-                if (rowIndexFromMouseDown == currentTimeCell.RowIndex)
+                if (RowIndexFromMouseDown == CurrentTimeCell.RowIndex)
                 {
                     SwitchTimerToRow(rowIndexOfItemUnderMouseToDrop);
                 }
@@ -741,7 +735,7 @@ namespace Timee
                 {
                     ((TimeeDataSet.TimeSheetTableRow)(grdWorkSummary.Rows[rowIndexOfItemUnderMouseToDrop].DataBoundItem as DataRowView).Row).Time +=
                     dragSourceTypedRow.Time;
-                    grdWorkSummary.Rows.RemoveAt(rowIndexFromMouseDown);
+                    grdWorkSummary.Rows.RemoveAt(RowIndexFromMouseDown);
                     hook.UnregisterLastHotKey();
                 }
             }
@@ -793,16 +787,16 @@ namespace Timee
             DataGridViewComboBoxColumn c;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName];
-            c.DataSource = context.Projects;
+            c.DataSource = Context.Projects;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName];
-            c.DataSource = context.Subprojects;
+            c.DataSource = Context.Subprojects;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName];
-            c.DataSource = context.Tasks;
+            c.DataSource = Context.Tasks;
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
-            c.DataSource = context.Locations;
+            c.DataSource = Context.Locations;
 
             btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
             btnSaveRowClicked += TimeeMain_btnSaveRowClicked;
@@ -824,10 +818,10 @@ namespace Timee
             }
 
             int currentRowIndex = this.grdWorkSummary.Rows.Count - 1;
-            this.currentTimeCell = grdWorkSummary.Rows[currentRowIndex]
+            this.CurrentTimeCell = grdWorkSummary.Rows[currentRowIndex]
                                                  .Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
             //Enter edit mode on first cell by default
-            grdWorkSummary.CurrentCell = grdWorkSummary.Rows[currentTimeCell.RowIndex]
+            grdWorkSummary.CurrentCell = grdWorkSummary.Rows[CurrentTimeCell.RowIndex]
                                          .Cells[0];
             grdWorkSummary.BeginEdit(true);
             // Register key
@@ -891,7 +885,7 @@ namespace Timee
         /// <param name="rowIndex"></param>
         private void SwitchTimerToRow(int rowIndex)
         {
-            this.currentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            this.CurrentTimeCell = grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
             if (!timer.Enabled)
             {
                 timer.Enabled = true;
@@ -904,7 +898,7 @@ namespace Timee
         /// <param name="rowIndex"></param>
         private void ShowTimerSwitchNotification()
         {
-            var rowIndex = this.currentTimeCell.RowIndex;
+            var rowIndex = this.CurrentTimeCell.RowIndex;
             var currentRow = grdWorkSummary.Rows[rowIndex];
             if (currentRow != null)
             {
@@ -998,26 +992,7 @@ namespace Timee
             trayIcon.ContextMenuStrip = trayMenu;
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            //var dlg = new PredefinedTasks();
-            using (var dlg = new PredefinedTasksDialog())
-            {
-                dlg.ShowDialog();
-                if (dlg.DialogResult == DialogResult.OK)
-                {
-                    TimeeDataSet.TimeSheetTableRow row = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-                    row.Comment = dlg.row.Comment;
-                    row.Date = DateTime.Today;
-                    row.Project = dlg.row.Project;
-                    row.SubProject = dlg.row.SubProject;
-                    row.Task = dlg.row.Task;
-                    row.Time = TimeSpan.Zero;
-                    row.Location = dlg.row.Location;
-                    AddNewRow(row);
-                }
-            }
-        }
+
 
         private void countdownAlertToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1026,11 +1001,11 @@ namespace Timee
                 dlg.ShowDialog();
                 if (dlg.DialogResult == DialogResult.OK)
                 {
-                    this.alarm = DateTime.Now;
-                    this.alarm = this.alarm.AddHours(dlg.alarmDuration.Hour);
-                    this.alarm = this.alarm.AddMinutes(dlg.alarmDuration.Minute);
-                    this.alarm = this.alarm.AddSeconds(dlg.alarmDuration.Second);
-                    this.alarmOptions = dlg.alarmOptions;
+                    this.Alarm = DateTime.Now;
+                    this.Alarm = this.Alarm.AddHours(dlg.AlarmDuration.Hour);
+                    this.Alarm = this.Alarm.AddMinutes(dlg.AlarmDuration.Minute);
+                    this.Alarm = this.Alarm.AddSeconds(dlg.AlarmDuration.Second);
+                    this.AlarmOptions = dlg.alarmOptions;
                     alarmTimer.Enabled = true;
                     
                 }
@@ -1042,15 +1017,6 @@ namespace Timee
 
         }
 
-        private void alarmTimer_Tick(object sender, EventArgs e)
-        {
-                TimeSpan alarmLeft = this.alarm - DateTime.Now;
-                lblAlarmValue.Text = alarmLeft.ToString(@"hh\:mm\:ss");
-                if (alarmLeft < TimeSpan.Zero)
-                {
-                    AlarmNotification(alarmOptions);
-                    alarmTimer.Enabled = false;
-                }
-        }
+
     }
 }
