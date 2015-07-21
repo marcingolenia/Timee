@@ -40,6 +40,7 @@ namespace Timee
         /// Current cell in which time is being counted.
         /// </summary>
         private DataGridViewCell CurrentTimeCell { get; set; }
+        private DataGridViewCell TmpCurrentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
 
         //Custom event for handling rows removal
@@ -99,6 +100,7 @@ namespace Timee
                grdWorkSummary.DataSource = timeeDataSet;
                grdWorkSummary.DataMember = "TimeSheetTable";
                this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+               this.TmpCurrentTimeCell = this.CurrentTimeCell;
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
 
@@ -310,6 +312,10 @@ namespace Timee
         /// <param name="e"></param>
         private void btnPause_Click(object sender, EventArgs e)
         {
+            if (this.CurrentTimeCell != this.TmpCurrentTimeCell)
+            {
+                this.CurrentTimeCell = this.TmpCurrentTimeCell;
+            }
             if (this.timer.Enabled)
             {
                
@@ -319,6 +325,7 @@ namespace Timee
             }
             else
             {
+  
                 this.timer.Start();
                 this.btnPause.Text = "Pause";
             }
@@ -617,7 +624,7 @@ namespace Timee
             }
         }
         /// <summary>
-        /// Setting time counting on clicked row.
+        /// Setting time counting on double clicked row.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -625,7 +632,15 @@ namespace Timee
         {
             this.SwitchTimerToRow(e.RowIndex);
         }
-
+        /// <summary>
+        /// Setting time counting on clicked row.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.TmpCurrentTimeCell = grdWorkSummary.Rows[e.RowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+        }
         /// <summary>
         /// Trigger btnDeleteRowClicked/btnSaveRowClicked event if cell is button.
         /// </summary>
@@ -641,6 +656,7 @@ namespace Timee
             {
                 btnSaveRowClicked(sender, e);
             }
+
         }
         /// <summary>
         /// Handle btnDeleteRowClicked custom event for deleting rows.
@@ -653,7 +669,18 @@ namespace Timee
             {
                 timer.Stop();
             }
+            if (grdWorkSummary.Rows.Count == 1)
+            {
+                btnPause.Enabled = false;
+            }
+            if (this.CurrentTimeCell.RowIndex == e.RowIndex)
+            {
+                btnPause.Text = "Resume";
+                this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
+
+
             hook.UnregisterLastHotKey();
         }
         /// <summary>

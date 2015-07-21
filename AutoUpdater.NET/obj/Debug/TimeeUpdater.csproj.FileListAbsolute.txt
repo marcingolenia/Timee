@@ -22,7 +22,6 @@ D:\LGBS\Projekty\Timee\Release\nl\AutoUpdater.NET.resources.dll
 D:\LGBS\Projekty\Timee\Release\pl\AutoUpdater.NET.resources.dll
 D:\LGBS\Projekty\Timee\Release\ru\AutoUpdater.NET.resources.dll
 D:\LGBS\Projekty\Timee\Release\sv\AutoUpdater.NET.resources.dll
-D:\LGBS\Projekty\Timee\AutoUpdater.NET\obj\Debug\TimeeUpdater.csprojResolveAssemblyReference.cache
 D:\LGBS\Projekty\Timee\AutoUpdater.NET\obj\Debug\AutoUpdaterDotNET.DownloadUpdateDialog.resources
 D:\LGBS\Projekty\Timee\AutoUpdater.NET\obj\Debug\AutoUpdaterDotNET.RemindLaterForm.resources
 D:\LGBS\Projekty\Timee\AutoUpdater.NET\obj\Debug\AutoUpdaterDotNET.UpdateForm.resources
