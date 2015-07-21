@@ -149,6 +149,11 @@
     <Compile Include="Controls\TimeeEditTask.Designer.cs">
       <DependentUpon>TimeeEditTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PredefinedTasksDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PredefinedTasksDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DAL\TimeeDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -257,6 +262,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DAL\PredefinedTasksDataSet.xsc">
+      <DependentUpon>PredefinedTasksDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DAL\PredefinedTasksDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PredefinedTasksDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DAL\PredefinedTasksDataSet.xss">
+      <DependentUpon>PredefinedTasksDataSet.xsd</DependentUpon>
+    </None>
     <None Include="DAL\TimeeDataSet.xsc">
       <DependentUpon>TimeeDataSet.xsd</DependentUpon>
     </None>

@@ -44,4 +44,11 @@ namespace Timee.Dialogs
         }
 
     }
+
+    public enum AlarmOption
+    {
+        SoundOnly,
+        ShowMessage,
+        SoundWithMessage
+    }
 }

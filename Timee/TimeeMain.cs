@@ -30,6 +30,7 @@ namespace Timee
         private int rowIndexFromMouseDown { get; set; }
         private DateTime alarm { get; set; }
         private List<int> alarmOptions { get; set; }
+        public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
 
         /// <summary>
         /// Hold context data
@@ -42,8 +43,8 @@ namespace Timee
         private readonly KeyboardHook hook = new KeyboardHook();
 
         //Custom event for handling rows removal
-        public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
-        public event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
+        private event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+        private event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
 
         //xmlDataset location
         //constructor
@@ -76,6 +77,8 @@ namespace Timee
         }
         private void Timee_Load(object sender, EventArgs e)
         {
+            newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
+
             if (Properties.Settings.Default.UpgradeRequired)
             {
                 Properties.Settings.Default.Upgrade();
@@ -624,48 +627,57 @@ namespace Timee
 
         private void TimeeMain_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
         {
-            //var row = (TimeeDataSet.TimeSheetTableRow)grdWorkSummary.Rows[e.RowIndex].DataGridVie;
-            string predefinedTasksXml = Properties.Settings.Default.PredefinedTasks;
-            XDocument prefXml =  XDocument.Parse(predefinedTasksXml);
-            var predefinedTask = from t in grdWorkSummary.Rows.Cast<DataGridViewRow>()
-                                 where t.Index == e.RowIndex
-                                 select new
-                                 {
-                                     Project = t.Cells[2].Value,
-                                     SubProject = t.Cells[3].Value,
-                                     Task = t.Cells[4].Value,
-                                     Comment = t.Cells[5].Value,
-                                     Location = t.Cells[6].Value   
-                                 };
+            TimeeDataSet.TimeSheetTableRow tmpPredefinedTask = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+            tmpPredefinedTask.Project = grdWorkSummary["Project", e.RowIndex].Value.ToString();
+            tmpPredefinedTask.SubProject = grdWorkSummary["SubProject", e.RowIndex].Value.ToString();
+            tmpPredefinedTask.Task = grdWorkSummary["Task", e.RowIndex].Value.ToString();
+            tmpPredefinedTask.Comment = grdWorkSummary["Comment", e.RowIndex].Value.ToString();
+            tmpPredefinedTask.Location = grdWorkSummary["Location", e.RowIndex].Value.ToString();
 
-            prefXml.Element("Root").Add
-                (
-                    new XElement
-                        (
-                        "PredefinedTask",
-                        new XElement
-                            (
-                            "Project", predefinedTask.First().Project.ToString()
-                            ),
-                        new XElement
-                            (
-                            "SubProject", predefinedTask.First().SubProject.ToString()
-                            ),
-                        new XElement
-                            (
-                            "Task", predefinedTask.First().Task.ToString()
-                            ),
-                        new XElement
-                            (
-                            "Comment", predefinedTask.First().Comment.ToString()
-                            ),
-                        new XElement
-                            (
-                            "Location", predefinedTask.First().Location.ToString()
-                            )
-                        )
-                );
-            Properties.Settings.Default.PredefinedTasks = prefXml.ToString();
+            newPredefinedTasks.Add(tmpPredefinedTask);
+            //var row = (TimeeDataSet.TimeSheetTableRow)grdWorkSummary.Rows[e.RowIndex].DataGridVie;
+            //string predefinedTasksXml = Properties.Settings.Default.PredefinedTasks;
+            //XDocument prefXml =  XDocument.Parse(predefinedTasksXml);
+           
+            //var predefinedTask = from t in grdWorkSummary.Rows.Cast<DataGridViewRow>()
+            //                     where t.Index == e.RowIndex
+            //                     select new
+            //                     {
+            //                         Project = t.Cells[2].Value,
+            //                         SubProject = t.Cells[3].Value,
+            //                         Task = t.Cells[4].Value,
+            //                         Comment = t.Cells[5].Value,
+            //                         Location = t.Cells[6].Value   
+            //                     };
+
+            //prefXml.Element("Root").Add
+            //    (
+            //        new XElement
+            //            (
+            //            "PredefinedTask",
+            //            new XElement
+            //                (
+            //                "Project", predefinedTask.First().Project.ToString()
+            //                ),
+            //            new XElement
+            //                (
+            //                "SubProject", predefinedTask.First().SubProject.ToString()
+            //                ),
+            //            new XElement
+            //                (
+            //                "Task", predefinedTask.First().Task.ToString()
+            //                ),
+            //            new XElement
+            //                (
+            //                "Comment", predefinedTask.First().Comment.ToString()
+            //                ),
+            //            new XElement
+            //                (
+            //                "Location", predefinedTask.First().Location.ToString()
+            //                )
+            //            )
+            //    );
+            //Properties.Settings.Default.PredefinedTasks = prefXml.ToString();
         }
         /// <summary>
         /// Neglect invalid data.
@@ -799,7 +811,7 @@ namespace Timee
         /// Add new row with default values or a predefined one.
         /// </summary>
         /// <param name="row">TimeSheetTableRow</param>
-        public void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
+        private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
         {
             if (row == null)
             {
@@ -996,11 +1008,11 @@ namespace Timee
                 {
                     TimeeDataSet.TimeSheetTableRow row = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
                     row.Comment = dlg.row.Comment;
-                    row.Date = dlg.row.Date;
+                    row.Date = DateTime.Today;
                     row.Project = dlg.row.Project;
                     row.SubProject = dlg.row.SubProject;
                     row.Task = dlg.row.Task;
-                    row.Time = dlg.row.Time;
+                    row.Time = TimeSpan.Zero;
                     row.Location = dlg.row.Location;
                     AddNewRow(row);
                 }

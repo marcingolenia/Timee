@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PredefinedTasksDataSet" targetNamespace="http://tempuri.org/PredefinedTasksDataSet.xsd" xmlns:mstns="http://tempuri.org/PredefinedTasksDataSet.xsd" xmlns="http://tempuri.org/PredefinedTasksDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PredefinedTasksDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PredefinedTasksDataSet" msprop:Generator_UserDSName="PredefinedTasksDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PredefinedTasksTable" msprop:Generator_TableClassName="PredefinedTasksTableDataTable" msprop:Generator_TableVarName="tablePredefinedTasksTable" msprop:Generator_TablePropName="PredefinedTasksTable" msprop:Generator_RowDeletingName="PredefinedTasksTableRowDeleting" msprop:Generator_RowChangingName="PredefinedTasksTableRowChanging" msprop:Generator_RowEvHandlerName="PredefinedTasksTableRowChangeEventHandler" msprop:Generator_RowDeletedName="PredefinedTasksTableRowDeleted" msprop:Generator_UserTableName="PredefinedTasksTable" msprop:Generator_RowChangedName="PredefinedTasksTableRowChanged" msprop:Generator_RowEvArgName="PredefinedTasksTableRowChangeEvent" msprop:Generator_RowClassName="PredefinedTasksTableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Project" msprop:Generator_ColumnVarNameInTable="columnProject" msprop:Generator_ColumnPropNameInRow="Project" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInTable="ProjectColumn" msprop:Generator_UserColumnName="Project" type="xs:string" minOccurs="0" />
+              <xs:element name="SubProject" msprop:Generator_ColumnVarNameInTable="columnSubProject" msprop:Generator_ColumnPropNameInRow="SubProject" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInTable="SubProjectColumn" msprop:Generator_UserColumnName="SubProject" type="xs:string" minOccurs="0" />
+              <xs:element name="Task" msprop:Generator_ColumnVarNameInTable="columnTask" msprop:Generator_ColumnPropNameInRow="Task" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInTable="TaskColumn" msprop:Generator_UserColumnName="Task" type="xs:string" minOccurs="0" />
+              <xs:element name="Location" msprop:Generator_ColumnVarNameInTable="columnLocation" msprop:Generator_ColumnPropNameInRow="Location" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_UserColumnName="Location" type="xs:string" minOccurs="0" />
+              <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" type="xs:string" minOccurs="0" />
+              <xs:element name="Time" msprop:Generator_ColumnVarNameInTable="columnTime" msprop:Generator_ColumnPropNameInRow="Time" msprop:Generator_ColumnPropNameInTable="TimeColumn" msprop:Generator_UserColumnName="Time" type="xs:duration" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
