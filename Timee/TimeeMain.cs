@@ -30,6 +30,7 @@ namespace Timee
         private int RowIndexFromMouseDown { get; set; }
         private DateTime Alarm { get; set; }
         private List<AlarmOption> AlarmOptions { get; set; }
+        private string AlarmMessage{get;set;}
         public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
 
         /// <summary>
@@ -637,9 +638,13 @@ namespace Timee
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void grdWorkSummary_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void grdWorkSummary_SelectionChanged(object sender, EventArgs e)
         {
-            this.TmpCurrentTimeCell = grdWorkSummary.Rows[e.RowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            if (grdWorkSummary.Rows.Count > 0)
+            {
+                this.TmpCurrentTimeCell =
+                grdWorkSummary.Rows[grdWorkSummary.CurrentCell.RowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
+            }
         }
         /// <summary>
         /// Trigger btnDeleteRowClicked/btnSaveRowClicked event if cell is button.
@@ -676,7 +681,6 @@ namespace Timee
             if (this.CurrentTimeCell.RowIndex == e.RowIndex)
             {
                 btnPause.Text = "Resume";
-                this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
 
@@ -995,7 +999,7 @@ namespace Timee
                         this.Show();
                         WindowState = FormWindowState.Normal;
                         alarmTimer.Enabled = false;
-                        MessageBox.Show("Time to go home", "Alarm Notification", MessageBoxButtons.OK);
+                        MessageBox.Show(AlarmMessage,"Exit", MessageBoxButtons.OK);
                         alarmTimer.Enabled = true;
                         break;
                     case AlarmOption.SoundOnly:
@@ -1033,6 +1037,7 @@ namespace Timee
                     this.Alarm = this.Alarm.AddMinutes(dlg.AlarmDuration.Minute);
                     this.Alarm = this.Alarm.AddSeconds(dlg.AlarmDuration.Second);
                     this.AlarmOptions = dlg.alarmOptions;
+                    this.AlarmMessage = dlg.AlarmMessage;
                     alarmTimer.Enabled = true;
                     
                 }

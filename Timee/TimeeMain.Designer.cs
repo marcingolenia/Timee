@@ -1,4 +1,5 @@
-﻿namespace Timee
+﻿using System;
+namespace Timee
 {
     partial class TimeeMain
     {
@@ -144,8 +145,8 @@
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
             this.grdWorkSummary.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdWorkSummary_DataError);
             this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
+            this.grdWorkSummary.SelectionChanged += new EventHandler(this.grdWorkSummary_SelectionChanged);
             this.grdWorkSummary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseDoubleClick);
-            this.grdWorkSummary.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseClick);
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);

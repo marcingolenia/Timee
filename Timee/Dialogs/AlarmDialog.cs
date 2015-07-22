@@ -14,6 +14,7 @@ namespace Timee.Dialogs
     {
         public DateTime AlarmDuration { get; set; }
         public List<AlarmOption> alarmOptions = new List<AlarmOption>();
+        public string AlarmMessage { get; set; }
         public AlarmDialog()
         {
             InitializeComponent();         
@@ -48,6 +49,7 @@ namespace Timee.Dialogs
                         alarmOptions.Add(AlarmOption.SoundOnly);
                     }
                 }
+                AlarmMessage = txtMessage.Text;
                 DialogResult = DialogResult.OK;
             }
                 
