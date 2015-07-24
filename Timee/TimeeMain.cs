@@ -43,8 +43,10 @@ namespace Timee
         /// <summary>
         /// used to load plugins
         /// </summary>
-        [ImportMany(typeof(TimeeBridge.IPlugins))]
-        IEnumerable<Lazy<TimeeBridge.IPlugins, TimeeBridge.IPluginsMetaData>> _plugins;
+        [ImportMany(typeof(TimeeBridge.IExcell))]
+        IEnumerable<Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData>> _excellPlugins;
+        [ImportMany(typeof(TimeeBridge.IContext))]
+        IEnumerable<Lazy<TimeeBridge.IContext, TimeeBridge.IMetaData>> _contextPlugins;
         /// <summary>
         /// Hold context data
         /// </summary>
@@ -89,13 +91,25 @@ namespace Timee
             CompositionContainer container = new CompositionContainer(dirCatalog);
             container.SatisfyImportsOnce(this);
             // Create new plugin position in menu
-            foreach (Lazy<TimeeBridge.IPlugins, TimeeBridge.IPluginsMetaData> plugin in _plugins)
+            foreach (Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData> excellPlugin in _excellPlugins)
             {
-                ToolStripMenuItem menuPlugin = new ToolStripMenuItem(plugin.Metadata.Name);
-                menuPlugin.Name = plugin.Metadata.Name;
-                menuPlugin.Click += new EventHandler(menuPluginClick);
+                
+                
+                ToolStripMenuItem excell = new ToolStripMenuItem(excellPlugin.Metadata.Name);
+                excell.Name = excellPlugin.Metadata.Name;
+                excell.Click += new EventHandler(menuPluginClick);
 
-                menuPlugins.DropDownItems.Insert(menuPlugins.DropDownItems.Count, menuPlugin);
+                menuExcell.DropDownItems.Insert(menuExcell.DropDownItems.Count, excell);
+            }
+            foreach (Lazy<TimeeBridge.IContext, TimeeBridge.IMetaData> contextPlugin in _contextPlugins)
+            {
+
+
+                ToolStripMenuItem context = new ToolStripMenuItem(contextPlugin.Metadata.Name);
+                context.Name = contextPlugin.Metadata.Name;
+                context.Click += new EventHandler(menuPluginClick);
+
+                menuContext.DropDownItems.Insert(menuContext.DropDownItems.Count, context);
             }
 
 
@@ -122,6 +136,7 @@ namespace Timee
 
             //Load saved tasks
             StringReader mainTasksXml = new StringReader(Properties.Settings.Default.MainTasks);
+            UserConfiguration testUser = new UserConfiguration();
             if (!(Properties.Settings.Default.MainTasks.Length == 0))
             {
                timeeDataSet.ReadXml(mainTasksXml);
@@ -131,7 +146,6 @@ namespace Timee
                this.TmpCurrentTimeCell = this.CurrentTimeCell;
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
-
 
             //register hotkeys to previous saved tasks
                 for (int row = 0; row < grdWorkSummary.Rows.Count; row++)
@@ -810,18 +824,29 @@ namespace Timee
         private void menuPluginClick(object sender, EventArgs e)
         {
             ToolStripItem item = (ToolStripItem)sender;
-            var action = from plugin in _plugins
+            var action = from plugin in _excellPlugins
                          where plugin.Metadata.Name == item.Name
                          select plugin;
             switch (action.First().Metadata.Type)
             {
                 case "ExcellImport":
                     {
+                       // StringReader tmpXml = new StringReader(action.First().Value.ImportXml(timeeDataSet.GetXml()));     
+                        timeeDataSet.Tables[0].Merge(action.First().Value.ImportToExcell(timeeDataSet.Tables[0]));
+
                         break;
                     }
                 case "ExcellExport":
                     {
-                        action.First().Value.ExportXml(timeeDataSet.GetXml());
+                        action.First().Value.ExportFromExcell(timeeDataSet.GetXml());
+                        break;
+                    }
+                case "ContextImport:":
+                    {
+                        break;
+                    }
+                case "ContextExport:":
+                    {
                         break;
                     }
             }

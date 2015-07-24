@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TimeeBridge
 {
-    public interface IPlugins
+    public interface IExcell
     {
-        string ImportXml (string xml);
-        void ExportXml(string xml);
+        DataTable ImportToExcell (DataTable source);
+        void ExportFromExcell(string xml);
     }
-    public interface IPluginsMetaData
+    public interface IContext
+    {
+        TimeeContext ImportToContext(TimeeContext source);
+        void ExportFromContext(TimeeContext source);
+    }
+
+    public interface IMetaData
     {
         string Name { get; }
         string Type { get; }

@@ -6,18 +6,19 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Excell
 {
-    [Export(typeof(TimeeBridge.IPlugins))]
+    [Export(typeof(TimeeBridge.IExcell))]
     [ExportMetadata("Name", "Export to Excell")]
     [ExportMetadata("Type", "ExcellExport")]
-    public class Excell : TimeeBridge.IPlugins
+    public class ExcellExport : TimeeBridge.IExcell
     {
         private string IsCreative { get; set; }
         private string Person { get; set; }
 
-        public void ExportXml(string xml)
+        public void ExportFromExcell(string xml)
         {
             using (var dlg = new ExcelExportSettings())
             {
@@ -116,9 +117,82 @@ namespace Excell
             }
         }
 
-        public string ImportXml(string xml)
+        public DataTable ImportToExcell(DataTable source)
         {
             throw new NotImplementedException();
         }
     }
+
+        [Export(typeof(TimeeBridge.IExcell))]
+        [ExportMetadata("Name", "Import to Excell")]
+        [ExportMetadata("Type", "ExcellImport")]
+    public class ExcellImport : TimeeBridge.IExcell
+    {
+            string fileName { get; set; }
+            TimeeBridge.TimeeDataSet excellDataSet = new TimeeBridge.TimeeDataSet();
+        public DataTable ImportToExcell(DataTable source)
+        {
+
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Filter = "(*.xlsx) Excel | *.xlsx";
+                dlg.AddExtension = true;
+                dlg.ShowDialog();
+                try
+                {
+                    if (!String.IsNullOrWhiteSpace(dlg.FileName))
+                    {
+                    }
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                this.fileName = dlg.FileName;
+
+            }
+            var workbook = new XLWorkbook(this.fileName);
+            var worksheet = workbook.Worksheet(1);
+
+            // export range
+            IXLRange exportRange = worksheet.Range(1, 1, Int16.MaxValue, 9);
+            exportRange.FirstRow().Merge();
+
+            // Fill data
+            IXLRange dataRange = exportRange.Range(3, 1, Int16.MaxValue, 9);
+            //StringReader tmpXml = new StringReader(xml);
+            //DataSet ds = new DataSet();
+            //ds.ReadXml(tmpXml);
+            int i = 3;
+            do{
+                var row = excellDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                row.Date = Convert.ToDateTime(worksheet.Row(i).Cell(1).Value).Date;
+                // dataRange.Cell(i + 1, 2).Value = Person;
+                //Round to Quarters
+                row.Time = TimeSpan.Zero;
+                row.Project = worksheet.Row(i).Cell(4).Value.ToString();
+                row.SubProject = worksheet.Row(i).Cell(5).Value.ToString();
+                row.Task = worksheet.Row(i).Cell(6).Value.ToString();
+                row.Comment = worksheet.Row(i).Cell(9).Value.ToString();
+                // dataRange.Cell(i + 1, 8).Value = IsCreative;
+                row.Location = worksheet.Row(i).Cell(7).Value.ToString();
+                source.Rows.Add(row.ItemArray);
+                i++;
+            } while(!worksheet.Row(i).IsEmpty());
+            
+            //this.newXml = ds.GetXml();
+            return source;
+        }
+
+
+        public void ExportFromExcell(string xml)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
 }

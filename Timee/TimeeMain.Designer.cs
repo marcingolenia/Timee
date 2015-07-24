@@ -86,6 +86,9 @@ namespace Timee
             this.lblAlarm = new System.Windows.Forms.Label();
             this.lblAlarmValue = new System.Windows.Forms.Label();
             this.alarmTimer = new System.Windows.Forms.Timer(this.components);
+            this.menuExcell = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuContext = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTimeSheet = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -473,7 +476,10 @@ namespace Timee
             // menuPlugins
             // 
             this.menuPlugins.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lGBSExcelToolStripMenuItem});
+            this.lGBSExcelToolStripMenuItem,
+            this.menuExcell,
+            this.menuContext,
+            this.menuTimeSheet});
             this.menuPlugins.Name = "menuPlugins";
             this.menuPlugins.Size = new System.Drawing.Size(58, 20);
             this.menuPlugins.Text = "Plugins";
@@ -491,14 +497,14 @@ namespace Timee
             // mnuSettings
             // 
             this.mnuSettings.Name = "mnuSettings";
-            this.mnuSettings.Size = new System.Drawing.Size(152, 22);
+            this.mnuSettings.Size = new System.Drawing.Size(116, 22);
             this.mnuSettings.Text = "Settings";
             this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
             // 
             // mnuExcelExport
             // 
             this.mnuExcelExport.Name = "mnuExcelExport";
-            this.mnuExcelExport.Size = new System.Drawing.Size(152, 22);
+            this.mnuExcelExport.Size = new System.Drawing.Size(116, 22);
             this.mnuExcelExport.Text = "Export";
             this.mnuExcelExport.Click += new System.EventHandler(this.mnuExcelExport_Click);
             // 
@@ -593,6 +599,24 @@ namespace Timee
             // alarmTimer
             // 
             this.alarmTimer.Tick += new System.EventHandler(this.alarmTimer_Tick);
+            // 
+            // menuExcell
+            // 
+            this.menuExcell.Name = "menuExcell";
+            this.menuExcell.Size = new System.Drawing.Size(152, 22);
+            this.menuExcell.Text = "Excell";
+            // 
+            // menuContext
+            // 
+            this.menuContext.Name = "menuContext";
+            this.menuContext.Size = new System.Drawing.Size(152, 22);
+            this.menuContext.Text = "Context";
+            // 
+            // menuTimeSheet
+            // 
+            this.menuTimeSheet.Name = "menuTimeSheet";
+            this.menuTimeSheet.Size = new System.Drawing.Size(152, 22);
+            this.menuTimeSheet.Text = "TimeSheet";
             // 
             // TimeeMain
             // 
@@ -701,6 +725,9 @@ namespace Timee
         private System.Windows.Forms.Label lblAlarm;
         private System.Windows.Forms.Label lblAlarmValue;
         private System.Windows.Forms.Timer alarmTimer;
+        private System.Windows.Forms.ToolStripMenuItem menuExcell;
+        private System.Windows.Forms.ToolStripMenuItem menuContext;
+        private System.Windows.Forms.ToolStripMenuItem menuTimeSheet;
     }
 }
 
