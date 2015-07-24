@@ -107,6 +107,8 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -153,6 +155,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PredefinedTasksDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\TimeeDataSet.cs">
+      <DependentUpon>TimeeDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DAL\TimeeDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -367,6 +373,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TimeeBridge\TimeeBridge.csproj">
+      <Project>{28ebd454-1bff-44d8-b387-3983a45b11f5}</Project>
+      <Name>TimeeBridge</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -68,13 +68,12 @@ namespace Timee
             this.mnuTimee = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.countdownAlertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.lGBSExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExcelExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.comingSoonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calendarColumn1 = new Timee.Controls.CalendarColumn.CalendarColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -145,8 +144,8 @@ namespace Timee
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
             this.grdWorkSummary.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdWorkSummary_DataError);
             this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
-            this.grdWorkSummary.SelectionChanged += new EventHandler(this.grdWorkSummary_SelectionChanged);
             this.grdWorkSummary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseDoubleClick);
+            this.grdWorkSummary.SelectionChanged += new System.EventHandler(this.grdWorkSummary_SelectionChanged);
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);
@@ -457,13 +456,6 @@ namespace Timee
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exit_Click);
-            // 
             // countdownAlertToolStripMenuItem
             // 
             this.countdownAlertToolStripMenuItem.Name = "countdownAlertToolStripMenuItem";
@@ -471,11 +463,17 @@ namespace Timee
             this.countdownAlertToolStripMenuItem.Text = "Count-down alert";
             this.countdownAlertToolStripMenuItem.Click += new System.EventHandler(this.countdownAlertToolStripMenuItem_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exit_Click);
+            // 
             // menuPlugins
             // 
             this.menuPlugins.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lGBSExcelToolStripMenuItem,
-            this.comingSoonToolStripMenuItem});
+            this.lGBSExcelToolStripMenuItem});
             this.menuPlugins.Name = "menuPlugins";
             this.menuPlugins.Size = new System.Drawing.Size(58, 20);
             this.menuPlugins.Text = "Plugins";
@@ -486,29 +484,23 @@ namespace Timee
             this.mnuSettings,
             this.mnuExcelExport});
             this.lGBSExcelToolStripMenuItem.Name = "lGBSExcelToolStripMenuItem";
-            this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lGBSExcelToolStripMenuItem.Text = "LGBS Excel";
             this.lGBSExcelToolStripMenuItem.Click += new System.EventHandler(this.lGBSExcelToolStripMenuItem_Click);
             // 
             // mnuSettings
             // 
             this.mnuSettings.Name = "mnuSettings";
-            this.mnuSettings.Size = new System.Drawing.Size(116, 22);
+            this.mnuSettings.Size = new System.Drawing.Size(152, 22);
             this.mnuSettings.Text = "Settings";
             this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
             // 
             // mnuExcelExport
             // 
             this.mnuExcelExport.Name = "mnuExcelExport";
-            this.mnuExcelExport.Size = new System.Drawing.Size(116, 22);
+            this.mnuExcelExport.Size = new System.Drawing.Size(152, 22);
             this.mnuExcelExport.Text = "Export";
             this.mnuExcelExport.Click += new System.EventHandler(this.mnuExcelExport_Click);
-            // 
-            // comingSoonToolStripMenuItem
-            // 
-            this.comingSoonToolStripMenuItem.Name = "comingSoonToolStripMenuItem";
-            this.comingSoonToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.comingSoonToolStripMenuItem.Text = "Coming Soon...";
             // 
             // calendarColumn1
             // 
@@ -685,7 +677,6 @@ namespace Timee
         private System.Windows.Forms.ToolStripMenuItem lGBSExcelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSettings;
         private System.Windows.Forms.ToolStripMenuItem mnuExcelExport;
-        private System.Windows.Forms.ToolStripMenuItem comingSoonToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private Controls.CalendarColumn.CalendarColumn calendarColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

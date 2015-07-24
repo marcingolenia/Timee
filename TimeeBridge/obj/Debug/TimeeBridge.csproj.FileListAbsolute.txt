@@ -1,0 +1,5 @@
+D:\LGBS\Projekty\Timee\TimeeBridge\bin\Debug\TimeeBridge.dll
+D:\LGBS\Projekty\Timee\TimeeBridge\bin\Debug\TimeeBridge.pdb
+D:\LGBS\Projekty\Timee\TimeeBridge\obj\Debug\TimeeBridge.csprojResolveAssemblyReference.cache
+D:\LGBS\Projekty\Timee\TimeeBridge\obj\Debug\TimeeBridge.dll
+D:\LGBS\Projekty\Timee\TimeeBridge\obj\Debug\TimeeBridge.pdb

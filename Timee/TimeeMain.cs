@@ -19,6 +19,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 
 namespace Timee
 {
@@ -28,11 +30,21 @@ namespace Timee
         /// Used in drag&drop
         /// </summary>
         private int RowIndexFromMouseDown { get; set; }
+        /// <summary>
+        /// Used in Alarm
+        /// </summary>
         private DateTime Alarm { get; set; }
         private List<AlarmOption> AlarmOptions { get; set; }
         private string AlarmMessage{get;set;}
+        /// <summary>
+        /// Used to save task as predefined task
+        /// </summary>
         public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
-
+        /// <summary>
+        /// used to load plugins
+        /// </summary>
+        [ImportMany(typeof(TimeeBridge.IPlugins))]
+        IEnumerable<Lazy<TimeeBridge.IPlugins, TimeeBridge.IPluginsMetaData>> _plugins;
         /// <summary>
         /// Hold context data
         /// </summary>
@@ -72,8 +84,23 @@ namespace Timee
         /// 
         private void Timee_Load(object sender, EventArgs e)
         {
-            newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
+            // Difine Catalog to load plugins
+            DirectoryCatalog dirCatalog = new DirectoryCatalog("Plugins");
+            CompositionContainer container = new CompositionContainer(dirCatalog);
+            container.SatisfyImportsOnce(this);
+            // Create new plugin position in menu
+            foreach (Lazy<TimeeBridge.IPlugins, TimeeBridge.IPluginsMetaData> plugin in _plugins)
+            {
+                ToolStripMenuItem menuPlugin = new ToolStripMenuItem(plugin.Metadata.Name);
+                menuPlugin.Name = plugin.Metadata.Name;
+                menuPlugin.Click += new EventHandler(menuPluginClick);
 
+                menuPlugins.DropDownItems.Insert(menuPlugins.DropDownItems.Count, menuPlugin);
+            }
+
+
+            newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
+            // Fix to save lost after update
             if (Properties.Settings.Default.UpgradeRequired)
             {
                 Properties.Settings.Default.Upgrade();
@@ -119,6 +146,8 @@ namespace Timee
            
             //Show help
         }
+
+
         /// <summary>
         /// Show hints
         /// </summary>
@@ -778,6 +807,25 @@ namespace Timee
             new AboutDialog().Show();
         }
         //TODO: In version 2 handle this with some general plugin mechanism
+        private void menuPluginClick(object sender, EventArgs e)
+        {
+            ToolStripItem item = (ToolStripItem)sender;
+            var action = from plugin in _plugins
+                         where plugin.Metadata.Name == item.Name
+                         select plugin;
+            switch (action.First().Metadata.Type)
+            {
+                case "ExcellImport":
+                    {
+                        break;
+                    }
+                case "ExcellExport":
+                    {
+                        action.First().Value.ExportXml(timeeDataSet.GetXml());
+                        break;
+                    }
+            }
+        }
         private void mnuExcelExport_Click(object sender, EventArgs e)
         {
             //Check time validity, if some bullshit set 00:00:00.
