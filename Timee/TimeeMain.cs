@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using Timee.Services;
 
 namespace Timee
 {
@@ -33,9 +34,7 @@ namespace Timee
         /// <summary>
         /// Used in Alarm
         /// </summary>
-        private DateTime alarmTime;
-        private string alarmMessage;
-        private List<AlarmOption> alarmOptions;
+        private AlarmService alarmService;
 
         /// <summary>
         /// Used to save task as predefined task
@@ -63,8 +62,6 @@ namespace Timee
         private event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
         private event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
 
-        //xmlDataset location
-        //constructor
         public TimeeMain()
         {
             InitializeComponent();
@@ -87,6 +84,13 @@ namespace Timee
         /// 
         private void Timee_Load(object sender, EventArgs e)
         {
+            //Prevent from losting saved tasks after update
+            if (Properties.Settings.Default.UpgradeRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
             // Difine Catalog to load plugins
             DirectoryCatalog dirCatalog = new DirectoryCatalog("Plugins");
             CompositionContainer container = new CompositionContainer(dirCatalog);
@@ -113,15 +117,6 @@ namespace Timee
                 menuContext.DropDownItems.Insert(menuContext.DropDownItems.Count, context);
             }
 
-
-            //newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
-            //// Fix to save lost after update
-            if (Properties.Settings.Default.UpgradeRequired)
-            {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpgradeRequired = false;
-                Properties.Settings.Default.Save();
-            }
             Assembly mainAssembly = Assembly.GetEntryAssembly();
             this.Context = TimeeXMLService.Instance.LoadContext();
             cmbProject.DataSource = Context.Projects;
@@ -146,7 +141,7 @@ namespace Timee
                this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
-
+                
             //register hotkeys to previous saved tasks
                 for (int row = 0; row < grdWorkSummary.Rows.Count; row++)
 			    {
@@ -424,21 +419,6 @@ namespace Timee
             {
                 Properties.Settings.Default.MainTasks = timeeDataSet.GetXml();
                 Properties.Settings.Default.Save();
-            }
-        }
-        /// <summary>
-        /// Counting time left till alarm.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void alarmTimer_Tick(object sender, EventArgs e)
-        {
-            TimeSpan alarmLeft = this.alarmTime - DateTime.Now;
-            lblAlarmValue.Text = alarmLeft.ToString(@"hh\:mm\:ss");
-            if (alarmLeft < TimeSpan.Zero)
-            {
-                AlarmNotification(alarmOptions);
-                alarmTimer.Enabled = false;
             }
         }
         /// <summary>
@@ -791,7 +771,7 @@ namespace Timee
             }
         }
 
-        //--Menu
+        //--Menuchyb
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutDialog().Show();
@@ -861,10 +841,10 @@ namespace Timee
                 dlg.ShowDialog();
                 if (dlg.DialogResult == DialogResult.OK)
                 {
-                    this.alarmTime = DateTime.Now.Add(dlg.AlarmDuration.TimeOfDay);
-                    this.alarmOptions = dlg.AlarmOptions;
-                    this.alarmMessage = dlg.AlarmMessage;
-                    alarmTimer.Enabled = true;
+                    this.alarmService = dlg.AlarmService;
+                    this.alarmService.RemainingTimeInfoControl = this.lblAlarmValue;
+                    this.alarmService.ActivationForm = this;
+                    this.alarmService.StartCountDown();
                 }
             }
         }
@@ -1051,31 +1031,6 @@ namespace Timee
                 this.trayIcon.BalloonTipText = text;
                 this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
                 this.trayIcon.ShowBalloonTip(showTime);
-            }
-        }
-        /// <summary>
-        /// Show choosen alarm notification
-        /// </summary>
-        /// <param name="options">List of selected alarm notifications.</param>
-        private void AlarmNotification(List<AlarmOption> options)
-        {
-            foreach (var option in options)
-            {
-                switch (option)
-                {
-                    case AlarmOption.ShowMessage:
-                        this.Show();
-                        WindowState = FormWindowState.Normal;
-                        alarmTimer.Enabled = false;
-                        MessageBox.Show(alarmMessage,"Exit", MessageBoxButtons.OK);
-                        alarmTimer.Enabled = true;
-                        break;
-                    case AlarmOption.SoundOnly:
-                        this.Show();
-                        WindowState = FormWindowState.Normal;
-                        System.Media.SystemSounds.Asterisk.Play();
-                        break;
-                }
             }
         }
         /// <summary>

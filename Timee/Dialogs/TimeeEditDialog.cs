@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using Timee.DAL;
 using Timee.Models;
+using Timee.Services;
 
 namespace Timee.Dialogs
 {

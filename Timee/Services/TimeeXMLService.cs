@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Timee.DAL;
 using Timee.Models;
 
-namespace Timee.DAL
+namespace Timee.Services
 {
     public class TimeeXMLService
     {

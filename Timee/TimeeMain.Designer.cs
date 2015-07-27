@@ -88,7 +88,6 @@ namespace Timee
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblAlarm = new System.Windows.Forms.Label();
             this.lblAlarmValue = new System.Windows.Forms.Label();
-            this.alarmTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -612,10 +611,6 @@ namespace Timee
             this.lblAlarmValue.Size = new System.Drawing.Size(0, 13);
             this.lblAlarmValue.TabIndex = 27;
             // 
-            // alarmTimer
-            // 
-            this.alarmTimer.Tick += new System.EventHandler(this.alarmTimer_Tick);
-            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -724,7 +719,6 @@ namespace Timee
         private System.Windows.Forms.ToolStripMenuItem countdownAlertToolStripMenuItem;
         private System.Windows.Forms.Label lblAlarm;
         private System.Windows.Forms.Label lblAlarmValue;
-        private System.Windows.Forms.Timer alarmTimer;
         private System.Windows.Forms.ToolStripMenuItem menuExcell;
         private System.Windows.Forms.ToolStripMenuItem menuContext;
         private System.Windows.Forms.ToolStripMenuItem menuTimeSheet;

@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timee.Services;
 
 namespace Timee.Dialogs
 {
     public partial class AlarmDialog : Form
     {
-        public DateTime AlarmDuration { get; set; }
-        public List<AlarmOption> AlarmOptions { get; set; }
-        public string AlarmMessage { get; set; }
+        public AlarmService AlarmService { get; set; }
         public AlarmDialog()
         {
-            InitializeComponent();         
+            InitializeComponent();
+            this.AlarmService = new AlarmService();
         }
         private void AlarmDialog_Load(object sender, EventArgs e)
         {
@@ -31,13 +31,13 @@ namespace Timee.Dialogs
         /// <param name="e"></param>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            AlarmDuration = dtpAlarmDuration.Value;
-            AlarmOptions = grbAlarmOptions.Controls.OfType<CheckBox>()
+            AlarmService.AlarmDuration = DateTime.Now.Add(dtpAlarmDuration.Value.TimeOfDay);
+            AlarmService.AlarmOptions = grbAlarmOptions.Controls.OfType<CheckBox>()
                            .Where(chk => chk.Checked)
                            .Select(chk => (AlarmOption)chk.TabIndex).ToList();
-            if (AlarmOptions.Count > 0)
+            if (AlarmService.AlarmOptions.Count > 0)
             {
-                AlarmMessage = txtMessage.Text;
+                AlarmService.AlarmMessage = txtMessage.Text;
                 DialogResult = DialogResult.OK;
             }
             else
@@ -50,11 +50,5 @@ namespace Timee.Dialogs
         {
             this.Close();
         }
-    }
-
-    public enum AlarmOption
-    {
-        ShowMessage,
-        SoundOnly
     }
 }
