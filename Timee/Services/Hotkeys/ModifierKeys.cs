@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Timee.Hotkeys
+namespace Timee.Services.Hotkeys
 {
     /// <summary>
     /// The enumeration of possible modifiers.

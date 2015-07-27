@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Timee.Hotkeys
+namespace Timee.Services.Hotkeys
 {
     /// <summary>
     /// Class for handling global hotkeys.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Timee.Services
 {
-    class HotkeysService
+    public class HotkeysService
     {
     }
 }

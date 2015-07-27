@@ -33,7 +33,7 @@ namespace Timee
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeeMain));
             this.cmbLocations = new System.Windows.Forms.ComboBox();
             this.userConfigurationLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.grdWorkSummary = new System.Windows.Forms.DataGridView();
+            this.grdWorkSummary = new Controls.TimeeGrid();
             this.Date = new Timee.Controls.CalendarColumn.CalendarColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Project = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -144,8 +144,6 @@ namespace Timee
             this.grdWorkSummary.TabIndex = 1;
             this.grdWorkSummary.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellContentClick);
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
-            this.grdWorkSummary.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdWorkSummary_DataError);
-            this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
             this.grdWorkSummary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseDoubleClick);
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
@@ -666,7 +664,7 @@ namespace Timee
         #endregion
 
         private System.Windows.Forms.ComboBox cmbLocations;
-        private System.Windows.Forms.DataGridView grdWorkSummary;
+        private Controls.TimeeGrid grdWorkSummary;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox cmbProject;
         private System.Windows.Forms.ComboBox cmbSubProject;

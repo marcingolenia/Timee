@@ -6,22 +6,18 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Timee.Controls;
 using Timee.DAL;
-using Timee.Hotkeys;
 using Timee.Models;
 using Timee.Plugins.LGBSExcelExport;
 using Timee.Dialogs;
-using System.Configuration;
 using AutoUpdaterDotNET;
 using System.Reflection;
 using System.IO;
-using System.Xml;
-using System.Xml.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using Timee.Services;
+using Timee.Services.Hotkeys;
 
 namespace Timee
 {
@@ -68,12 +64,11 @@ namespace Timee
             this.InitializeTrayElements();
             this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
             //Show all records + shortcuts(or numbers)
-            hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F11);
+            hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, Keys.F11);
             //Add new row
-            hook.RegisterHotKey(Hotkeys.ModifierKeys.Control, Keys.F12);
+            hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, Keys.F12);
             //Hints
         }
-
 
         //Events
         /// <summary>
@@ -148,7 +143,7 @@ namespace Timee
 			      Keys keyToRegister = this.GetKeyByRowNumber(row);
                        if (keyToRegister != Keys.None)
                        {
-                           this.hook.RegisterHotKey(Timee.Hotkeys.ModifierKeys.Control, keyToRegister);
+                           this.hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, keyToRegister);
                        }
 			    }
             }
@@ -504,31 +499,6 @@ namespace Timee
 
         //--Grid events
         /// <summary>
-        /// Attaching events for controls placed in the grid.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void grdWorkSummary_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            e.Control.PreviewKeyDown -= LastCell_PreviewKeyDown;
-            if (grdWorkSummary.CurrentCell.OwningColumn.CellType == typeof(DataGridViewComboBoxCell))
-            {
-                ComboBox cmb = e.Control as ComboBox;
-
-                if (cmb == null)
-                    return;
-                cmb.DropDownStyle = ComboBoxStyle.DropDown;
-                cmb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                cmb.PreviewKeyDown -= new PreviewKeyDownEventHandler(GridCmb_KeyPress);
-                cmb.PreviewKeyDown += new PreviewKeyDownEventHandler(GridCmb_KeyPress);
-            }
-            if (grdWorkSummary.CurrentCell.RowIndex == grdWorkSummary.Rows.Count - 1 &&
-                grdWorkSummary.CurrentCell.OwningColumn.DisplayIndex == grdWorkSummary.Columns.Count-2)
-            {
-                e.Control.PreviewKeyDown += LastCell_PreviewKeyDown;
-            }
-        }
-        /// <summary>
         /// Handling delete-button.
         /// </summary>
         /// <param name="sender"></param>
@@ -536,31 +506,6 @@ namespace Timee
         private void btnGridRemoveRow(object sender, EventArgs e)
         {
             grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);
-        }
-        /// <summary>
-        /// Comment is last column, so let's add new row after pressing Tab or Enter.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LastCell_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
-            {
-                AddNewRow();
-            }
-        }
-        /// <summary>
-        /// Handling editable comboboxes - Tab key.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridCmb_KeyPress(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyCode == Keys.Tab)
-            {
-                grdWorkSummary.EndEdit();
-                grdWorkSummary.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
-            }
         }
         /// <summary>
         /// Handling editable comboboxes - Adding new values.
@@ -703,15 +648,7 @@ namespace Timee
             TimeeXMLService.Instance.SavePredefinedTasks(this.Context.PredefinedTasks);
            
         }
-        /// <summary>
-        /// Neglect invalid data.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void grdWorkSummary_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            e.Cancel = true;
-        }
+
 
         //--Grid drag and drop
         /// <summary>
@@ -907,7 +844,7 @@ namespace Timee
             Keys keyToRegister = this.GetKeyByRowNumber(currentRowIndex);
             if (keyToRegister != Keys.None)
             {
-                this.hook.RegisterHotKey(Timee.Hotkeys.ModifierKeys.Control, keyToRegister);
+                this.hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, keyToRegister);
             }
 
             this.timer.Start();
