@@ -33,7 +33,7 @@
             this.lblMessage = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpAlarmDuration = new System.Windows.Forms.DateTimePicker();
             this.grbAlarmOptions = new System.Windows.Forms.GroupBox();
             this.chkSound = new System.Windows.Forms.CheckBox();
             this.chkMessage = new System.Windows.Forms.CheckBox();
@@ -84,15 +84,16 @@
             this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // dateTimePicker1
+            // dtpAlarmDuration
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(95, 40);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.ShowUpDown = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(85, 20);
-            this.dateTimePicker1.TabIndex = 7;
+            this.dtpAlarmDuration.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpAlarmDuration.Location = new System.Drawing.Point(95, 40);
+            this.dtpAlarmDuration.Name = "dtpAlarmDuration";
+            this.dtpAlarmDuration.ShowUpDown = true;
+            this.dtpAlarmDuration.Size = new System.Drawing.Size(85, 20);
+            this.dtpAlarmDuration.TabIndex = 7;
             // 
             // grbAlarmOptions
             // 
@@ -133,7 +134,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.grbAlarmOptions);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpAlarmDuration);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblMessage);
@@ -156,7 +157,7 @@
         private System.Windows.Forms.Label lblMessage;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpAlarmDuration;
         private System.Windows.Forms.GroupBox grbAlarmOptions;
         private System.Windows.Forms.CheckBox chkSound;
         private System.Windows.Forms.CheckBox chkMessage;

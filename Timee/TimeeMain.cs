@@ -33,9 +33,10 @@ namespace Timee
         /// <summary>
         /// Used in Alarm
         /// </summary>
-        private DateTime Alarm { get; set; }
-        private List<AlarmOption> AlarmOptions { get; set; }
-        private string AlarmMessage{get;set;}
+        private DateTime alarmTime;
+        private string alarmMessage;
+        private List<AlarmOption> alarmOptions;
+
         /// <summary>
         /// Used to save task as predefined task
         /// </summary>
@@ -437,11 +438,11 @@ namespace Timee
         /// <param name="e"></param>
         private void alarmTimer_Tick(object sender, EventArgs e)
         {
-            TimeSpan alarmLeft = this.Alarm - DateTime.Now;
+            TimeSpan alarmLeft = this.alarmTime - DateTime.Now;
             lblAlarmValue.Text = alarmLeft.ToString(@"hh\:mm\:ss");
             if (alarmLeft < TimeSpan.Zero)
             {
-                AlarmNotification(AlarmOptions);
+                AlarmNotification(alarmOptions);
                 alarmTimer.Enabled = false;
             }
         }
@@ -855,6 +856,25 @@ namespace Timee
         {
             new ExcelExportSettings().ShowDialog();
         }
+        /// <summary>
+        /// Dialog for starting count-down alarm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void countdownAlertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new AlarmDialog())
+            {
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    this.alarmTime = DateTime.Now.Add(dlg.AlarmDuration.TimeOfDay);
+                    this.alarmOptions = dlg.AlarmOptions;
+                    this.alarmMessage = dlg.AlarmMessage;
+                    alarmTimer.Enabled = true;
+                }
+            }
+        }
 
         //Methods
         /// <summary>
@@ -1054,7 +1074,7 @@ namespace Timee
                         this.Show();
                         WindowState = FormWindowState.Normal;
                         alarmTimer.Enabled = false;
-                        MessageBox.Show(AlarmMessage,"Exit", MessageBoxButtons.OK);
+                        MessageBox.Show(alarmMessage,"Exit", MessageBoxButtons.OK);
                         alarmTimer.Enabled = true;
                         break;
                     case AlarmOption.SoundOnly:
@@ -1076,27 +1096,6 @@ namespace Timee
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenuStrip = trayMenu;
-        }
-
-
-
-        private void countdownAlertToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (var dlg = new AlarmDialog())
-            {
-                dlg.ShowDialog();
-                if (dlg.DialogResult == DialogResult.OK)
-                {
-                    this.Alarm = DateTime.Now;
-                    this.Alarm = this.Alarm.AddHours(dlg.AlarmDuration.Hour);
-                    this.Alarm = this.Alarm.AddMinutes(dlg.AlarmDuration.Minute);
-                    this.Alarm = this.Alarm.AddSeconds(dlg.AlarmDuration.Second);
-                    this.AlarmOptions = dlg.alarmOptions;
-                    this.AlarmMessage = dlg.AlarmMessage;
-                    alarmTimer.Enabled = true;
-                    
-                }
-            }
         }
 
     }

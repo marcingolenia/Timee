@@ -13,7 +13,7 @@ namespace Timee.Dialogs
     public partial class AlarmDialog : Form
     {
         public DateTime AlarmDuration { get; set; }
-        public List<AlarmOption> alarmOptions = new List<AlarmOption>();
+        public List<AlarmOption> AlarmOptions { get; set; }
         public string AlarmMessage { get; set; }
         public AlarmDialog()
         {
@@ -21,8 +21,8 @@ namespace Timee.Dialogs
         }
         private void AlarmDialog_Load(object sender, EventArgs e)
         {
-            dateTimePicker1.CustomFormat = "HH,mm,ss";
-            dateTimePicker1.Value = new DateTime(DateTime.Now.Year,DateTime.Now.Month, DateTime.Now.Day, 08, 00, 00);
+            dtpAlarmDuration.CustomFormat = "H'h' mm'm'";
+            dtpAlarmDuration.Value = DateTime.Today.AddHours(8);
         }
         /// <summary>
         /// Checking if any checkbox were checked
@@ -31,40 +31,30 @@ namespace Timee.Dialogs
         /// <param name="e"></param>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            AlarmDuration = dateTimePicker1.Value;
-            var options = (from option in grbAlarmOptions.Controls.OfType<CheckBox>()
-                          where (option.Checked)
-                          select(option.TabIndex));
-            if (options.Any())
+            AlarmDuration = dtpAlarmDuration.Value;
+            AlarmOptions = grbAlarmOptions.Controls.OfType<CheckBox>()
+                           .Where(chk => chk.Checked)
+                           .Select(chk => (AlarmOption)chk.TabIndex).ToList();
+            if (AlarmOptions.Count > 0)
             {
-
-                foreach (var cb in options)
-                {
-                    if (cb == 0)
-                    {
-                        alarmOptions.Add(AlarmOption.ShowMessage);
-                    }
-                    else if (cb == 1)
-                    {
-                        alarmOptions.Add(AlarmOption.SoundOnly);
-                    }
-                }
                 AlarmMessage = txtMessage.Text;
                 DialogResult = DialogResult.OK;
             }
-                
             else
             {
-                MessageBox.Show("Check at least one option","Error", MessageBoxButtons.OK);
+                MessageBox.Show("At least one option must be selected to start.");
             }
-       
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 
     public enum AlarmOption
     {
-        SoundOnly,
         ShowMessage,
+        SoundOnly
     }
 }
