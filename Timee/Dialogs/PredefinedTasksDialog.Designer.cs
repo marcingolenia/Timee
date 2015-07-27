@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PredefinedTasksDialog));
             this.grdPredefinedSummary = new System.Windows.Forms.DataGridView();
             this.timeeDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.timeeDataSet = new Timee.DAL.TimeeDataSet();
@@ -40,8 +39,6 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Add = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Remove = new System.Windows.Forms.DataGridViewImageColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Project = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +46,8 @@
             this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Add = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Remove = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdPredefinedSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
@@ -67,15 +66,15 @@
             this.grdPredefinedSummary.CausesValidation = false;
             this.grdPredefinedSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdPredefinedSummary.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Add,
-            this.Remove,
             this.Date,
             this.Project,
             this.SubProject,
             this.Task,
             this.Location,
             this.Comment,
-            this.Time});
+            this.Time,
+            this.Add,
+            this.Remove});
             this.grdPredefinedSummary.DataMember = "TimeSheetTable";
             this.grdPredefinedSummary.DataSource = this.timeeDataSetBindingSource;
             this.grdPredefinedSummary.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
@@ -147,28 +146,6 @@
             this.dataGridViewTextBoxColumn7.Visible = false;
             this.dataGridViewTextBoxColumn7.Width = 113;
             // 
-            // Add
-            // 
-            this.Add.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Add.FillWeight = 25F;
-            this.Add.HeaderText = "";
-            this.Add.Image = global::Timee.Properties.Resources.save;
-            this.Add.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.Add.Name = "Add";
-            this.Add.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Add.Width = 25;
-            // 
-            // Remove
-            // 
-            this.Remove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Remove.FillWeight = 25F;
-            this.Remove.HeaderText = "";
-            this.Remove.Image = ((System.Drawing.Image)(resources.GetObject("Remove.Image")));
-            this.Remove.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.Remove.Name = "Remove";
-            this.Remove.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Remove.Width = 25;
-            // 
             // Date
             // 
             this.Date.DataPropertyName = "Date";
@@ -211,6 +188,28 @@
             this.Time.HeaderText = "Time";
             this.Time.Name = "Time";
             // 
+            // Add
+            // 
+            this.Add.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Add.FillWeight = 25F;
+            this.Add.HeaderText = "";
+            this.Add.Image = global::Timee.Properties.Resources._new;
+            this.Add.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.Add.Name = "Add";
+            this.Add.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Add.Width = 25;
+            // 
+            // Remove
+            // 
+            this.Remove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Remove.FillWeight = 25F;
+            this.Remove.HeaderText = "";
+            this.Remove.Image = global::Timee.Properties.Resources.remove;
+            this.Remove.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.Remove.Name = "Remove";
+            this.Remove.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Remove.Width = 25;
+            // 
             // PredefinedTasksDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,8 +238,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.BindingSource timeeDataSetBindingSource;
         private DAL.TimeeDataSet timeeDataSet;
-        private System.Windows.Forms.DataGridViewImageColumn Add;
-        private System.Windows.Forms.DataGridViewImageColumn Remove;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn Project;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubProject;
@@ -248,5 +245,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Location;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.DataGridViewImageColumn Add;
+        private System.Windows.Forms.DataGridViewImageColumn Remove;
     }
 }

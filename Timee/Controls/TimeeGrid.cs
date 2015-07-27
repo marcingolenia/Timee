@@ -9,27 +9,20 @@ namespace Timee.Controls
 {
     public class TimeeGrid: DataGridView
     {
-        private DataGridViewTextBoxColumn Column1;
-    
+        public event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
+        public event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
         public TimeeGrid()
         {
             InitializeComponent();
         }
         private void InitializeComponent()
         {
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            // 
             // TimeeGrid
             // 
-            this.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1});
+            this.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TimeeGrid_CellContentClick);
             this.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.TimeeGrid_DataError);
             this.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.TimeeGrid_EditingControlShowing);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -69,5 +62,18 @@ namespace Timee.Controls
                 this.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
             }
         }
+
+        private void TimeeGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (this.Columns[e.ColumnIndex].Name == "Remove")
+            {
+                btnDeleteRowClicked(sender, e);
+            }
+            else if (this.Columns[e.ColumnIndex].Name == "Save")
+            {
+                btnSaveRowClicked(sender, e);
+            }
+        }
+
     }
 }

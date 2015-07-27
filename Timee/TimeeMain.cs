@@ -53,11 +53,6 @@ namespace Timee
         private DataGridViewCell CurrentTimeCell { get; set; }
         //private DataGridViewCell TmpCurrentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
-
-        //Custom event for handling rows removal
-        private event EventHandler<DataGridViewCellEventArgs> btnDeleteRowClicked;
-        private event EventHandler<DataGridViewCellEventArgs> btnSaveRowClicked;
-
         public TimeeMain()
         {
             InitializeComponent();
@@ -499,15 +494,6 @@ namespace Timee
 
         //--Grid events
         /// <summary>
-        /// Handling delete-button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnGridRemoveRow(object sender, EventArgs e)
-        {
-            grdWorkSummary.Rows.RemoveAt(grdWorkSummary.CurrentCell.RowIndex);
-        }
-        /// <summary>
         /// Handling editable comboboxes - Adding new values.
         /// </summary>
         /// <param name="sender"></param>
@@ -593,28 +579,11 @@ namespace Timee
             this.SwitchTimerToRow(e.RowIndex);
         }
         /// <summary>
-        /// Trigger btnDeleteRowClicked/btnSaveRowClicked event if cell is button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void grdWorkSummary_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (grdWorkSummary.Columns[e.ColumnIndex].Name == "Remove")
-            {
-                btnDeleteRowClicked(sender, e);
-            }
-            else if (grdWorkSummary.Columns[e.ColumnIndex].Name == "Save")
-            {
-                btnSaveRowClicked(sender, e);
-            }
-
-        }
-        /// <summary>
         /// Handle btnDeleteRowClicked custom event for deleting rows.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TimeeMain_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
+        private void grdWorkSummary_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
         {
             if (grdWorkSummary.Rows[e.RowIndex].Cells.Contains(CurrentTimeCell))
             {
@@ -638,7 +607,7 @@ namespace Timee
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TimeeMain_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
+        private void grdWorkSummary_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
         {
             TimeeDataSet.TimeSheetTableRow tmpPredefinedTask = Context.PredefinedTasks.TimeSheetTable.NewTimeSheetTableRow();
             var row = (TimeeDataSet.TimeSheetTableRow)((DataRowView)grdWorkSummary.Rows[e.RowIndex].DataBoundItem).Row;
@@ -813,9 +782,6 @@ namespace Timee
 
             c = (DataGridViewComboBoxColumn)grdWorkSummary.Columns[this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName];
             c.DataSource = Context.Locations;
-
-            btnDeleteRowClicked += TimeeMain_btnDeleteRowClicked;
-            btnSaveRowClicked += TimeeMain_btnSaveRowClicked;
         }
         /// <summary>
         /// Add new row with default values or a predefined one.
@@ -982,6 +948,5 @@ namespace Timee
             // Add menu to tray icon and show it.
             trayIcon.ContextMenuStrip = trayMenu;
         }
-
     }
 }
