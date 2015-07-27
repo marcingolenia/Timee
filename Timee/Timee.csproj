@@ -307,6 +307,7 @@
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableRowChangeEvent.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableRowChangeEventHandler.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet.datasource" />
+    <None Include="Properties\DataSources\Timee.Models.TimeeContext.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationLocation.datasource" />
     <None Include="Properties\DataSources\Timee.Models.UserConfigurationLocation1.datasource" />
     <None Include="Properties\DataSources\Timee.models.UserConfigurationProject.datasource" />

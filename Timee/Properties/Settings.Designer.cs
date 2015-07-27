@@ -74,7 +74,7 @@ namespace Timee.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<Root>\r\n</Root>\r\n")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<Root></Root>")]
         public string PredefinedTasks {
             get {
                 return ((string)(this["PredefinedTasks"]));

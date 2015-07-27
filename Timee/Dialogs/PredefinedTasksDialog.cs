@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Timee.DAL;
+using Timee.Models;
 
 namespace Timee.Dialogs
 {
@@ -20,10 +21,11 @@ namespace Timee.Dialogs
         private event EventHandler<DataGridViewCellEventArgs> btnAddRowClicked;
         public TimeeDataSet.TimeSheetTableRow Row { get; set; }
 
-        private DataSet predefinedSet = new PredefinedTasksDataSet();
-        public PredefinedTasksDialog()
+        public PredefinedTasksDialog(TimeeContext context)
         {
             InitializeComponent();
+            StringReader predefinedSetXml = new StringReader(Properties.Settings.Default.PredefinedTasks);
+            grdPredefinedSummary.DataSource = context.PredefinedTasks;
         }
         /// <summary>
         /// Initialize PredefinedTasks Table
@@ -32,31 +34,10 @@ namespace Timee.Dialogs
         /// <param name="e"></param>
         private void PredefinedTasks_Load(object sender, EventArgs e)
         {
-           
-            StringReader predefinedSetXml = new StringReader(Properties.Settings.Default.PredefinedTasks);
-            predefinedSet.ReadXml(predefinedSetXml);
-            if (TimeeMain.newPredefinedTasks.Any())
-            {
-                foreach (var row in TimeeMain.newPredefinedTasks)
-                {
-                    
-                    predefinedSet.Tables[0].Rows.Add(row.ItemArray);
-
-                }
-                TimeeMain.newPredefinedTasks.Clear();
-            }
-                grdPredefinedSummary.DataSource = predefinedSet.Tables[0];
-                grdPredefinedSummary.Columns["Remove"].DisplayIndex = 8;
-                grdPredefinedSummary.Columns["Add"].DisplayIndex = 7;
-                grdPredefinedSummary.Columns["Location"].DisplayIndex = 6;
-                grdPredefinedSummary.Columns["Time"].Visible = false;
-                grdPredefinedSummary.Columns["Date"].Visible = false;
-
-               
-                grdPredefinedSummary.Refresh();
-
-                btnDeleteRowClicked += PredefinedTasks_btnDeleteRowClicked;
-                btnAddRowClicked += PredefinedTasks_btnAddRowClicked;
+            grdPredefinedSummary.Columns[timeeDataSet.TimeSheetTable.DateColumn.ColumnName].Visible = false;
+            grdPredefinedSummary.Columns[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].Visible = false;              
+            btnDeleteRowClicked += PredefinedTasks_btnDeleteRowClicked;
+            btnAddRowClicked += PredefinedTasks_btnAddRowClicked;
         }
         /// <summary>
         /// Trigger btnDeleteRowClicked/btnAddRowClicked event if cell is button.
@@ -83,9 +64,8 @@ namespace Timee.Dialogs
          private void PredefinedTasks_btnDeleteRowClicked(object sender, DataGridViewCellEventArgs e)
         {
                  grdPredefinedSummary.Rows.RemoveAt(e.RowIndex);
-                 Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();
+                 Properties.Settings.Default.PredefinedTasks = this.timeeDataSet.GetXml();
         }
-
 
          /// <summary>
          /// Handle btnAddRowClicked custom event for adding predefinedTask to Main Table.
@@ -94,24 +74,9 @@ namespace Timee.Dialogs
          /// <param name="e"></param>
         private void PredefinedTasks_btnAddRowClicked(object sender, DataGridViewCellEventArgs e)
         {
-            TimeeDataSet tmpDataSet = new TimeeDataSet();
-            
-            var drv = ((DataRowView)grdPredefinedSummary.Rows[e.RowIndex].DataBoundItem).Row;
-            TimeeDataSet.TimeSheetTableRow row = tmpDataSet.TimeSheetTable.NewTimeSheetTableRow();
-            row.ItemArray = drv.ItemArray;
-            
-            
-            
-            this.Row = row;
-
-            Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();
+            this.Row = (TimeeDataSet.TimeSheetTableRow)((DataRowView)grdPredefinedSummary.Rows[e.RowIndex].DataBoundItem).Row;
             this.DialogResult = DialogResult.OK;
             this.Close();
-        }
-
-        private void PredefinedTasks_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Properties.Settings.Default.PredefinedTasks = this.predefinedSet.GetXml();
         }
     }
 }

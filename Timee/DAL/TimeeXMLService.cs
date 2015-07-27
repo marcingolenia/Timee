@@ -36,6 +36,7 @@ namespace Timee.DAL
             context.Projects = new BindingList<Models.UserConfigurationProject>(conf.Project.ToList());
             context.Tasks = new BindingList<Models.UserConfigurationTask>(conf.Task.ToList());
             context.Subprojects = new BindingList<Models.UserConfigurationSubproject>(conf.Subproject.ToList());
+            context.PredefinedTasks.ReadXml(new StringReader(Properties.Settings.Default.PredefinedTasks));
             return context;
         }
 
@@ -47,6 +48,7 @@ namespace Timee.DAL
             conf.Subproject = context.Subprojects.ToArray();
             conf.Task = context.Tasks.ToArray();
 
+            Properties.Settings.Default.PredefinedTasks = context.PredefinedTasks.GetXml();
             var xmlSerializer = new XmlSerializer(typeof(Models.UserConfiguration));
             using (StringWriter textWriter = new StringWriter())
             {
@@ -54,6 +56,12 @@ namespace Timee.DAL
                 Properties.Settings.Default.UserConfiguration = textWriter.ToString();
                 Properties.Settings.Default.Save();
             }
+        }
+
+        public void SavePredefinedTasks(TimeeDataSet tasksDataSet)
+        {
+            Properties.Settings.Default.PredefinedTasks = tasksDataSet.GetXml();
+            Properties.Settings.Default.Save();
         }
     }
 }

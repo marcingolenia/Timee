@@ -114,8 +114,8 @@ namespace Timee
             }
 
 
-            newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
-            // Fix to save lost after update
+            //newPredefinedTasks = new List<TimeeDataSet.TimeSheetTableRow>();
+            //// Fix to save lost after update
             if (Properties.Settings.Default.UpgradeRequired)
             {
                 Properties.Settings.Default.Upgrade();
@@ -160,8 +160,6 @@ namespace Timee
            
             //Show help
         }
-
-
         /// <summary>
         /// Show hints
         /// </summary>
@@ -285,6 +283,7 @@ namespace Timee
         /// <param name="e"></param>
         private void TimeeMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            TimeeXMLService.Instance.SavePredefinedTasks(this.Context.PredefinedTasks);
             if ((timeeDataSet.Tables.Count > 0) && (timeeDataSet.Tables[0].Rows.Count > 0))
             {
                 var result = MessageBox.Show("Save your data?", "Exit", MessageBoxButtons.YesNo);
@@ -303,7 +302,6 @@ namespace Timee
             }
  
         }
-
 
         //--GUI besides grid
         /// <summary>
@@ -332,7 +330,7 @@ namespace Timee
         /// <param name="e"></param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            using (var dlg = new PredefinedTasksDialog())
+            using (var dlg = new PredefinedTasksDialog(this.Context))
             {
                 dlg.ShowDialog();
                 if (dlg.DialogResult == DialogResult.OK)
@@ -357,15 +355,12 @@ namespace Timee
         private void btnPause_Click(object sender, EventArgs e)
         {
             if (this.timer.Enabled)
-            {
-               
-                
+            {   
                 this.timer.Stop();
                 this.btnPause.Text = "Resume";
             }
             else
             {
-  
                 this.timer.Start();
                 this.btnPause.Text = "Pause";
             }
@@ -603,7 +598,7 @@ namespace Timee
                 var newProject = new Models.UserConfigurationProject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Projects.Max(p => p.Order) + 1,
+                    Order = this.Context.Projects.Count == 0 ? 1 : this.Context.Projects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
                 this.Context.Projects.Add(newProject);
@@ -617,7 +612,7 @@ namespace Timee
                 var newSubProject = new Models.UserConfigurationSubproject()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
+                    Order =  this.Context.Subprojects.Count == 0 ? 1 : this.Context.Subprojects.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
                 this.Context.Subprojects.Add(newSubProject);
@@ -631,7 +626,7 @@ namespace Timee
                 var newTask = new Models.UserConfigurationTask()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
+                    Order = this.Context.Tasks.Count == 0 ? 1 : this.Context.Tasks.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
                 this.Context.Tasks.Add(newTask);
@@ -645,7 +640,7 @@ namespace Timee
                 var newLocation = new Models.UserConfigurationLocation()
                 {
                     Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Locations.Max(p => p.Order) + 1,
+                    Order = this.Context.Locations.Count == 0 ? 1 : this.Context.Locations.Max(p => p.Order) + 1,
                     OrderSpecified = true
                 };
                 this.Context.Locations.Add(newLocation);
@@ -720,14 +715,12 @@ namespace Timee
         /// <param name="e"></param>
         private void TimeeMain_btnSaveRowClicked(object sender, DataGridViewCellEventArgs e)
         {
-            TimeeDataSet.TimeSheetTableRow tmpPredefinedTask = timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-            tmpPredefinedTask.Project = grdWorkSummary["Project", e.RowIndex].Value.ToString();
-            tmpPredefinedTask.SubProject = grdWorkSummary["SubProject", e.RowIndex].Value.ToString();
-            tmpPredefinedTask.Task = grdWorkSummary["Task", e.RowIndex].Value.ToString();
-            tmpPredefinedTask.Comment = grdWorkSummary["Comment", e.RowIndex].Value.ToString();
-            tmpPredefinedTask.Location = grdWorkSummary["Location", e.RowIndex].Value.ToString();
+            TimeeDataSet.TimeSheetTableRow tmpPredefinedTask = Context.PredefinedTasks.TimeSheetTable.NewTimeSheetTableRow();
+            var row = (TimeeDataSet.TimeSheetTableRow)((DataRowView)grdWorkSummary.Rows[e.RowIndex].DataBoundItem).Row;
+            tmpPredefinedTask.ItemArray = row.ItemArray;
 
-            newPredefinedTasks.Add(tmpPredefinedTask);
+            Context.PredefinedTasks.TimeSheetTable.AddTimeSheetTableRow(tmpPredefinedTask);
+            TimeeXMLService.Instance.SavePredefinedTasks(this.Context.PredefinedTasks);
            
         }
         /// <summary>

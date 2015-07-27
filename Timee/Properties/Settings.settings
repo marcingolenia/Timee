@@ -25,9 +25,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PredefinedTasks" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;Root&gt;
-&lt;/Root&gt;
-</Value>
+      <Value Profile="(Default)">&lt;Root&gt;&lt;/Root&gt;</Value>
     </Setting>
     <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
