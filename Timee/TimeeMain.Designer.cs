@@ -74,6 +74,9 @@ namespace Timee
             this.lGBSExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExcelExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExcell = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuContext = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuTimeSheet = new System.Windows.Forms.ToolStripMenuItem();
             this.calendarColumn1 = new Timee.Controls.CalendarColumn.CalendarColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,9 +89,6 @@ namespace Timee
             this.lblAlarm = new System.Windows.Forms.Label();
             this.lblAlarmValue = new System.Windows.Forms.Label();
             this.alarmTimer = new System.Windows.Forms.Timer(this.components);
-            this.menuExcell = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuContext = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuTimeSheet = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -148,7 +148,6 @@ namespace Timee
             this.grdWorkSummary.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.grdWorkSummary_DataError);
             this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
             this.grdWorkSummary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseDoubleClick);
-            this.grdWorkSummary.SelectionChanged += new System.EventHandler(this.grdWorkSummary_SelectionChanged);
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);
@@ -490,9 +489,8 @@ namespace Timee
             this.mnuSettings,
             this.mnuExcelExport});
             this.lGBSExcelToolStripMenuItem.Name = "lGBSExcelToolStripMenuItem";
-            this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.lGBSExcelToolStripMenuItem.Text = "LGBS Excel";
-            this.lGBSExcelToolStripMenuItem.Click += new System.EventHandler(this.lGBSExcelToolStripMenuItem_Click);
             // 
             // mnuSettings
             // 
@@ -507,6 +505,24 @@ namespace Timee
             this.mnuExcelExport.Size = new System.Drawing.Size(116, 22);
             this.mnuExcelExport.Text = "Export";
             this.mnuExcelExport.Click += new System.EventHandler(this.mnuExcelExport_Click);
+            // 
+            // menuExcell
+            // 
+            this.menuExcell.Name = "menuExcell";
+            this.menuExcell.Size = new System.Drawing.Size(130, 22);
+            this.menuExcell.Text = "Excell";
+            // 
+            // menuContext
+            // 
+            this.menuContext.Name = "menuContext";
+            this.menuContext.Size = new System.Drawing.Size(130, 22);
+            this.menuContext.Text = "Context";
+            // 
+            // menuTimeSheet
+            // 
+            this.menuTimeSheet.Name = "menuTimeSheet";
+            this.menuTimeSheet.Size = new System.Drawing.Size(130, 22);
+            this.menuTimeSheet.Text = "TimeSheet";
             // 
             // calendarColumn1
             // 
@@ -600,24 +616,6 @@ namespace Timee
             // 
             this.alarmTimer.Tick += new System.EventHandler(this.alarmTimer_Tick);
             // 
-            // menuExcell
-            // 
-            this.menuExcell.Name = "menuExcell";
-            this.menuExcell.Size = new System.Drawing.Size(152, 22);
-            this.menuExcell.Text = "Excell";
-            // 
-            // menuContext
-            // 
-            this.menuContext.Name = "menuContext";
-            this.menuContext.Size = new System.Drawing.Size(152, 22);
-            this.menuContext.Text = "Context";
-            // 
-            // menuTimeSheet
-            // 
-            this.menuTimeSheet.Name = "menuTimeSheet";
-            this.menuTimeSheet.Size = new System.Drawing.Size(152, 22);
-            this.menuTimeSheet.Text = "TimeSheet";
-            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,8 +645,10 @@ namespace Timee
             this.Controls.Add(this.grdWorkSummary);
             this.Controls.Add(this.cmbLocations);
             this.Controls.Add(this.mnu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnu;
+            this.MaximizeBox = false;
             this.Name = "TimeeMain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimeeMain_FormClosing);
             this.Load += new System.EventHandler(this.Timee_Load);

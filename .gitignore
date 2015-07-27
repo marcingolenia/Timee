@@ -55,3 +55,10 @@ UpgradeLog.htm
 
 # Click-Once directory
 publish/
+AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+release/Timee.exe
+release/Timee.pdb
+release/Timee.exe
+*.exe

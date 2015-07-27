@@ -55,7 +55,7 @@ namespace Timee
         /// Current cell in which time is being counted.
         /// </summary>
         private DataGridViewCell CurrentTimeCell { get; set; }
-        private DataGridViewCell TmpCurrentTimeCell { get; set; }
+        //private DataGridViewCell TmpCurrentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
 
         //Custom event for handling rows removal
@@ -143,7 +143,6 @@ namespace Timee
                grdWorkSummary.DataSource = timeeDataSet;
                grdWorkSummary.DataMember = "TimeSheetTable";
                this.CurrentTimeCell = grdWorkSummary.Rows[0].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-               this.TmpCurrentTimeCell = this.CurrentTimeCell;
                btnPause.Enabled = true;
                this.btnPause.Text = "Resume";
 
@@ -356,10 +355,6 @@ namespace Timee
         /// <param name="e"></param>
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (this.CurrentTimeCell != this.TmpCurrentTimeCell)
-            {
-                this.CurrentTimeCell = this.TmpCurrentTimeCell;
-            }
             if (this.timer.Enabled)
             {
                
@@ -675,19 +670,6 @@ namespace Timee
         private void grdWorkSummary_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             this.SwitchTimerToRow(e.RowIndex);
-        }
-        /// <summary>
-        /// Setting time counting on clicked row.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void grdWorkSummary_SelectionChanged(object sender, EventArgs e)
-        {
-            if (grdWorkSummary.Rows.Count > 0)
-            {
-                this.TmpCurrentTimeCell =
-                grdWorkSummary.Rows[grdWorkSummary.CurrentCell.RowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName];
-            }
         }
         /// <summary>
         /// Trigger btnDeleteRowClicked/btnSaveRowClicked event if cell is button.
@@ -1116,12 +1098,6 @@ namespace Timee
                 }
             }
         }
-
-        private void lGBSExcelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
     }
 }
