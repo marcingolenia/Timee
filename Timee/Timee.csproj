@@ -111,6 +111,8 @@
     <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -168,6 +170,11 @@
     </Compile>
     <Compile Include="Controls\TimeeEditComponent.Designer.cs">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TimesheetService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\TimeeXMLService.cs" />
     <Compile Include="Dialogs\AboutDialog.cs">
@@ -320,6 +327,188 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\TimesheetService\DataService.wsdl" />
+    <None Include="Service References\TimesheetService\DataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService1.wsdl" />
+    <None Include="Service References\TimesheetService\DataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\DataService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ApproveResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeCommentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeCreativeStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeLocationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangePaymentStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeProjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeSubprojectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ChangeTaskResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_DeleteRecordsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_Project.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_RedirectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ResendForApprovalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_ResendToEmployeeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_SplitRecordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Alt_TimesheetRecord.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ApprovalStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Client.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ConfirmationDate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ContractTitle.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ContractTitleItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ContractTitleStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.CreativeStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.CreativeWork.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.CurrentUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Dashboard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.DeletableLocation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.GetProjectAccountStatusesDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.HistoryRecord.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Inconsistencies.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.IsSoldStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Location.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Person.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.PlanReportGenerationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Project.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectAccountInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectAccountStatuses.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectHistoryRecord.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.ProjectTreeNode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.SoldHours.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.SplitRowsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Status.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Subproject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Summary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Task.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.Timesheeter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.TimesheetRecord.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.TimesheetSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.TimesheetVisualization.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TimesheetService\Timee.TimesheetService.TimesheetWeekSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Timee_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +534,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\timee_347x358.png" />
+    <None Include="Service References\TimesheetService\DataService.disco" />
+    <None Include="Service References\TimesheetService\configuration91.svcinfo" />
+    <None Include="Service References\TimesheetService\configuration.svcinfo" />
+    <None Include="Service References\TimesheetService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="timee.xml" />
     <Content Include="userConfiguration.xml" />
   </ItemGroup>
@@ -373,6 +569,9 @@
       <Project>{28ebd454-1bff-44d8-b387-3983a45b11f5}</Project>
       <Name>TimeeBridge</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TimesheetService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,2130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="/Imports">
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd1" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DataService" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="https://timesheet.lgbs.pl/WS/DataService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/LGBS.Timesheet.DataService.Alt" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DataService_GetProjectTree_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectTree" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectTree_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectTree_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q1:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectsGridData_InputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectsGridData" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectsGridData_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectsGridDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectsGridData_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q2:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateProject_InputMessage">
+    <wsdl:part name="parameters" element="CreateProject" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateProject_OutputMessage">
+    <wsdl:part name="parameters" element="CreateProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateProject_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q3:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ModifyProjectTree_InputMessage">
+    <wsdl:part name="parameters" element="ModifyProjectTree" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ModifyProjectTree_OutputMessage">
+    <wsdl:part name="parameters" element="ModifyProjectTreeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ModifyProjectTree_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q4:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectObservers_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectObservers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectObservers_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectObserversResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectObservers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q5:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountObservers_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountObservers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountObservers_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountObserversResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountObservers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q6:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClients_InputMessage">
+    <wsdl:part name="parameters" element="GetClients" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClients_OutputMessage">
+    <wsdl:part name="parameters" element="GetClientsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClients_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q7:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClient_InputMessage">
+    <wsdl:part name="parameters" element="GetClient" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClient_OutputMessage">
+    <wsdl:part name="parameters" element="GetClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetClient_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q8:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteClient_InputMessage">
+    <wsdl:part name="parameters" element="DeleteClient" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteClient_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteClient_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q9:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateClient_InputMessage">
+    <wsdl:part name="parameters" element="CreateClient" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateClient_OutputMessage">
+    <wsdl:part name="parameters" element="CreateClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CreateClient_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q10:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateClient_InputMessage">
+    <wsdl:part name="parameters" element="UpdateClient" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateClient_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateClient_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q11:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountProjectNames_InputMessage">
+    <wsdl:part name="parameters" element="GetAccountProjectNames" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountProjectNames_OutputMessage">
+    <wsdl:part name="parameters" element="GetAccountProjectNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountProjectNames_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q12:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllAccountManagers_InputMessage">
+    <wsdl:part name="parameters" element="GetAllAccountManagers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllAccountManagers_OutputMessage">
+    <wsdl:part name="parameters" element="GetAllAccountManagersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllAccountManagers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q13:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountManagers_InputMessage">
+    <wsdl:part name="parameters" element="GetAccountManagers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountManagers_OutputMessage">
+    <wsdl:part name="parameters" element="GetAccountManagersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountManagers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q14:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountObservers_InputMessage">
+    <wsdl:part name="parameters" element="GetAccountObservers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountObservers_OutputMessage">
+    <wsdl:part name="parameters" element="GetAccountObserversResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAccountObservers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q15:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccount_InputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectAccount" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccount_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccount_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q16:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProjectAccount_InputMessage">
+    <wsdl:part name="parameters" element="DeleteProjectAccount" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProjectAccount_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteProjectAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProjectAccount_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q17:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetDashboard_InputMessage">
+    <wsdl:part name="parameters" element="GetDashboard" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetDashboard_OutputMessage">
+    <wsdl:part name="parameters" element="GetDashboardResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetDashboard_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q18:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummary_InputMessage">
+    <wsdl:part name="parameters" element="GetSummary" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummary_OutputMessage">
+    <wsdl:part name="parameters" element="GetSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummary_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q19:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_updateGlobalConfirmationDates_InputMessage">
+    <wsdl:part name="parameters" element="updateGlobalConfirmationDates" />
+  </wsdl:message>
+  <wsdl:message name="DataService_updateGlobalConfirmationDates_OutputMessage">
+    <wsdl:part name="parameters" element="updateGlobalConfirmationDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_updateGlobalConfirmationDates_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q20:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_getConfirmationDates_InputMessage">
+    <wsdl:part name="parameters" element="getConfirmationDates" />
+  </wsdl:message>
+  <wsdl:message name="DataService_getConfirmationDates_OutputMessage">
+    <wsdl:part name="parameters" element="getConfirmationDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_getConfirmationDates_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q21:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_PlanReportGeneration_InputMessage">
+    <wsdl:part name="parameters" element="PlanReportGeneration" />
+  </wsdl:message>
+  <wsdl:message name="DataService_PlanReportGeneration_OutputMessage">
+    <wsdl:part name="parameters" element="PlanReportGenerationResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_PlanReportGeneration_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q22:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CloseLastMonth_InputMessage">
+    <wsdl:part name="parameters" element="CloseLastMonth" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CloseLastMonth_OutputMessage">
+    <wsdl:part name="parameters" element="CloseLastMonthResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_CloseLastMonth_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q23:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ClosePreviousYear_InputMessage">
+    <wsdl:part name="parameters" element="ClosePreviousYear" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ClosePreviousYear_OutputMessage">
+    <wsdl:part name="parameters" element="ClosePreviousYearResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_ClosePreviousYear_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q24:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateTimesheetSettings_InputMessage">
+    <wsdl:part name="parameters" element="UpdateTimesheetSettings" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateTimesheetSettings_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateTimesheetSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateTimesheetSettings_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q25:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateLocations_InputMessage">
+    <wsdl:part name="parameters" element="UpdateLocations" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateLocations_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateLocationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateLocations_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q26:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetSettings_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetSettings" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetSettings_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetSettings_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q27:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHoursForTimesheeters_InputMessage">
+    <wsdl:part name="parameters" element="GetHoursForTimesheeters" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHoursForTimesheeters_OutputMessage">
+    <wsdl:part name="parameters" element="GetHoursForTimesheetersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHoursForTimesheeters_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q28:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheeters_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheeters" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheeters_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheeters_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q29:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursDifference_InputMessage">
+    <wsdl:part name="parameters" element="GetSoldHoursDifference" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursDifference_OutputMessage">
+    <wsdl:part name="parameters" element="GetSoldHoursDifferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursDifference_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q30:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursMonths_InputMessage">
+    <wsdl:part name="parameters" element="GetSoldHoursMonths" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursMonths_OutputMessage">
+    <wsdl:part name="parameters" element="GetSoldHoursMonthsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSoldHoursMonths_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q31:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeRange_InputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWorksScopeRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeRange_OutputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWorksScopeRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q32:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeMonth_InputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWorksScopeMonth" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeMonth_OutputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWorksScopeMonthResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWorksScopeMonth_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q33:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWork_InputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWork" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWork_OutputMessage">
+    <wsdl:part name="parameters" element="GetCreativeWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeWork_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q34:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetUpdatedCreativeWork_InputMessage">
+    <wsdl:part name="parameters" element="GetUpdatedCreativeWork" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetUpdatedCreativeWork_OutputMessage">
+    <wsdl:part name="parameters" element="GetUpdatedCreativeWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetUpdatedCreativeWork_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q35:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RefreshCreativeWork_InputMessage">
+    <wsdl:part name="parameters" element="RefreshCreativeWork" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RefreshCreativeWork_OutputMessage">
+    <wsdl:part name="parameters" element="RefreshCreativeWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RefreshCreativeWork_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q36:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateComment_InputMessage">
+    <wsdl:part name="parameters" element="UpdateComment" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateComment_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateComment_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q37:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateCreativeWorkItem_InputMessage">
+    <wsdl:part name="parameters" element="UpdateCreativeWorkItem" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateCreativeWorkItem_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateCreativeWorkItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateCreativeWorkItem_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q38:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsOfficeWorker_InputMessage">
+    <wsdl:part name="parameters" element="IsOfficeWorker" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsOfficeWorker_OutputMessage">
+    <wsdl:part name="parameters" element="IsOfficeWorkerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsOfficeWorker_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q39:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GenerateCreativeWorkRecords_InputMessage">
+    <wsdl:part name="parameters" element="GenerateCreativeWorkRecords" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GenerateCreativeWorkRecords_OutputMessage">
+    <wsdl:part name="parameters" element="GenerateCreativeWorkRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GenerateCreativeWorkRecords_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q40:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLastMonth_InputMessage">
+    <wsdl:part name="parameters" element="GetLastMonth" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLastMonth_OutputMessage">
+    <wsdl:part name="parameters" element="GetLastMonthResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLastMonth_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q41:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForCreativeWorksReport_InputMessage">
+    <wsdl:part name="parameters" element="GetMonthsForCreativeWorksReport" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForCreativeWorksReport_OutputMessage">
+    <wsdl:part name="parameters" element="GetMonthsForCreativeWorksReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForCreativeWorksReport_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q42:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForPersonsCreativeWorksReport_InputMessage">
+    <wsdl:part name="parameters" element="GetMonthsForPersonsCreativeWorksReport" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForPersonsCreativeWorksReport_OutputMessage">
+    <wsdl:part name="parameters" element="GetMonthsForPersonsCreativeWorksReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetMonthsForPersonsCreativeWorksReport_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q43:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteCreativeWork_InputMessage">
+    <wsdl:part name="parameters" element="DeleteCreativeWork" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteCreativeWork_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteCreativeWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteCreativeWork_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q44:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekSummary_InputMessage">
+    <wsdl:part name="parameters" element="GetWeekSummary" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekSummary_OutputMessage">
+    <wsdl:part name="parameters" element="GetWeekSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekSummary_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q45:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekVisualization_InputMessage">
+    <wsdl:part name="parameters" element="GetWeekVisualization" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekVisualization_OutputMessage">
+    <wsdl:part name="parameters" element="GetWeekVisualizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetWeekVisualization_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q46:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetInconsistencies_InputMessage">
+    <wsdl:part name="parameters" element="GetInconsistencies" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetInconsistencies_OutputMessage">
+    <wsdl:part name="parameters" element="GetInconsistenciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetInconsistencies_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q47:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummaryOfInconsistencies_InputMessage">
+    <wsdl:part name="parameters" element="GetSummaryOfInconsistencies" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummaryOfInconsistencies_OutputMessage">
+    <wsdl:part name="parameters" element="GetSummaryOfInconsistenciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetSummaryOfInconsistencies_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q48:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithInconsistencies_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetWithInconsistencies" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithInconsistencies_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetWithInconsistenciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithInconsistencies_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q49:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsAdministrator_InputMessage">
+    <wsdl:part name="parameters" element="IsAdministrator" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsAdministrator_OutputMessage">
+    <wsdl:part name="parameters" element="IsAdministratorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_IsAdministrator_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q50:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusesData_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountStatusesData" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusesData_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountStatusesDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusesData_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q51:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusData_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountStatusData" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusData_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountStatusDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountStatusData_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q52:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccountStatuses_InputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectAccountStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccountStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateProjectAccountStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateProjectAccountStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q53:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertContractTitle_InputMessage">
+    <wsdl:part name="parameters" element="InsertContractTitle" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertContractTitle_OutputMessage">
+    <wsdl:part name="parameters" element="InsertContractTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertContractTitle_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q54:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteContractTitle_InputMessage">
+    <wsdl:part name="parameters" element="DeleteContractTitle" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteContractTitle_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteContractTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteContractTitle_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q55:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateContractTitle_InputMessage">
+    <wsdl:part name="parameters" element="UpdateContractTitle" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateContractTitle_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateContractTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateContractTitle_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q56:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItemsForTitle_InputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleItemsForTitle" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItemsForTitle_OutputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleItemsForTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItemsForTitle_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q57:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItems_InputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleItems" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItems_OutputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleItems_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q58:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitles_InputMessage">
+    <wsdl:part name="parameters" element="GetContractTitles" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitles_OutputMessage">
+    <wsdl:part name="parameters" element="GetContractTitlesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitles_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q59:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetContractTitleStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetContractTitleStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q60:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateEmployeeInfo_InputMessage">
+    <wsdl:part name="parameters" element="UpdateEmployeeInfo" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateEmployeeInfo_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateEmployeeInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateEmployeeInfo_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q61:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetSubprojectId_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetSubprojectId" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetSubprojectId_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetSubprojectIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetSubprojectId_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q62:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableTasks_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetAvailableTasks" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableTasks_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetAvailableTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableTasks_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q63:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableSubprojects_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetAvailableSubprojects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableSubprojects_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetAvailableSubprojectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetAvailableSubprojects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q64:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocations_InputMessage">
+    <wsdl:part name="parameters" element="GetLocations" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocations_OutputMessage">
+    <wsdl:part name="parameters" element="GetLocationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocations_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q65="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q65:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTasks_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTasks" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTasks_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTasks_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q66="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q66:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetProjects_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetProjects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetProjects_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetProjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetProjects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q67="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q67:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetRecord_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetRecord" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetRecord_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetRecord_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q68="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q68:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DuplicateRecord_InputMessage">
+    <wsdl:part name="parameters" element="Alt_DuplicateRecord" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DuplicateRecord_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_DuplicateRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DuplicateRecord_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q69="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q69:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_SplitRecord_InputMessage">
+    <wsdl:part name="parameters" element="Alt_SplitRecord" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_SplitRecord_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_SplitRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_SplitRecord_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q70="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q70:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertFromClipboard_InputMessage">
+    <wsdl:part name="parameters" element="Alt_InsertFromClipboard" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertFromClipboard_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_InsertFromClipboardResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertFromClipboard_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q71="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q71:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertRecords_InputMessage">
+    <wsdl:part name="parameters" element="Alt_InsertRecords" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertRecords_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_InsertRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_InsertRecords_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q72="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q72:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeSubproject_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeSubproject" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeSubproject_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeSubprojectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeSubproject_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q73="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q73:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeProject_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeProject" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeProject_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeProject_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q74="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q74:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeTask_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeTask" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeTask_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeTask_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q75="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q75:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeStatus_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeStatus" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeStatus_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeStatus_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q76="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q76:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_UpdateRecord_InputMessage">
+    <wsdl:part name="parameters" element="Alt_UpdateRecord" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_UpdateRecord_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_UpdateRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_UpdateRecord_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q77="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q77:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithInconsistencies_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetWithInconsistencies" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithInconsistencies_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetWithInconsistenciesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithInconsistencies_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q78="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q78:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRange_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRange_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q79="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q79:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRangeN_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdRangeN" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRangeN_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdRangeNResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRangeN_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q80="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q80:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRange_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRange_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q81="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q81:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRangeN_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeRangeN" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRangeN_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeRangeNResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeRangeN_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q82="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q82:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeCustomRange_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeCustomRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeCustomRange_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeCustomRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeCustomRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q83="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q83:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdCustomRange_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdCustomRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdCustomRange_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetScopeIdCustomRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetScopeIdCustomRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q84="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q84:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithErrors_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetWithErrors" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithErrors_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetWithErrorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetWithErrors_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q85="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q85:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetToCorrect_InputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetToCorrect" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetToCorrect_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_GetTimesheetToCorrectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_GetTimesheetToCorrect_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q86="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q86:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DeleteRecords_InputMessage">
+    <wsdl:part name="parameters" element="Alt_DeleteRecords" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DeleteRecords_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_DeleteRecordsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_DeleteRecords_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q87="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q87:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeLocation_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeLocation" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeLocation_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeLocation_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q88="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q88:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeCreativeStatus_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeCreativeStatus" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeCreativeStatus_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeCreativeStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeCreativeStatus_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q89="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q89:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeComment_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeComment" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeComment_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangeCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangeComment_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q90="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q90:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangePaymentStatus_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangePaymentStatus" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangePaymentStatus_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ChangePaymentStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ChangePaymentStatus_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q91="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q91:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Redirect_InputMessage">
+    <wsdl:part name="parameters" element="Alt_Redirect" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Redirect_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_RedirectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Redirect_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q92="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q92:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendForApproval_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ResendForApproval" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendForApproval_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ResendForApprovalResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendForApproval_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q93="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q93:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendToEmployee_InputMessage">
+    <wsdl:part name="parameters" element="Alt_ResendToEmployee" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendToEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ResendToEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_ResendToEmployee_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q94="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q94:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Approve_InputMessage">
+    <wsdl:part name="parameters" element="Alt_Approve" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Approve_OutputMessage">
+    <wsdl:part name="parameters" element="Alt_ApproveResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Alt_Approve_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q95="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q95:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="GetCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="GetCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCurrentUser_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q96="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q96:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableContexts_InputMessage">
+    <wsdl:part name="parameters" element="GetAvailableContexts" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableContexts_OutputMessage">
+    <wsdl:part name="parameters" element="GetAvailableContextsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableContexts_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q97="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q97:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentProjects_InputMessage">
+    <wsdl:part name="parameters" element="GetRecentProjects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentProjects_OutputMessage">
+    <wsdl:part name="parameters" element="GetRecentProjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentProjects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q98="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q98:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentLocations_InputMessage">
+    <wsdl:part name="parameters" element="GetRecentLocations" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentLocations_OutputMessage">
+    <wsdl:part name="parameters" element="GetRecentLocationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentLocations_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q99="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q99:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentSubprojects_InputMessage">
+    <wsdl:part name="parameters" element="GetRecentSubprojects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentSubprojects_OutputMessage">
+    <wsdl:part name="parameters" element="GetRecentSubprojectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentSubprojects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q100="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q100:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentTasks_InputMessage">
+    <wsdl:part name="parameters" element="GetRecentTasks" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentTasks_OutputMessage">
+    <wsdl:part name="parameters" element="GetRecentTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentTasks_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q101="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q101:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentComments_InputMessage">
+    <wsdl:part name="parameters" element="GetRecentComments" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentComments_OutputMessage">
+    <wsdl:part name="parameters" element="GetRecentCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRecentComments_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q102="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q102:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRange_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRange_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q103="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q103:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetTest_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetTest" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetTest_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetTest_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q104="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q104:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRangeN_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdRangeN" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRangeN_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdRangeNResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRangeN_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q105="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q105:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRange_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRange_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q106="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q106:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRangeN_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeRangeN" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRangeN_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeRangeNResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeRangeN_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q107="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q107:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeCustomRange_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeCustomRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeCustomRange_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeCustomRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeCustomRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q108="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q108:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdCustomRange_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdCustomRange" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdCustomRange_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetScopeIdCustomRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetScopeIdCustomRange_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q109="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q109:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithErrors_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetWithErrors" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithErrors_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetWithErrorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetWithErrors_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q110="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q110:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetToCorrect_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetToCorrect" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetToCorrect_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetToCorrectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetToCorrect_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q111="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q111:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPendingItemsCount_InputMessage">
+    <wsdl:part name="parameters" element="GetPendingItemsCount" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPendingItemsCount_OutputMessage">
+    <wsdl:part name="parameters" element="GetPendingItemsCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPendingItemsCount_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q112="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q112:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetForMyApprovalCount_InputMessage">
+    <wsdl:part name="parameters" element="GetForMyApprovalCount" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetForMyApprovalCount_OutputMessage">
+    <wsdl:part name="parameters" element="GetForMyApprovalCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetForMyApprovalCount_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q113="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q113:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetCreativeStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetCreativeStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetCreativeStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q114="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q114:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjects_InputMessage">
+    <wsdl:part name="parameters" element="GetProjects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjects_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q115="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q115:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectsInfo_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectsInfo" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectsInfo_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectsInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectsInfo_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q116="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q116:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPersons_InputMessage">
+    <wsdl:part name="parameters" element="GetPersons" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPersons_OutputMessage">
+    <wsdl:part name="parameters" element="GetPersonsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetPersons_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q117="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q117:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetPersons_InputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetPersons" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetPersons_OutputMessage">
+    <wsdl:part name="parameters" element="GetTimesheetPersonsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetTimesheetPersons_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q118="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q118:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllTimesheeters_InputMessage">
+    <wsdl:part name="parameters" element="GetAllTimesheeters" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllTimesheeters_OutputMessage">
+    <wsdl:part name="parameters" element="GetAllTimesheetersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllTimesheeters_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q119="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q119:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableSubprojects_InputMessage">
+    <wsdl:part name="parameters" element="GetAvailableSubprojects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableSubprojects_OutputMessage">
+    <wsdl:part name="parameters" element="GetAvailableSubprojectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableSubprojects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q120="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q120:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetApprovalStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetApprovalStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetApprovalStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetApprovalStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetApprovalStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q121="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q121:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocationsWithCanBeDeleted_InputMessage">
+    <wsdl:part name="parameters" element="GetLocationsWithCanBeDeleted" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocationsWithCanBeDeleted_OutputMessage">
+    <wsdl:part name="parameters" element="GetLocationsWithCanBeDeletedResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetLocationsWithCanBeDeleted_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q122="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q122:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q123="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q123:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetIsSoldStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetIsSoldStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetIsSoldStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetIsSoldStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetIsSoldStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q124="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q124:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Approve_InputMessage">
+    <wsdl:part name="parameters" element="Approve" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Approve_OutputMessage">
+    <wsdl:part name="parameters" element="ApproveResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Approve_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q125="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q125:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Paste_InputMessage">
+    <wsdl:part name="parameters" element="Paste" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Paste_OutputMessage">
+    <wsdl:part name="parameters" element="PasteResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_Paste_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q126="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q126:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRows_InputMessage">
+    <wsdl:part name="parameters" element="UpdateRows" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRows_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRows_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q127="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q127:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRow_InputMessage">
+    <wsdl:part name="parameters" element="UpdateRow" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRow_OutputMessage">
+    <wsdl:part name="parameters" element="UpdateRowResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_UpdateRow_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q128="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q128:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRow_InputMessage">
+    <wsdl:part name="parameters" element="GetRow" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRow_OutputMessage">
+    <wsdl:part name="parameters" element="GetRowResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRow_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q129="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q129:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRows_InputMessage">
+    <wsdl:part name="parameters" element="GetRows" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRows_OutputMessage">
+    <wsdl:part name="parameters" element="GetRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetRows_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q130="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q130:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHistory_InputMessage">
+    <wsdl:part name="parameters" element="GetHistory" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHistory_OutputMessage">
+    <wsdl:part name="parameters" element="GetHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetHistory_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q131="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q131:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectHistory_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectHistory" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectHistory_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectHistory_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q132="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q132:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_SplitRows_InputMessage">
+    <wsdl:part name="parameters" element="SplitRows" />
+  </wsdl:message>
+  <wsdl:message name="DataService_SplitRows_OutputMessage">
+    <wsdl:part name="parameters" element="SplitRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_SplitRows_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q133="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q133:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertRows_InputMessage">
+    <wsdl:part name="parameters" element="InsertRows" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertRows_OutputMessage">
+    <wsdl:part name="parameters" element="InsertRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_InsertRows_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q134="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q134:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteRows_InputMessage">
+    <wsdl:part name="parameters" element="DeleteRows" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteRows_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteRowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteRows_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q135="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q135:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableTasks_InputMessage">
+    <wsdl:part name="parameters" element="GetAvailableTasks" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableTasks_OutputMessage">
+    <wsdl:part name="parameters" element="GetAvailableTasksResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAvailableTasks_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q136="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q136:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveTasksAssignment_InputMessage">
+    <wsdl:part name="parameters" element="RemoveTasksAssignment" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveTasksAssignment_OutputMessage">
+    <wsdl:part name="parameters" element="RemoveTasksAssignmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveTasksAssignment_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q137="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q137:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojectsAssignment_InputMessage">
+    <wsdl:part name="parameters" element="RemoveSubprojectsAssignment" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojectsAssignment_OutputMessage">
+    <wsdl:part name="parameters" element="RemoveSubprojectsAssignmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojectsAssignment_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q138="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q138:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojects_InputMessage">
+    <wsdl:part name="parameters" element="RemoveSubprojects" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojects_OutputMessage">
+    <wsdl:part name="parameters" element="RemoveSubprojectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveSubprojects_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q139="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q139:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetGlobalManagers_InputMessage">
+    <wsdl:part name="parameters" element="GetGlobalManagers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetGlobalManagers_OutputMessage">
+    <wsdl:part name="parameters" element="GetGlobalManagersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetGlobalManagers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q140="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q140:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllButGlobalManagers_InputMessage">
+    <wsdl:part name="parameters" element="GetAllButGlobalManagers" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllButGlobalManagers_OutputMessage">
+    <wsdl:part name="parameters" element="GetAllButGlobalManagersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetAllButGlobalManagers_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q141="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q141:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveGlobalManager_InputMessage">
+    <wsdl:part name="parameters" element="RemoveGlobalManager" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveGlobalManager_OutputMessage">
+    <wsdl:part name="parameters" element="RemoveGlobalManagerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveGlobalManager_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q142="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q142:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveProjectAccountObserver_InputMessage">
+    <wsdl:part name="parameters" element="RemoveProjectAccountObserver" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveProjectAccountObserver_OutputMessage">
+    <wsdl:part name="parameters" element="RemoveProjectAccountObserverResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_RemoveProjectAccountObserver_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q143="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q143:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddProjectAccountObservator_InputMessage">
+    <wsdl:part name="parameters" element="AddProjectAccountObservator" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddProjectAccountObservator_OutputMessage">
+    <wsdl:part name="parameters" element="AddProjectAccountObservatorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddProjectAccountObservator_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q144="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q144:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddGlobalManager_InputMessage">
+    <wsdl:part name="parameters" element="AddGlobalManager" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddGlobalManager_OutputMessage">
+    <wsdl:part name="parameters" element="AddGlobalManagerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_AddGlobalManager_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q145="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q145:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectStatuses_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectStatuses" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectStatusesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectStatuses_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q146="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q146:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccounts_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccounts" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccounts_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q147="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q147:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountsInfo_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountsInfo" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountsInfo_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountsInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccountsInfo_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q148="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q148:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccount_InputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccount" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccount_OutputMessage">
+    <wsdl:part name="parameters" element="GetProjectAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetProjectAccount_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q149="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q149:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProject_InputMessage">
+    <wsdl:part name="parameters" element="DeleteProject" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProject_OutputMessage">
+    <wsdl:part name="parameters" element="DeleteProjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_DeleteProject_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q150="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q150:StandardFault" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetActualHours_InputMessage">
+    <wsdl:part name="parameters" element="GetActualHours" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetActualHours_OutputMessage">
+    <wsdl:part name="parameters" element="GetActualHoursResponse" />
+  </wsdl:message>
+  <wsdl:message name="DataService_GetActualHours_StandardFaultFault_FaultMessage">
+    <wsdl:part xmlns:q151="http://schemas.datacontract.org/2004/07/DataService" name="detail" element="q151:StandardFault" />
+  </wsdl:message>
+  <wsdl:portType name="DataService">
+    <wsdl:operation name="GetProjectTree">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectTree" message="DataService_GetProjectTree_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectTreeResponse" message="DataService_GetProjectTree_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectTreeStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectTree_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProjectsGridData">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateProjectsGridData" message="DataService_UpdateProjectsGridData_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateProjectsGridDataResponse" message="DataService_UpdateProjectsGridData_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateProjectsGridDataStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateProjectsGridData_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateProject">
+      <wsdl:input wsaw:Action="urn:DataService/CreateProject" message="DataService_CreateProject_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/CreateProjectResponse" message="DataService_CreateProject_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/CreateProjectStandardFaultFault" name="StandardFaultFault" message="DataService_CreateProject_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModifyProjectTree">
+      <wsdl:input wsaw:Action="urn:DataService/ModifyProjectTree" message="DataService_ModifyProjectTree_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/ModifyProjectTreeResponse" message="DataService_ModifyProjectTree_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/ModifyProjectTreeStandardFaultFault" name="StandardFaultFault" message="DataService_ModifyProjectTree_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectObservers">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectObservers" message="DataService_GetProjectObservers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectObserversResponse" message="DataService_GetProjectObservers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectObserversStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectObservers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccountObservers">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccountObservers" message="DataService_GetProjectAccountObservers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountObserversResponse" message="DataService_GetProjectAccountObservers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountObserversStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccountObservers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClients">
+      <wsdl:input wsaw:Action="urn:DataService/GetClients" message="DataService_GetClients_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetClientsResponse" message="DataService_GetClients_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetClientsStandardFaultFault" name="StandardFaultFault" message="DataService_GetClients_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClient">
+      <wsdl:input wsaw:Action="urn:DataService/GetClient" message="DataService_GetClient_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetClientResponse" message="DataService_GetClient_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetClientStandardFaultFault" name="StandardFaultFault" message="DataService_GetClient_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteClient">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteClient" message="DataService_DeleteClient_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteClientResponse" message="DataService_DeleteClient_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteClientStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteClient_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateClient">
+      <wsdl:input wsaw:Action="urn:DataService/CreateClient" message="DataService_CreateClient_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/CreateClientResponse" message="DataService_CreateClient_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/CreateClientStandardFaultFault" name="StandardFaultFault" message="DataService_CreateClient_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClient">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateClient" message="DataService_UpdateClient_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateClientResponse" message="DataService_UpdateClient_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateClientStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateClient_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountProjectNames">
+      <wsdl:input wsaw:Action="urn:DataService/GetAccountProjectNames" message="DataService_GetAccountProjectNames_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAccountProjectNamesResponse" message="DataService_GetAccountProjectNames_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAccountProjectNamesStandardFaultFault" name="StandardFaultFault" message="DataService_GetAccountProjectNames_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAccountManagers">
+      <wsdl:input wsaw:Action="urn:DataService/GetAllAccountManagers" message="DataService_GetAllAccountManagers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAllAccountManagersResponse" message="DataService_GetAllAccountManagers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAllAccountManagersStandardFaultFault" name="StandardFaultFault" message="DataService_GetAllAccountManagers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountManagers">
+      <wsdl:input wsaw:Action="urn:DataService/GetAccountManagers" message="DataService_GetAccountManagers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAccountManagersResponse" message="DataService_GetAccountManagers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAccountManagersStandardFaultFault" name="StandardFaultFault" message="DataService_GetAccountManagers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountObservers">
+      <wsdl:input wsaw:Action="urn:DataService/GetAccountObservers" message="DataService_GetAccountObservers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAccountObserversResponse" message="DataService_GetAccountObservers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAccountObserversStandardFaultFault" name="StandardFaultFault" message="DataService_GetAccountObservers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProjectAccount">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateProjectAccount" message="DataService_UpdateProjectAccount_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateProjectAccountResponse" message="DataService_UpdateProjectAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateProjectAccountStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateProjectAccount_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProjectAccount">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteProjectAccount" message="DataService_DeleteProjectAccount_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteProjectAccountResponse" message="DataService_DeleteProjectAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteProjectAccountStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteProjectAccount_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDashboard">
+      <wsdl:input wsaw:Action="urn:DataService/GetDashboard" message="DataService_GetDashboard_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetDashboardResponse" message="DataService_GetDashboard_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetDashboardStandardFaultFault" name="StandardFaultFault" message="DataService_GetDashboard_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSummary">
+      <wsdl:input wsaw:Action="urn:DataService/GetSummary" message="DataService_GetSummary_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetSummaryResponse" message="DataService_GetSummary_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetSummaryStandardFaultFault" name="StandardFaultFault" message="DataService_GetSummary_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateGlobalConfirmationDates">
+      <wsdl:input wsaw:Action="urn:DataService/updateGlobalConfirmationDates" message="DataService_updateGlobalConfirmationDates_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/updateGlobalConfirmationDatesResponse" message="DataService_updateGlobalConfirmationDates_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/updateGlobalConfirmationDatesStandardFaultFault" name="StandardFaultFault" message="DataService_updateGlobalConfirmationDates_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getConfirmationDates">
+      <wsdl:input wsaw:Action="urn:DataService/getConfirmationDates" message="DataService_getConfirmationDates_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/getConfirmationDatesResponse" message="DataService_getConfirmationDates_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/getConfirmationDatesStandardFaultFault" name="StandardFaultFault" message="DataService_getConfirmationDates_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PlanReportGeneration">
+      <wsdl:input wsaw:Action="urn:DataService/PlanReportGeneration" message="DataService_PlanReportGeneration_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/PlanReportGenerationResponse" message="DataService_PlanReportGeneration_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/PlanReportGenerationStandardFaultFault" name="StandardFaultFault" message="DataService_PlanReportGeneration_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseLastMonth">
+      <wsdl:input wsaw:Action="urn:DataService/CloseLastMonth" message="DataService_CloseLastMonth_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/CloseLastMonthResponse" message="DataService_CloseLastMonth_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/CloseLastMonthStandardFaultFault" name="StandardFaultFault" message="DataService_CloseLastMonth_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClosePreviousYear">
+      <wsdl:input wsaw:Action="urn:DataService/ClosePreviousYear" message="DataService_ClosePreviousYear_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/ClosePreviousYearResponse" message="DataService_ClosePreviousYear_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/ClosePreviousYearStandardFaultFault" name="StandardFaultFault" message="DataService_ClosePreviousYear_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTimesheetSettings">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateTimesheetSettings" message="DataService_UpdateTimesheetSettings_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateTimesheetSettingsResponse" message="DataService_UpdateTimesheetSettings_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateTimesheetSettingsStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateTimesheetSettings_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLocations">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateLocations" message="DataService_UpdateLocations_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateLocationsResponse" message="DataService_UpdateLocations_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateLocationsStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateLocations_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetSettings">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetSettings" message="DataService_GetTimesheetSettings_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetSettingsResponse" message="DataService_GetTimesheetSettings_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetSettingsStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetSettings_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHoursForTimesheeters">
+      <wsdl:input wsaw:Action="urn:DataService/GetHoursForTimesheeters" message="DataService_GetHoursForTimesheeters_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetHoursForTimesheetersResponse" message="DataService_GetHoursForTimesheeters_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetHoursForTimesheetersStandardFaultFault" name="StandardFaultFault" message="DataService_GetHoursForTimesheeters_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheeters">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheeters" message="DataService_GetTimesheeters_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetersResponse" message="DataService_GetTimesheeters_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetersStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheeters_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSoldHoursDifference">
+      <wsdl:input wsaw:Action="urn:DataService/GetSoldHoursDifference" message="DataService_GetSoldHoursDifference_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetSoldHoursDifferenceResponse" message="DataService_GetSoldHoursDifference_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetSoldHoursDifferenceStandardFaultFault" name="StandardFaultFault" message="DataService_GetSoldHoursDifference_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSoldHoursMonths">
+      <wsdl:input wsaw:Action="urn:DataService/GetSoldHoursMonths" message="DataService_GetSoldHoursMonths_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetSoldHoursMonthsResponse" message="DataService_GetSoldHoursMonths_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetSoldHoursMonthsStandardFaultFault" name="StandardFaultFault" message="DataService_GetSoldHoursMonths_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreativeWorksScopeRange">
+      <wsdl:input wsaw:Action="urn:DataService/GetCreativeWorksScopeRange" message="DataService_GetCreativeWorksScopeRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetCreativeWorksScopeRangeResponse" message="DataService_GetCreativeWorksScopeRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetCreativeWorksScopeRangeStandardFaultFault" name="StandardFaultFault" message="DataService_GetCreativeWorksScopeRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreativeWorksScopeMonth">
+      <wsdl:input wsaw:Action="urn:DataService/GetCreativeWorksScopeMonth" message="DataService_GetCreativeWorksScopeMonth_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetCreativeWorksScopeMonthResponse" message="DataService_GetCreativeWorksScopeMonth_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetCreativeWorksScopeMonthStandardFaultFault" name="StandardFaultFault" message="DataService_GetCreativeWorksScopeMonth_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreativeWork">
+      <wsdl:input wsaw:Action="urn:DataService/GetCreativeWork" message="DataService_GetCreativeWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetCreativeWorkResponse" message="DataService_GetCreativeWork_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetCreativeWorkStandardFaultFault" name="StandardFaultFault" message="DataService_GetCreativeWork_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUpdatedCreativeWork">
+      <wsdl:input wsaw:Action="urn:DataService/GetUpdatedCreativeWork" message="DataService_GetUpdatedCreativeWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetUpdatedCreativeWorkResponse" message="DataService_GetUpdatedCreativeWork_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetUpdatedCreativeWorkStandardFaultFault" name="StandardFaultFault" message="DataService_GetUpdatedCreativeWork_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshCreativeWork">
+      <wsdl:input wsaw:Action="urn:DataService/RefreshCreativeWork" message="DataService_RefreshCreativeWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RefreshCreativeWorkResponse" message="DataService_RefreshCreativeWork_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RefreshCreativeWorkStandardFaultFault" name="StandardFaultFault" message="DataService_RefreshCreativeWork_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateComment">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateComment" message="DataService_UpdateComment_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateCommentResponse" message="DataService_UpdateComment_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateCommentStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateComment_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCreativeWorkItem">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateCreativeWorkItem" message="DataService_UpdateCreativeWorkItem_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateCreativeWorkItemResponse" message="DataService_UpdateCreativeWorkItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateCreativeWorkItemStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateCreativeWorkItem_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsOfficeWorker">
+      <wsdl:input wsaw:Action="urn:DataService/IsOfficeWorker" message="DataService_IsOfficeWorker_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/IsOfficeWorkerResponse" message="DataService_IsOfficeWorker_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/IsOfficeWorkerStandardFaultFault" name="StandardFaultFault" message="DataService_IsOfficeWorker_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCreativeWorkRecords">
+      <wsdl:input wsaw:Action="urn:DataService/GenerateCreativeWorkRecords" message="DataService_GenerateCreativeWorkRecords_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GenerateCreativeWorkRecordsResponse" message="DataService_GenerateCreativeWorkRecords_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GenerateCreativeWorkRecordsStandardFaultFault" name="StandardFaultFault" message="DataService_GenerateCreativeWorkRecords_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastMonth">
+      <wsdl:input wsaw:Action="urn:DataService/GetLastMonth" message="DataService_GetLastMonth_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetLastMonthResponse" message="DataService_GetLastMonth_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetLastMonthStandardFaultFault" name="StandardFaultFault" message="DataService_GetLastMonth_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMonthsForCreativeWorksReport">
+      <wsdl:input wsaw:Action="urn:DataService/GetMonthsForCreativeWorksReport" message="DataService_GetMonthsForCreativeWorksReport_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetMonthsForCreativeWorksReportResponse" message="DataService_GetMonthsForCreativeWorksReport_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetMonthsForCreativeWorksReportStandardFaultFault" name="StandardFaultFault" message="DataService_GetMonthsForCreativeWorksReport_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMonthsForPersonsCreativeWorksReport">
+      <wsdl:input wsaw:Action="urn:DataService/GetMonthsForPersonsCreativeWorksReport" message="DataService_GetMonthsForPersonsCreativeWorksReport_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetMonthsForPersonsCreativeWorksReportResponse" message="DataService_GetMonthsForPersonsCreativeWorksReport_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetMonthsForPersonsCreativeWorksReportStandardFaultFault" name="StandardFaultFault" message="DataService_GetMonthsForPersonsCreativeWorksReport_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCreativeWork">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteCreativeWork" message="DataService_DeleteCreativeWork_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteCreativeWorkResponse" message="DataService_DeleteCreativeWork_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteCreativeWorkStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteCreativeWork_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWeekSummary">
+      <wsdl:input wsaw:Action="urn:DataService/GetWeekSummary" message="DataService_GetWeekSummary_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetWeekSummaryResponse" message="DataService_GetWeekSummary_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetWeekSummaryStandardFaultFault" name="StandardFaultFault" message="DataService_GetWeekSummary_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWeekVisualization">
+      <wsdl:input wsaw:Action="urn:DataService/GetWeekVisualization" message="DataService_GetWeekVisualization_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetWeekVisualizationResponse" message="DataService_GetWeekVisualization_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetWeekVisualizationStandardFaultFault" name="StandardFaultFault" message="DataService_GetWeekVisualization_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInconsistencies">
+      <wsdl:input wsaw:Action="urn:DataService/GetInconsistencies" message="DataService_GetInconsistencies_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetInconsistenciesResponse" message="DataService_GetInconsistencies_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetInconsistenciesStandardFaultFault" name="StandardFaultFault" message="DataService_GetInconsistencies_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSummaryOfInconsistencies">
+      <wsdl:input wsaw:Action="urn:DataService/GetSummaryOfInconsistencies" message="DataService_GetSummaryOfInconsistencies_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetSummaryOfInconsistenciesResponse" message="DataService_GetSummaryOfInconsistencies_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetSummaryOfInconsistenciesStandardFaultFault" name="StandardFaultFault" message="DataService_GetSummaryOfInconsistencies_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetWithInconsistencies">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetWithInconsistencies" message="DataService_GetTimesheetWithInconsistencies_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetWithInconsistenciesResponse" message="DataService_GetTimesheetWithInconsistencies_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetWithInconsistenciesStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetWithInconsistencies_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsAdministrator">
+      <wsdl:input wsaw:Action="urn:DataService/IsAdministrator" message="DataService_IsAdministrator_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/IsAdministratorResponse" message="DataService_IsAdministrator_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/IsAdministratorStandardFaultFault" name="StandardFaultFault" message="DataService_IsAdministrator_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccountStatusesData">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccountStatusesData" message="DataService_GetProjectAccountStatusesData_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountStatusesDataResponse" message="DataService_GetProjectAccountStatusesData_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountStatusesDataStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccountStatusesData_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccountStatusData">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccountStatusData" message="DataService_GetProjectAccountStatusData_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountStatusDataResponse" message="DataService_GetProjectAccountStatusData_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountStatusDataStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccountStatusData_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProjectAccountStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateProjectAccountStatuses" message="DataService_UpdateProjectAccountStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateProjectAccountStatusesResponse" message="DataService_UpdateProjectAccountStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateProjectAccountStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateProjectAccountStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertContractTitle">
+      <wsdl:input wsaw:Action="urn:DataService/InsertContractTitle" message="DataService_InsertContractTitle_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/InsertContractTitleResponse" message="DataService_InsertContractTitle_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/InsertContractTitleStandardFaultFault" name="StandardFaultFault" message="DataService_InsertContractTitle_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContractTitle">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteContractTitle" message="DataService_DeleteContractTitle_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteContractTitleResponse" message="DataService_DeleteContractTitle_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteContractTitleStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteContractTitle_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContractTitle">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateContractTitle" message="DataService_UpdateContractTitle_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateContractTitleResponse" message="DataService_UpdateContractTitle_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateContractTitleStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateContractTitle_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractTitleItemsForTitle">
+      <wsdl:input wsaw:Action="urn:DataService/GetContractTitleItemsForTitle" message="DataService_GetContractTitleItemsForTitle_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetContractTitleItemsForTitleResponse" message="DataService_GetContractTitleItemsForTitle_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetContractTitleItemsForTitleStandardFaultFault" name="StandardFaultFault" message="DataService_GetContractTitleItemsForTitle_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractTitleItems">
+      <wsdl:input wsaw:Action="urn:DataService/GetContractTitleItems" message="DataService_GetContractTitleItems_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetContractTitleItemsResponse" message="DataService_GetContractTitleItems_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetContractTitleItemsStandardFaultFault" name="StandardFaultFault" message="DataService_GetContractTitleItems_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractTitles">
+      <wsdl:input wsaw:Action="urn:DataService/GetContractTitles" message="DataService_GetContractTitles_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetContractTitlesResponse" message="DataService_GetContractTitles_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetContractTitlesStandardFaultFault" name="StandardFaultFault" message="DataService_GetContractTitles_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractTitleStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetContractTitleStatuses" message="DataService_GetContractTitleStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetContractTitleStatusesResponse" message="DataService_GetContractTitleStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetContractTitleStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetContractTitleStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEmployeeInfo">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateEmployeeInfo" message="DataService_UpdateEmployeeInfo_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateEmployeeInfoResponse" message="DataService_UpdateEmployeeInfo_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateEmployeeInfoStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateEmployeeInfo_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetSubprojectId">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetSubprojectId" message="DataService_Alt_GetSubprojectId_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetSubprojectIdResponse" message="DataService_Alt_GetSubprojectId_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetSubprojectIdStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetSubprojectId_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetAvailableTasks">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetAvailableTasks" message="DataService_Alt_GetAvailableTasks_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetAvailableTasksResponse" message="DataService_Alt_GetAvailableTasks_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetAvailableTasksStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetAvailableTasks_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetAvailableSubprojects">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetAvailableSubprojects" message="DataService_Alt_GetAvailableSubprojects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetAvailableSubprojectsResponse" message="DataService_Alt_GetAvailableSubprojects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetAvailableSubprojectsStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetAvailableSubprojects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocations">
+      <wsdl:input wsaw:Action="urn:DataService/GetLocations" message="DataService_GetLocations_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetLocationsResponse" message="DataService_GetLocations_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetLocationsStandardFaultFault" name="StandardFaultFault" message="DataService_GetLocations_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTasks">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTasks" message="DataService_Alt_GetTasks_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTasksResponse" message="DataService_Alt_GetTasks_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTasksStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTasks_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetProjects">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetProjects" message="DataService_Alt_GetProjects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetProjectsResponse" message="DataService_Alt_GetProjects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetProjectsStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetProjects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetRecord">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetRecord" message="DataService_Alt_GetTimesheetRecord_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetRecordResponse" message="DataService_Alt_GetTimesheetRecord_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetRecordStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetRecord_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_DuplicateRecord">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_DuplicateRecord" message="DataService_Alt_DuplicateRecord_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_DuplicateRecordResponse" message="DataService_Alt_DuplicateRecord_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_DuplicateRecordStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_DuplicateRecord_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_SplitRecord">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_SplitRecord" message="DataService_Alt_SplitRecord_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_SplitRecordResponse" message="DataService_Alt_SplitRecord_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_SplitRecordStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_SplitRecord_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_InsertFromClipboard">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_InsertFromClipboard" message="DataService_Alt_InsertFromClipboard_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_InsertFromClipboardResponse" message="DataService_Alt_InsertFromClipboard_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_InsertFromClipboardStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_InsertFromClipboard_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_InsertRecords">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_InsertRecords" message="DataService_Alt_InsertRecords_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_InsertRecordsResponse" message="DataService_Alt_InsertRecords_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_InsertRecordsStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_InsertRecords_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeSubproject">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeSubproject" message="DataService_Alt_ChangeSubproject_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeSubprojectResponse" message="DataService_Alt_ChangeSubproject_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeSubprojectStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeSubproject_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeProject">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeProject" message="DataService_Alt_ChangeProject_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeProjectResponse" message="DataService_Alt_ChangeProject_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeProjectStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeProject_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeTask">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeTask" message="DataService_Alt_ChangeTask_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeTaskResponse" message="DataService_Alt_ChangeTask_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeTaskStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeTask_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeStatus">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeStatus" message="DataService_Alt_ChangeStatus_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeStatusResponse" message="DataService_Alt_ChangeStatus_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeStatusStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeStatus_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_UpdateRecord">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_UpdateRecord" message="DataService_Alt_UpdateRecord_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_UpdateRecordResponse" message="DataService_Alt_UpdateRecord_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_UpdateRecordStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_UpdateRecord_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetWithInconsistencies">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetWithInconsistencies" message="DataService_Alt_GetTimesheetWithInconsistencies_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetWithInconsistenciesResponse" message="DataService_Alt_GetTimesheetWithInconsistencies_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetWithInconsistenciesStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetWithInconsistencies_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeRange">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRange" message="DataService_Alt_GetTimesheetScopeRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRangeResponse" message="DataService_Alt_GetTimesheetScopeRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRangeStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeIdRangeN">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRangeN" message="DataService_Alt_GetTimesheetScopeIdRangeN_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRangeNResponse" message="DataService_Alt_GetTimesheetScopeIdRangeN_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRangeNStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeIdRangeN_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeIdRange">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRange" message="DataService_Alt_GetTimesheetScopeIdRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRangeResponse" message="DataService_Alt_GetTimesheetScopeIdRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdRangeStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeIdRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeRangeN">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRangeN" message="DataService_Alt_GetTimesheetScopeRangeN_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRangeNResponse" message="DataService_Alt_GetTimesheetScopeRangeN_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeRangeNStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeRangeN_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeCustomRange">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeCustomRange" message="DataService_Alt_GetTimesheetScopeCustomRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeCustomRangeResponse" message="DataService_Alt_GetTimesheetScopeCustomRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeCustomRangeStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeCustomRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetScopeIdCustomRange">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdCustomRange" message="DataService_Alt_GetTimesheetScopeIdCustomRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdCustomRangeResponse" message="DataService_Alt_GetTimesheetScopeIdCustomRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetScopeIdCustomRangeStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetScopeIdCustomRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetWithErrors">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetWithErrors" message="DataService_Alt_GetTimesheetWithErrors_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetWithErrorsResponse" message="DataService_Alt_GetTimesheetWithErrors_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetWithErrorsStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetWithErrors_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_GetTimesheetToCorrect">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_GetTimesheetToCorrect" message="DataService_Alt_GetTimesheetToCorrect_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_GetTimesheetToCorrectResponse" message="DataService_Alt_GetTimesheetToCorrect_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_GetTimesheetToCorrectStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_GetTimesheetToCorrect_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_DeleteRecords">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_DeleteRecords" message="DataService_Alt_DeleteRecords_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_DeleteRecordsResponse" message="DataService_Alt_DeleteRecords_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_DeleteRecordsStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_DeleteRecords_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeLocation">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeLocation" message="DataService_Alt_ChangeLocation_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeLocationResponse" message="DataService_Alt_ChangeLocation_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeLocationStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeLocation_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeCreativeStatus">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeCreativeStatus" message="DataService_Alt_ChangeCreativeStatus_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeCreativeStatusResponse" message="DataService_Alt_ChangeCreativeStatus_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeCreativeStatusStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeCreativeStatus_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangeComment">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangeComment" message="DataService_Alt_ChangeComment_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangeCommentResponse" message="DataService_Alt_ChangeComment_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangeCommentStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangeComment_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ChangePaymentStatus">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ChangePaymentStatus" message="DataService_Alt_ChangePaymentStatus_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ChangePaymentStatusResponse" message="DataService_Alt_ChangePaymentStatus_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ChangePaymentStatusStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ChangePaymentStatus_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_Redirect">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_Redirect" message="DataService_Alt_Redirect_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_RedirectResponse" message="DataService_Alt_Redirect_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_RedirectStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_Redirect_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ResendForApproval">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ResendForApproval" message="DataService_Alt_ResendForApproval_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ResendForApprovalResponse" message="DataService_Alt_ResendForApproval_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ResendForApprovalStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ResendForApproval_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_ResendToEmployee">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_ResendToEmployee" message="DataService_Alt_ResendToEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ResendToEmployeeResponse" message="DataService_Alt_ResendToEmployee_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ResendToEmployeeStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_ResendToEmployee_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Alt_Approve">
+      <wsdl:input wsaw:Action="urn:DataService/Alt_Approve" message="DataService_Alt_Approve_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/Alt_ApproveResponse" message="DataService_Alt_Approve_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/Alt_ApproveStandardFaultFault" name="StandardFaultFault" message="DataService_Alt_Approve_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentUser">
+      <wsdl:input wsaw:Action="urn:DataService/GetCurrentUser" message="DataService_GetCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetCurrentUserResponse" message="DataService_GetCurrentUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetCurrentUserStandardFaultFault" name="StandardFaultFault" message="DataService_GetCurrentUser_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableContexts">
+      <wsdl:input wsaw:Action="urn:DataService/GetAvailableContexts" message="DataService_GetAvailableContexts_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAvailableContextsResponse" message="DataService_GetAvailableContexts_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAvailableContextsStandardFaultFault" name="StandardFaultFault" message="DataService_GetAvailableContexts_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentProjects">
+      <wsdl:input wsaw:Action="urn:DataService/GetRecentProjects" message="DataService_GetRecentProjects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRecentProjectsResponse" message="DataService_GetRecentProjects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRecentProjectsStandardFaultFault" name="StandardFaultFault" message="DataService_GetRecentProjects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentLocations">
+      <wsdl:input wsaw:Action="urn:DataService/GetRecentLocations" message="DataService_GetRecentLocations_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRecentLocationsResponse" message="DataService_GetRecentLocations_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRecentLocationsStandardFaultFault" name="StandardFaultFault" message="DataService_GetRecentLocations_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentSubprojects">
+      <wsdl:input wsaw:Action="urn:DataService/GetRecentSubprojects" message="DataService_GetRecentSubprojects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRecentSubprojectsResponse" message="DataService_GetRecentSubprojects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRecentSubprojectsStandardFaultFault" name="StandardFaultFault" message="DataService_GetRecentSubprojects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentTasks">
+      <wsdl:input wsaw:Action="urn:DataService/GetRecentTasks" message="DataService_GetRecentTasks_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRecentTasksResponse" message="DataService_GetRecentTasks_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRecentTasksStandardFaultFault" name="StandardFaultFault" message="DataService_GetRecentTasks_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecentComments">
+      <wsdl:input wsaw:Action="urn:DataService/GetRecentComments" message="DataService_GetRecentComments_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRecentCommentsResponse" message="DataService_GetRecentComments_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRecentCommentsStandardFaultFault" name="StandardFaultFault" message="DataService_GetRecentComments_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeRange">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeRange" message="DataService_GetTimesheetScopeRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeRangeResponse" message="DataService_GetTimesheetScopeRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeRangeStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetTest">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetTest" message="DataService_GetTimesheetTest_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetTestResponse" message="DataService_GetTimesheetTest_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetTestStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetTest_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeIdRangeN">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeIdRangeN" message="DataService_GetTimesheetScopeIdRangeN_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeIdRangeNResponse" message="DataService_GetTimesheetScopeIdRangeN_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeIdRangeNStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeIdRangeN_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeIdRange">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeIdRange" message="DataService_GetTimesheetScopeIdRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeIdRangeResponse" message="DataService_GetTimesheetScopeIdRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeIdRangeStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeIdRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeRangeN">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeRangeN" message="DataService_GetTimesheetScopeRangeN_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeRangeNResponse" message="DataService_GetTimesheetScopeRangeN_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeRangeNStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeRangeN_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeCustomRange">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeCustomRange" message="DataService_GetTimesheetScopeCustomRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeCustomRangeResponse" message="DataService_GetTimesheetScopeCustomRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeCustomRangeStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeCustomRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetScopeIdCustomRange">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetScopeIdCustomRange" message="DataService_GetTimesheetScopeIdCustomRange_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetScopeIdCustomRangeResponse" message="DataService_GetTimesheetScopeIdCustomRange_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetScopeIdCustomRangeStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetScopeIdCustomRange_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetWithErrors">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetWithErrors" message="DataService_GetTimesheetWithErrors_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetWithErrorsResponse" message="DataService_GetTimesheetWithErrors_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetWithErrorsStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetWithErrors_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetToCorrect">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetToCorrect" message="DataService_GetTimesheetToCorrect_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetToCorrectResponse" message="DataService_GetTimesheetToCorrect_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetToCorrectStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetToCorrect_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPendingItemsCount">
+      <wsdl:input wsaw:Action="urn:DataService/GetPendingItemsCount" message="DataService_GetPendingItemsCount_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetPendingItemsCountResponse" message="DataService_GetPendingItemsCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetPendingItemsCountStandardFaultFault" name="StandardFaultFault" message="DataService_GetPendingItemsCount_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetForMyApprovalCount">
+      <wsdl:input wsaw:Action="urn:DataService/GetForMyApprovalCount" message="DataService_GetForMyApprovalCount_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetForMyApprovalCountResponse" message="DataService_GetForMyApprovalCount_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetForMyApprovalCountStandardFaultFault" name="StandardFaultFault" message="DataService_GetForMyApprovalCount_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCreativeStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetCreativeStatuses" message="DataService_GetCreativeStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetCreativeStatusesResponse" message="DataService_GetCreativeStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetCreativeStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetCreativeStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjects">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjects" message="DataService_GetProjects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectsResponse" message="DataService_GetProjects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectsStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectsInfo">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectsInfo" message="DataService_GetProjectsInfo_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectsInfoResponse" message="DataService_GetProjectsInfo_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectsInfoStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectsInfo_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPersons">
+      <wsdl:input wsaw:Action="urn:DataService/GetPersons" message="DataService_GetPersons_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetPersonsResponse" message="DataService_GetPersons_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetPersonsStandardFaultFault" name="StandardFaultFault" message="DataService_GetPersons_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimesheetPersons">
+      <wsdl:input wsaw:Action="urn:DataService/GetTimesheetPersons" message="DataService_GetTimesheetPersons_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetTimesheetPersonsResponse" message="DataService_GetTimesheetPersons_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetTimesheetPersonsStandardFaultFault" name="StandardFaultFault" message="DataService_GetTimesheetPersons_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTimesheeters">
+      <wsdl:input wsaw:Action="urn:DataService/GetAllTimesheeters" message="DataService_GetAllTimesheeters_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAllTimesheetersResponse" message="DataService_GetAllTimesheeters_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAllTimesheetersStandardFaultFault" name="StandardFaultFault" message="DataService_GetAllTimesheeters_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableSubprojects">
+      <wsdl:input wsaw:Action="urn:DataService/GetAvailableSubprojects" message="DataService_GetAvailableSubprojects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAvailableSubprojectsResponse" message="DataService_GetAvailableSubprojects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAvailableSubprojectsStandardFaultFault" name="StandardFaultFault" message="DataService_GetAvailableSubprojects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApprovalStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetApprovalStatuses" message="DataService_GetApprovalStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetApprovalStatusesResponse" message="DataService_GetApprovalStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetApprovalStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetApprovalStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocationsWithCanBeDeleted">
+      <wsdl:input wsaw:Action="urn:DataService/GetLocationsWithCanBeDeleted" message="DataService_GetLocationsWithCanBeDeleted_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetLocationsWithCanBeDeletedResponse" message="DataService_GetLocationsWithCanBeDeleted_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetLocationsWithCanBeDeletedStandardFaultFault" name="StandardFaultFault" message="DataService_GetLocationsWithCanBeDeleted_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetStatuses" message="DataService_GetStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetStatusesResponse" message="DataService_GetStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIsSoldStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetIsSoldStatuses" message="DataService_GetIsSoldStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetIsSoldStatusesResponse" message="DataService_GetIsSoldStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetIsSoldStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetIsSoldStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Approve">
+      <wsdl:input wsaw:Action="urn:DataService/Approve" message="DataService_Approve_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/ApproveResponse" message="DataService_Approve_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/ApproveStandardFaultFault" name="StandardFaultFault" message="DataService_Approve_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Paste">
+      <wsdl:input wsaw:Action="urn:DataService/Paste" message="DataService_Paste_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/PasteResponse" message="DataService_Paste_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/PasteStandardFaultFault" name="StandardFaultFault" message="DataService_Paste_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRows">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateRows" message="DataService_UpdateRows_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateRowsResponse" message="DataService_UpdateRows_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateRowsStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateRows_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRow">
+      <wsdl:input wsaw:Action="urn:DataService/UpdateRow" message="DataService_UpdateRow_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/UpdateRowResponse" message="DataService_UpdateRow_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/UpdateRowStandardFaultFault" name="StandardFaultFault" message="DataService_UpdateRow_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRow">
+      <wsdl:input wsaw:Action="urn:DataService/GetRow" message="DataService_GetRow_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRowResponse" message="DataService_GetRow_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRowStandardFaultFault" name="StandardFaultFault" message="DataService_GetRow_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRows">
+      <wsdl:input wsaw:Action="urn:DataService/GetRows" message="DataService_GetRows_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetRowsResponse" message="DataService_GetRows_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetRowsStandardFaultFault" name="StandardFaultFault" message="DataService_GetRows_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHistory">
+      <wsdl:input wsaw:Action="urn:DataService/GetHistory" message="DataService_GetHistory_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetHistoryResponse" message="DataService_GetHistory_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetHistoryStandardFaultFault" name="StandardFaultFault" message="DataService_GetHistory_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectHistory">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectHistory" message="DataService_GetProjectHistory_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectHistoryResponse" message="DataService_GetProjectHistory_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectHistoryStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectHistory_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SplitRows">
+      <wsdl:input wsaw:Action="urn:DataService/SplitRows" message="DataService_SplitRows_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/SplitRowsResponse" message="DataService_SplitRows_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/SplitRowsStandardFaultFault" name="StandardFaultFault" message="DataService_SplitRows_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertRows">
+      <wsdl:input wsaw:Action="urn:DataService/InsertRows" message="DataService_InsertRows_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/InsertRowsResponse" message="DataService_InsertRows_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/InsertRowsStandardFaultFault" name="StandardFaultFault" message="DataService_InsertRows_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRows">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteRows" message="DataService_DeleteRows_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteRowsResponse" message="DataService_DeleteRows_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteRowsStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteRows_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableTasks">
+      <wsdl:input wsaw:Action="urn:DataService/GetAvailableTasks" message="DataService_GetAvailableTasks_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAvailableTasksResponse" message="DataService_GetAvailableTasks_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAvailableTasksStandardFaultFault" name="StandardFaultFault" message="DataService_GetAvailableTasks_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTasksAssignment">
+      <wsdl:input wsaw:Action="urn:DataService/RemoveTasksAssignment" message="DataService_RemoveTasksAssignment_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RemoveTasksAssignmentResponse" message="DataService_RemoveTasksAssignment_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RemoveTasksAssignmentStandardFaultFault" name="StandardFaultFault" message="DataService_RemoveTasksAssignment_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubprojectsAssignment">
+      <wsdl:input wsaw:Action="urn:DataService/RemoveSubprojectsAssignment" message="DataService_RemoveSubprojectsAssignment_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RemoveSubprojectsAssignmentResponse" message="DataService_RemoveSubprojectsAssignment_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RemoveSubprojectsAssignmentStandardFaultFault" name="StandardFaultFault" message="DataService_RemoveSubprojectsAssignment_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubprojects">
+      <wsdl:input wsaw:Action="urn:DataService/RemoveSubprojects" message="DataService_RemoveSubprojects_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RemoveSubprojectsResponse" message="DataService_RemoveSubprojects_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RemoveSubprojectsStandardFaultFault" name="StandardFaultFault" message="DataService_RemoveSubprojects_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalManagers">
+      <wsdl:input wsaw:Action="urn:DataService/GetGlobalManagers" message="DataService_GetGlobalManagers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetGlobalManagersResponse" message="DataService_GetGlobalManagers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetGlobalManagersStandardFaultFault" name="StandardFaultFault" message="DataService_GetGlobalManagers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllButGlobalManagers">
+      <wsdl:input wsaw:Action="urn:DataService/GetAllButGlobalManagers" message="DataService_GetAllButGlobalManagers_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetAllButGlobalManagersResponse" message="DataService_GetAllButGlobalManagers_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetAllButGlobalManagersStandardFaultFault" name="StandardFaultFault" message="DataService_GetAllButGlobalManagers_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveGlobalManager">
+      <wsdl:input wsaw:Action="urn:DataService/RemoveGlobalManager" message="DataService_RemoveGlobalManager_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RemoveGlobalManagerResponse" message="DataService_RemoveGlobalManager_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RemoveGlobalManagerStandardFaultFault" name="StandardFaultFault" message="DataService_RemoveGlobalManager_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveProjectAccountObserver">
+      <wsdl:input wsaw:Action="urn:DataService/RemoveProjectAccountObserver" message="DataService_RemoveProjectAccountObserver_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/RemoveProjectAccountObserverResponse" message="DataService_RemoveProjectAccountObserver_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/RemoveProjectAccountObserverStandardFaultFault" name="StandardFaultFault" message="DataService_RemoveProjectAccountObserver_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddProjectAccountObservator">
+      <wsdl:input wsaw:Action="urn:DataService/AddProjectAccountObservator" message="DataService_AddProjectAccountObservator_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/AddProjectAccountObservatorResponse" message="DataService_AddProjectAccountObservator_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/AddProjectAccountObservatorStandardFaultFault" name="StandardFaultFault" message="DataService_AddProjectAccountObservator_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddGlobalManager">
+      <wsdl:input wsaw:Action="urn:DataService/AddGlobalManager" message="DataService_AddGlobalManager_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/AddGlobalManagerResponse" message="DataService_AddGlobalManager_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/AddGlobalManagerStandardFaultFault" name="StandardFaultFault" message="DataService_AddGlobalManager_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectStatuses">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectStatuses" message="DataService_GetProjectStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectStatusesResponse" message="DataService_GetProjectStatuses_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectStatusesStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectStatuses_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccounts">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccounts" message="DataService_GetProjectAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountsResponse" message="DataService_GetProjectAccounts_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountsStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccounts_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccountsInfo">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccountsInfo" message="DataService_GetProjectAccountsInfo_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountsInfoResponse" message="DataService_GetProjectAccountsInfo_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountsInfoStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccountsInfo_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectAccount">
+      <wsdl:input wsaw:Action="urn:DataService/GetProjectAccount" message="DataService_GetProjectAccount_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetProjectAccountResponse" message="DataService_GetProjectAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetProjectAccountStandardFaultFault" name="StandardFaultFault" message="DataService_GetProjectAccount_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteProject">
+      <wsdl:input wsaw:Action="urn:DataService/DeleteProject" message="DataService_DeleteProject_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/DeleteProjectResponse" message="DataService_DeleteProject_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/DeleteProjectStandardFaultFault" name="StandardFaultFault" message="DataService_DeleteProject_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActualHours">
+      <wsdl:input wsaw:Action="urn:DataService/GetActualHours" message="DataService_GetActualHours_InputMessage" />
+      <wsdl:output wsaw:Action="urn:DataService/GetActualHoursResponse" message="DataService_GetActualHours_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:DataService/GetActualHoursStandardFaultFault" name="StandardFaultFault" message="DataService_GetActualHours_StandardFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
