@@ -54,7 +54,8 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
-
+            var t = new Timesheet.TimesheetPlugin();
+            t.test();
             this.InitializeTrayElements();
             this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
             //Show all records + shortcuts(or numbers)
@@ -598,7 +599,6 @@ namespace Timee
            
         }
 
-
         //--Grid drag and drop
         /// <summary>
         /// Imitates left mouse hold left button, passes data to drag argruments.
@@ -656,35 +656,10 @@ namespace Timee
                 }
             }
         }
-
-        //--Menuchyb
+        //--Menu
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutDialog().Show();
-        }
-        //TODO: In version 2 handle this with some general plugin mechanism
-        
-        private void mnuExcelExport_Click(object sender, EventArgs e)
-        {
-            //Check time validity, if some bullshit set 00:00:00.
-            if(grdWorkSummary.CurrentCell.OwningColumn.Name == timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
-            {
-                TimeSpan dumb;
-                if (TimeSpan.TryParse(grdWorkSummary.CurrentCell.EditedFormattedValue.ToString(), out dumb) == false)
-                {
-                    grdWorkSummary.CurrentCell.Value = new TimeSpan();
-                }
-            }
-            DataRowCollection allEntries = this.timeeDataSet.TimeSheetTable.Rows;
-            if (allEntries.Count > 0)
-            {
-                XlsExportManager exporter = new XlsExportManager();
-                exporter.ExportAllEntries(allEntries);
-            }
-        }
-        private void mnuSettings_Click(object sender, EventArgs e)
-        {
-            new ExcelExportSettings().ShowDialog();
         }
         /// <summary>
         /// Dialog for starting count-down alarm.

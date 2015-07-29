@@ -394,25 +394,6 @@ namespace Timee
             this.lGBSExcelToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.lGBSExcelToolStripMenuItem.Text = "LGBS Excel";
             // 
-            // mnuSettings
-            // 
-            this.mnuSettings.Name = "mnuSettings";
-            this.mnuSettings.Size = new System.Drawing.Size(116, 22);
-            this.mnuSettings.Text = "Settings";
-            this.mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
-            // 
-            // mnuExcelExport
-            // 
-            this.mnuExcelExport.Name = "mnuExcelExport";
-            this.mnuExcelExport.Size = new System.Drawing.Size(116, 22);
-            this.mnuExcelExport.Text = "Export";
-            this.mnuExcelExport.Click += new System.EventHandler(this.mnuExcelExport_Click);
-            // 
-            // menuExcell
-            // 
-            this.menuExcell.Name = "menuExcell";
-            this.menuExcell.Size = new System.Drawing.Size(130, 22);
-            this.menuExcell.Text = "Excell";
             // 
             // menuContext
             // 
