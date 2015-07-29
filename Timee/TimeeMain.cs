@@ -23,6 +23,7 @@ namespace Timee
 {
     public partial class TimeeMain : Form
     {
+
         /// <summary>
         /// Used in drag&drop
         /// </summary>
@@ -39,10 +40,7 @@ namespace Timee
         /// <summary>
         /// used to load plugins
         /// </summary>
-        [ImportMany(typeof(TimeeBridge.IExcell))]
-        IEnumerable<Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData>> _excellPlugins;
-        [ImportMany(typeof(TimeeBridge.IContext))]
-        IEnumerable<Lazy<TimeeBridge.IContext, TimeeBridge.IMetaData>> _contextPlugins;
+
         /// <summary>
         /// Hold context data
         /// </summary>
@@ -56,6 +54,7 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
+
             this.InitializeTrayElements();
             this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
             //Show all records + shortcuts(or numbers)
@@ -82,30 +81,9 @@ namespace Timee
                 Properties.Settings.Default.Save();
             }
             // Difine Catalog to load plugins
-            DirectoryCatalog dirCatalog = new DirectoryCatalog("Plugins");
-            CompositionContainer container = new CompositionContainer(dirCatalog);
-            container.SatisfyImportsOnce(this);
+           
             // Create new plugin position in menu
-            foreach (Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData> excellPlugin in _excellPlugins)
-            {
-                
-                
-                ToolStripMenuItem excell = new ToolStripMenuItem(excellPlugin.Metadata.Name);
-                excell.Name = excellPlugin.Metadata.Name;
-                excell.Click += new EventHandler(menuPluginClick);
-
-                menuExcell.DropDownItems.Insert(menuExcell.DropDownItems.Count, excell);
-            }
-            foreach (Lazy<TimeeBridge.IContext, TimeeBridge.IMetaData> contextPlugin in _contextPlugins)
-            {
-
-
-                ToolStripMenuItem context = new ToolStripMenuItem(contextPlugin.Metadata.Name);
-                context.Name = contextPlugin.Metadata.Name;
-                context.Click += new EventHandler(menuPluginClick);
-
-                menuContext.DropDownItems.Insert(menuContext.DropDownItems.Count, context);
-            }
+            
 
             Assembly mainAssembly = Assembly.GetEntryAssembly();
             this.Context = TimeeXMLService.Instance.LoadContext();
@@ -122,7 +100,6 @@ namespace Timee
 
             //Load saved tasks
             StringReader mainTasksXml = new StringReader(Properties.Settings.Default.MainTasks);
-            UserConfiguration testUser = new UserConfiguration();
             if (!(Properties.Settings.Default.MainTasks.Length == 0))
             {
                timeeDataSet.ReadXml(mainTasksXml);
@@ -144,6 +121,9 @@ namespace Timee
             }
            
             //Show help
+            PluginsService initializePlugins = new PluginsService(this, this.Context);
+            initializePlugins.InitializeMenu(mnu);
+
         }
         /// <summary>
         /// Show hints
@@ -683,36 +663,7 @@ namespace Timee
             new AboutDialog().Show();
         }
         //TODO: In version 2 handle this with some general plugin mechanism
-        private void menuPluginClick(object sender, EventArgs e)
-        {
-            ToolStripItem item = (ToolStripItem)sender;
-            var action = from plugin in _excellPlugins
-                         where plugin.Metadata.Name == item.Name
-                         select plugin;
-            switch (action.First().Metadata.Type)
-            {
-                case "ExcellImport":
-                    {
-                       // StringReader tmpXml = new StringReader(action.First().Value.ImportXml(timeeDataSet.GetXml()));     
-                        timeeDataSet.Tables[0].Merge(action.First().Value.ImportToExcell(timeeDataSet.Tables[0]));
-
-                        break;
-                    }
-                case "ExcellExport":
-                    {
-                        action.First().Value.ExportFromExcell(timeeDataSet.GetXml());
-                        break;
-                    }
-                case "ContextImport:":
-                    {
-                        break;
-                    }
-                case "ContextExport:":
-                    {
-                        break;
-                    }
-            }
-        }
+        
         private void mnuExcelExport_Click(object sender, EventArgs e)
         {
             //Check time validity, if some bullshit set 00:00:00.

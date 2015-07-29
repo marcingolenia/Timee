@@ -26,6 +26,7 @@ namespace Timee.Dialogs
             InitializeComponent();
             StringReader predefinedSetXml = new StringReader(Properties.Settings.Default.PredefinedTasks);
             grdPredefinedSummary.DataSource = context.PredefinedTasks;
+
         }
         /// <summary>
         /// Initialize PredefinedTasks Table

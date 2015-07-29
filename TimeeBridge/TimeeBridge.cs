@@ -11,6 +11,7 @@ namespace TimeeBridge
     {
         DataTable ImportToExcell (DataTable source);
         void ExportFromExcell(string xml);
+        void test();
     }
     public interface IContext
     {
@@ -21,6 +22,6 @@ namespace TimeeBridge
     public interface IMetaData
     {
         string Name { get; }
-        string Type { get; }
+        string Return { get; }
     }
 }

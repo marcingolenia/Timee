@@ -52,6 +52,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="TimeeValues.cs" />
     <Compile Include="UserConfiguration.cs">
       <DependentUpon>UserConfiguration.xsd</DependentUpon>
     </Compile>

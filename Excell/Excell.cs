@@ -12,7 +12,7 @@ namespace Excell
 {
     [Export(typeof(TimeeBridge.IExcell))]
     [ExportMetadata("Name", "Export to Excell")]
-    [ExportMetadata("Type", "ExcellExport")]
+    [ExportMetadata("Return", null)]
     public class ExcellExport : TimeeBridge.IExcell
     {
         private string IsCreative { get; set; }
@@ -121,11 +121,17 @@ namespace Excell
         {
             throw new NotImplementedException();
         }
+
+
+        public void test()
+        {
+            throw new NotImplementedException();
+        }
     }
 
         [Export(typeof(TimeeBridge.IExcell))]
         [ExportMetadata("Name", "Import to Excell")]
-        [ExportMetadata("Type", "ExcellImport")]
+        [ExportMetadata("Return", "MainTasks")]
     public class ExcellImport : TimeeBridge.IExcell
     {
             string fileName { get; set; }
@@ -193,6 +199,35 @@ namespace Excell
         {
             throw new NotImplementedException();
         }
+
+
+        public void test()
+        {
+            throw new NotImplementedException();
+        }
     }
+        [Export(typeof(TimeeBridge.IExcell))]
+        [ExportMetadata("Name", "test")]
+        [ExportMetadata("Return", "MainTasksXml")]
+        //[ExportMetadata("Return", "PredefineTasksXml", IsMultiple = true)]
+        public class tester : TimeeBridge.IExcell
+        {
+
+            public DataTable ImportToExcell(DataTable source)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void ExportFromExcell(string xml)
+            {
+                throw new NotImplementedException();
+            }
+            public void test()
+            {
+                string xml = TimeeBridge.TimeeValues.PredefineTasksXml;
+                TimeeBridge.TimeeValues.MainTasksXml = xml;
+                TimeeBridge.TimeeValues.PredefineTasksXml = TimeeBridge.TimeeValues.MainTasksXml;
+            }
+        }
     
 }

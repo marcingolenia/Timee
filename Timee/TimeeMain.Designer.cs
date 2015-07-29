@@ -686,7 +686,7 @@ namespace Timee
         private System.Windows.Forms.Label lblSubProject;
         private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.Label lblTask;
-        private DAL.TimeeDataSet timeeDataSet;
+        public DAL.TimeeDataSet timeeDataSet;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.MenuStrip mnu;
         private System.Windows.Forms.ToolStripMenuItem mnuTimee;

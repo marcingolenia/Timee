@@ -176,6 +176,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\PluginsService.cs" />
     <Compile Include="Services\TimeeXMLService.cs" />
     <Compile Include="Dialogs\AboutDialog.cs">
       <SubType>Form</SubType>
@@ -518,6 +519,24 @@
     <Folder Include="Imports\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dialogs\Hints\1.html" />
+    <Content Include="Dialogs\Hints\2.html" />
+    <Content Include="Dialogs\Hints\3.html" />
+    <Content Include="Dialogs\Hints\4.html" />
+    <Content Include="Dialogs\Hints\5.html" />
+    <Content Include="Dialogs\Hints\Images\1.gif" />
+    <Content Include="Dialogs\Hints\Images\2.gif" />
+    <Content Include="Dialogs\Hints\Images\3.gif" />
+    <Content Include="Dialogs\Hints\Images\4.gif" />
+    <Content Include="Dialogs\Hints\Images\5.gif" />
+    <Content Include="Dialogs\Hints\Images\Legend\1.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\2.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\3.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\browse.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\Delete.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\New.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\Pause.jpg" />
+    <Content Include="Dialogs\Hints\Images\Legend\Save.jpg" />
     <Content Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
