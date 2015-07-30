@@ -10,15 +10,17 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Excell
 {
-    [Export(typeof(TimeeBridge.IExcell))]
+    [Export(typeof(TimeeBridge.IPlugins))]
     [ExportMetadata("Name", "Export to Excell")]
-    [ExportMetadata("Return", null)]
-    public class ExcellExport : TimeeBridge.IExcell
+    [ExportMetadata("Return", "None")]
+    [ExportMetadata("Group", "Excell")]
+    public class ExcellExport : TimeeBridge.IPlugins
     {
         private string IsCreative { get; set; }
         private string Person { get; set; }
+        private string xml = TimeeBridge.TimeeValues.MainTasksXml;
 
-        public void ExportFromExcell(string xml)
+        public void Start()
         {
             using (var dlg = new ExcelExportSettings())
             {
@@ -29,6 +31,7 @@ namespace Excell
                     this.Person = dlg.Person;
                 }
             }
+
             StringReader tmpXml = new StringReader(xml);
             DataSet ds = new DataSet();
             ds.ReadXml(tmpXml);
@@ -83,9 +86,9 @@ namespace Excell
                 dataRange.Cell(i + 1, 4).Value = row.ItemArray[1];
                 dataRange.Cell(i + 1, 5).Value = row.ItemArray[2];
                 dataRange.Cell(i + 1, 6).Value = row.ItemArray[3];
-                dataRange.Cell(i + 1, 7).Value = row.ItemArray[4];
+                dataRange.Cell(i + 1, 9).Value = row.ItemArray[4];
                 dataRange.Cell(i + 1, 8).Value = IsCreative;
-                dataRange.Cell(i + 1, 9).Value = row.ItemArray[5];
+                dataRange.Cell(i + 1, 7).Value = row.ItemArray[5];
             }
 
             // Set borders
@@ -116,27 +119,19 @@ namespace Excell
                 }
             }
         }
-
-        public DataTable ImportToExcell(DataTable source)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void test()
-        {
-            throw new NotImplementedException();
-        }
     }
 
-        [Export(typeof(TimeeBridge.IExcell))]
-        [ExportMetadata("Name", "Import to Excell")]
+        [Export(typeof(TimeeBridge.IPlugins))]
+        [ExportMetadata("Name", "Import from Excell")]
         [ExportMetadata("Return", "MainTasks")]
-    public class ExcellImport : TimeeBridge.IExcell
+        [ExportMetadata("Group", "Excell")]
+
+    public class ExcellImport : TimeeBridge.IPlugins
     {
             string fileName { get; set; }
             TimeeBridge.TimeeDataSet excellDataSet = new TimeeBridge.TimeeDataSet();
-        public DataTable ImportToExcell(DataTable source)
+            private DataTable source = TimeeBridge.TimeeValues.MainTasks;
+        public void Start()
         {
 
             using (var dlg = new OpenFileDialog())
@@ -183,46 +178,26 @@ namespace Excell
                 row.Project = worksheet.Row(i).Cell(4).Value.ToString();
                 row.SubProject = worksheet.Row(i).Cell(5).Value.ToString();
                 row.Task = worksheet.Row(i).Cell(6).Value.ToString();
-                row.Comment = worksheet.Row(i).Cell(9).Value.ToString();
+                row.Comment = worksheet.Row(i).Cell(7).Value.ToString();
                 // dataRange.Cell(i + 1, 8).Value = IsCreative;
-                row.Location = worksheet.Row(i).Cell(7).Value.ToString();
+                row.Location = worksheet.Row(i).Cell(9).Value.ToString();
                 source.Rows.Add(row.ItemArray);
                 i++;
             } while(!worksheet.Row(i).IsEmpty());
             
             //this.newXml = ds.GetXml();
-            return source;
-        }
-
-
-        public void ExportFromExcell(string xml)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void test()
-        {
-            throw new NotImplementedException();
+            TimeeBridge.TimeeValues.MainTasks.Merge(source);
         }
     }
-        [Export(typeof(TimeeBridge.IExcell))]
+        [Export(typeof(TimeeBridge.IPlugins))]
         [ExportMetadata("Name", "test")]
         [ExportMetadata("Return", "MainTasksXml")]
+        [ExportMetadata("Group", "Misc")]
+
         //[ExportMetadata("Return", "PredefineTasksXml", IsMultiple = true)]
-        public class tester : TimeeBridge.IExcell
+        public class test : TimeeBridge.IPlugins
         {
-
-            public DataTable ImportToExcell(DataTable source)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void ExportFromExcell(string xml)
-            {
-                throw new NotImplementedException();
-            }
-            public void test()
+            public void Start()
             {
                 string xml = TimeeBridge.TimeeValues.PredefineTasksXml;
                 TimeeBridge.TimeeValues.MainTasksXml = xml;

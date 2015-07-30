@@ -7,21 +7,14 @@ using System.Threading.Tasks;
 
 namespace TimeeBridge
 {
-    public interface IExcell
+    public interface IPlugins
     {
-        DataTable ImportToExcell (DataTable source);
-        void ExportFromExcell(string xml);
-        void test();
+        void Start();
     }
-    public interface IContext
-    {
-        TimeeContext ImportToContext(TimeeContext source);
-        void ExportFromContext(TimeeContext source);
-    }
-
     public interface IMetaData
     {
         string Name { get; }
         string Return { get; }
+        string Group { get; }
     }
 }

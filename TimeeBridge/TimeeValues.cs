@@ -12,6 +12,7 @@ namespace TimeeBridge
        public static string MainTasksXml { get; set; }
        public static string PredefineTasksXml { get; set; }
        public static DataTable MainTasks { get; set; }
+       public static DataSet MainTasksDataSet { get; set; }
        public static DataTable PredefineTasks { get; set; }
 
     }

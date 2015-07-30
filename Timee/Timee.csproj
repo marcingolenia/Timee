@@ -206,17 +206,6 @@
     <Compile Include="Models\UserConfiguration.cs">
       <DependentUpon>UserConfiguration.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.cs">
-      <DependentUpon>LGBSExcelExportConfiguration.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Plugins\LGBSExcelExport\LGBSExcelExportConfigurationService.cs" />
-    <Compile Include="Plugins\LGBSExcelExport\LGBSExcelExportSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Plugins\LGBSExcelExport\LGBSExcelExportSettings.Designer.cs">
-      <DependentUpon>LGBSExcelExportSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Plugins\LGBSExcelExport\XlsExportManager.cs" />
     <Compile Include="Dialogs\TimeeEditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,9 +243,6 @@
     <EmbeddedResource Include="Dialogs\PredefinedTasksDialog.resx">
       <DependentUpon>PredefinedTasksDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Plugins\LGBSExcelExport\LGBSExcelExportSettings.resx">
-      <DependentUpon>LGBSExcelExportSettings.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TimeeEditDialog.resx">
       <DependentUpon>TimeeEditDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -292,9 +278,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\DataSources\Timee.DAL.TimeeDataSet+TimeSheetTableDataTable.datasource" />
@@ -326,7 +309,9 @@
     <None Include="Timee_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Imports\" />
@@ -350,9 +335,6 @@
     <Content Include="Dialogs\Hints\Images\Legend\New.jpg" />
     <Content Include="Dialogs\Hints\Images\Legend\Pause.jpg" />
     <Content Include="Dialogs\Hints\Images\Legend\Save.jpg" />
-    <Content Include="Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Properties\DataSources\zegar-2_318-11614.jpg" />
     <None Include="Resources\new.png" />
     <None Include="Resources\folder.png" />

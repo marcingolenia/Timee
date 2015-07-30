@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Timee.DAL;
 using Timee.Models;
-using Timee.Plugins.LGBSExcelExport;
 using Timee.Dialogs;
 using AutoUpdaterDotNET;
 using System.Reflection;
@@ -54,8 +53,6 @@ namespace Timee
         public TimeeMain()
         {
             InitializeComponent();
-            var t = new Timesheet.TimesheetPlugin();
-            t.test();
             this.InitializeTrayElements();
             this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
             //Show all records + shortcuts(or numbers)
@@ -277,6 +274,7 @@ namespace Timee
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
+            //TimeeXMLService.Instance.LoadContext();
             TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
             row.Comment = this.tbComment.Text;
             row.Date = this.dpWorkDate.Value;
@@ -362,6 +360,7 @@ namespace Timee
                 if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
                 {
                     TimeeXMLService.Instance.SaveContext(this.Context);
+                    this.Context.ResetAllBindings();
                 }
                 else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
                 {

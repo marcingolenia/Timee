@@ -13,8 +13,8 @@ namespace Timee.Services
 {
     class PluginsService
     {
-        [ImportMany(typeof(TimeeBridge.IExcell))]
-        IEnumerable<Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData>> _excellPlugins;
+        [ImportMany(typeof(TimeeBridge.IPlugins))]
+        IEnumerable<Lazy<TimeeBridge.IPlugins, TimeeBridge.IMetaData>> _plugins;
 
         private TimeeMain main;
         private TimeeContext context;
@@ -40,16 +40,31 @@ namespace Timee.Services
         {
             ToolStripMenuItem plugins = new ToolStripMenuItem("Plugins");
             menu.Items.Add(plugins);
-            ToolStripMenuItem menuExcell = new ToolStripMenuItem("Excell");
-            plugins.DropDownItems.Add(menuExcell);
+            
+            
 
-            foreach (Lazy<TimeeBridge.IExcell, TimeeBridge.IMetaData> excellPlugin in _excellPlugins)
+            foreach (Lazy<TimeeBridge.IPlugins, TimeeBridge.IMetaData> plugin in _plugins)
             {
-                ToolStripMenuItem excell = new ToolStripMenuItem(excellPlugin.Metadata.Name);
-                excell.Name = excellPlugin.Metadata.Name;
-                excell.Click += new EventHandler(menuPluginClick);
+                ToolStripMenuItem menuPlugin = new ToolStripMenuItem(plugin.Metadata.Group);
 
-                menuExcell.DropDownItems.Add(excell);
+                  if (plugins.DropDownItems
+                      .Cast<ToolStripMenuItem>()
+                     .Any(x => x.Text == plugin.Metadata.Group))
+                 {
+                     var newMenu = from ToolStripMenuItem mnu in plugins.DropDownItems.Cast<ToolStripMenuItem>()
+                                   where mnu.Text == plugin.Metadata.Group
+                                   select mnu;
+                     menuPlugin = newMenu.First();
+                 }
+                  else
+                  {
+                      plugins.DropDownItems.Add(menuPlugin);
+                  }
+                ToolStripMenuItem pluginMenuItem = new ToolStripMenuItem(plugin.Metadata.Name);
+                pluginMenuItem.Name = plugin.Metadata.Name;
+                pluginMenuItem.Click += new EventHandler(menuPluginClick);
+
+                menuPlugin.DropDownItems.Add(pluginMenuItem);
             }
         }
         /// <summary>
@@ -60,7 +75,7 @@ namespace Timee.Services
         private void menuPluginClick(object sender, EventArgs e)
         {
             ToolStripItem item = (ToolStripItem)sender;
-            var action = from plugin in _excellPlugins
+            var action = from plugin in _plugins
                          where plugin.Metadata.Name == item.Name
                          select plugin;
 
@@ -68,9 +83,10 @@ namespace Timee.Services
             TimeeBridge.TimeeValues.MainTasksXml = main.timeeDataSet.GetXml();
             TimeeBridge.TimeeValues.PredefineTasks = context.PredefinedTasks.Tables[0];
             TimeeBridge.TimeeValues.PredefineTasksXml = context.PredefinedTasks.GetXml();
+            TimeeBridge.TimeeValues.MainTasksDataSet = main.timeeDataSet;
 
 
-            action.First().Value.test();
+            action.First().Value.Start();
             switch (action.First().Metadata.Return)  
             {
                 case "MainTasks":
