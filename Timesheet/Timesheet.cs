@@ -101,7 +101,7 @@ namespace Timesheet
     }
     [Export(typeof(TimeeBridge.IPlugins))]
     [ExportMetadata("Name", "Import from Timesheet")]
-    [ExportMetadata("Return", "None")]
+    [ExportMetadata("Return", "Context")]
     [ExportMetadata("Group", "Timesheet")]
     public class TimesheetImport : TimeeBridge.IPlugins
     {
@@ -164,8 +164,24 @@ namespace Timesheet
 	            }
 
             }
-            
-               
+                //Projects.Keys.DefaultIfEmpty("");
+                TimeeBridge.TimeeValues.ContextProject.Name = Projects.Keys.FirstOrDefault();
+                TimeeBridge.TimeeValues.ContextProject.Value = Projects.Values.FirstOrDefault().ToString();
+
+                //SubProjects.Keys.DefaultIfEmpty("");
+                TimeeBridge.TimeeValues.ContextSubproject.Name = SubProjects.Keys.FirstOrDefault();
+                TimeeBridge.TimeeValues.ContextSubproject.Value = SubProjects.Values.FirstOrDefault().ToString();
+
+                //TimeeBridge.TimeeValues.ContextTask.Name = Tasks.Keys.FirstOrDefault();
+                //TimeeBridge.TimeeValues.ContextTask.Value = Tasks.Values.FirstOrDefault().ToString();
+                //Locations.Keys.DefaultIfEmpty("");
+                TimeeBridge.TimeeValues.ContextLocation.Name = Locations.Keys.FirstOrDefault();
+                TimeeBridge.TimeeValues.ContextLocation.Value = Locations.Values.FirstOrDefault().ToString();
+           
+
+            Locations.Clear();
+            Projects.Clear();
+            SubProjects.Clear();
         }
         
     }

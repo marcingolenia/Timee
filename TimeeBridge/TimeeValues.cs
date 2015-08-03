@@ -14,6 +14,11 @@ namespace TimeeBridge
        public static DataTable MainTasks { get; set; }
        public static DataSet MainTasksDataSet { get; set; }
        public static DataTable PredefineTasks { get; set; }
+       public static TimeeContext Context { get; set; }
+       public static UserConfigurationLocation ContextLocation = new UserConfigurationLocation();
+       public static UserConfigurationProject ContextProject = new UserConfigurationProject();
+       public static UserConfigurationSubproject ContextSubproject = new UserConfigurationSubproject();
+       public static UserConfigurationTask ContextTask = new UserConfigurationTask();
 
     }
 }

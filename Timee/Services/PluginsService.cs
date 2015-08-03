@@ -111,6 +111,64 @@ namespace Timee.Services
                         this.context.PredefinedTasks.ReadXml(xml);
                         break;
                     }
+                case "Context":
+                    {
+                        UserConfigurationLocation tmpLocation = new UserConfigurationLocation();
+                        UserConfigurationProject tmpProject = new UserConfigurationProject();
+                        UserConfigurationSubproject tmpSubproject = new UserConfigurationSubproject();
+                        UserConfigurationTask tmpTask = new UserConfigurationTask();
+
+                        tmpLocation.Name = TimeeBridge.TimeeValues.ContextLocation.Name;
+                        if (tmpLocation.Name != null)
+                        {
+                            if (this.context.Locations.Where(i => i.Name == tmpLocation.Name).Count() == 0)
+                            {
+                                tmpLocation.Value = TimeeBridge.TimeeValues.ContextLocation.Value;
+                                tmpLocation.Order = context.Locations.Count == 0 ? 1 : this.context.Locations.Max(i => i.Order + 1);
+                                tmpLocation.OrderSpecified = true;
+                                this.context.Locations.Add(tmpLocation);
+                            }
+
+                        }
+
+
+                        tmpProject.Name = TimeeBridge.TimeeValues.ContextProject.Name;
+                        if (tmpProject.Name != null)
+                        {
+                            if (this.context.Projects.Where(i => i.Name == tmpProject.Name).Count() == 0)
+                            {
+                                tmpProject.Value = TimeeBridge.TimeeValues.ContextProject.Value;
+                                tmpProject.Order = context.Projects.Count == 0 ? 1 : this.context.Projects.Max(i => i.Order + 1);
+                                tmpProject.OrderSpecified = true;
+                                this.context.Projects.Add(tmpProject);
+                            }
+
+                        }
+
+                        tmpSubproject.Name = TimeeBridge.TimeeValues.ContextSubproject.Name;
+                        if (tmpSubproject.Name != null)
+                        {
+                            if (this.context.Subprojects.Where(i => i.Name == tmpSubproject.Name).Count() == 0)
+                            {
+                                tmpSubproject.Value = TimeeBridge.TimeeValues.ContextSubproject.Value;
+                                tmpSubproject.Order = context.Subprojects.Count == 0 ? 1 : this.context.Subprojects.Max(i => i.Order + 1);
+                                tmpSubproject.OrderSpecified = true;
+                                this.context.Subprojects.Add(tmpSubproject);
+                            }
+
+                        }
+                        
+
+                        //tmpTask.Name = TimeeBridge.TimeeValues.ContextTask.Name;
+                        //tmpTask.Value = TimeeBridge.TimeeValues.ContextTask.Value;
+                        //context.Tasks.Add(tmpTask);
+
+                        Services.TimeeXMLService.Instance.SaveContext(context);
+                        Services.TimeeXMLService.Instance.LoadContext();
+
+                       // TimeeBridge.TimeeValues.Context.Locations.Where(l => l.Name.Length != 0).Select(l => l.Name);
+                        break;
+                    }
             }
         }
     }
