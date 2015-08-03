@@ -274,18 +274,28 @@ namespace Timee
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
-            //TimeeXMLService.Instance.LoadContext();
-            TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-            row.Comment = this.tbComment.Text;
-            row.Date = this.dpWorkDate.Value;
-            row.Project = this.cmbProject.Text;
-            row.SubProject = this.cmbSubProject.Text;
-            row.Task = this.cmbTask.Text;
-            row.Time = TimeSpan.Zero;
-            row.Location = this.cmbLocations.Text;
-            AddNewRow(row);
-            this.btnPause.Enabled = true;
-            this.btnPause.Text = "Pause";
+            {
+                using (var dlg = new Dialogs.PrototypeDialog())
+                {
+                    dlg.Context = this.Context;
+                    dlg.ShowDialog();
+                    if (dlg.DialogResult == DialogResult.OK)
+                    {
+                        TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                        row.Comment = this.tbComment.Text;
+                        row.Date = this.dpWorkDate.Value;
+                        row.Project = dlg.Project;
+                        row.SubProject = dlg.SubProject;
+                        row.Task = dlg.Task;
+                        row.Time = TimeSpan.Zero;
+                        row.Location = dlg.Location;
+                        AddNewRow(row);
+                        this.btnPause.Enabled = true;
+                        this.btnPause.Text = "Pause";
+                    }
+                }
+            }
+            
         }
         /// <summary>
         /// Open table with PredefinedTasks.
@@ -872,6 +882,15 @@ namespace Timee
 
             // Add menu to tray icon and show it.
             trayIcon.ContextMenuStrip = trayMenu;
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new Dialogs.PrototypeDialog())
+            {
+                dlg.Context = this.Context;
+                dlg.ShowDialog();
+            }
         }
     }
 }

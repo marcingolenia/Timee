@@ -11,6 +11,7 @@
                     <xs:extension base="xs:string">
                       <xs:attribute type="xs:byte" name="Order" use="optional"/>
                       <xs:attribute type="xs:string" name="Name" use="optional"/>
+		      <xs:attribute type="xs:string" name="Parent" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -43,6 +44,7 @@
                     <xs:extension base="xs:string">
                       <xs:attribute type="xs:byte" name="Order" use="optional"/>
                       <xs:attribute type="xs:string" name="Name" use="optional"/>
+		      <xs:attribute type="xs:string" name="Parent" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>
@@ -59,6 +61,7 @@
                     <xs:extension base="xs:string">
                       <xs:attribute type="xs:byte" name="Order" use="optional"/>
                       <xs:attribute type="xs:string" name="Name" use="optional"/>
+		      <xs:attribute type="xs:string" name="Parent" use="optional"/>
                     </xs:extension>
                   </xs:simpleContent>
                 </xs:complexType>

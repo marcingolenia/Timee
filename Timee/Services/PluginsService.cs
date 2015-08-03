@@ -113,49 +113,70 @@ namespace Timee.Services
                     }
                 case "Context":
                     {
-                        UserConfigurationLocation tmpLocation = new UserConfigurationLocation();
-                        UserConfigurationProject tmpProject = new UserConfigurationProject();
-                        UserConfigurationSubproject tmpSubproject = new UserConfigurationSubproject();
-                        UserConfigurationTask tmpTask = new UserConfigurationTask();
+                        
 
-                        tmpLocation.Name = TimeeBridge.TimeeValues.ContextLocation.Name;
-                        if (tmpLocation.Name != null)
+                        foreach (var location in TimeeBridge.TimeeValues.ContextLocationCollection)
                         {
-                            if (this.context.Locations.Where(i => i.Name == tmpLocation.Name).Count() == 0)
-                            {
-                                tmpLocation.Value = TimeeBridge.TimeeValues.ContextLocation.Value;
-                                tmpLocation.Order = context.Locations.Count == 0 ? 1 : this.context.Locations.Max(i => i.Order + 1);
-                                tmpLocation.OrderSpecified = true;
-                                this.context.Locations.Add(tmpLocation);
-                            }
+                            UserConfigurationLocation tmpLocation = new UserConfigurationLocation();
 
+                            tmpLocation.Name = location.Name;
+                            if (tmpLocation.Name != null)
+                            {
+                                if (this.context.Locations.Where(i => i.Name == tmpLocation.Name).Count() == 0)
+                                {
+                                    tmpLocation.Value = location.Value;
+                                    tmpLocation.Order = context.Locations.Count == 0 ? 1 : this.context.Locations.Max(i => i.Order + 1);
+                                    tmpLocation.OrderSpecified = true;
+                                    this.context.Locations.Add(tmpLocation);
+                                }
+
+                            }
                         }
 
 
-                        tmpProject.Name = TimeeBridge.TimeeValues.ContextProject.Name;
-                        if (tmpProject.Name != null)
+                        foreach (var project in TimeeBridge.TimeeValues.ContextProjectCollection)
                         {
-                            if (this.context.Projects.Where(i => i.Name == tmpProject.Name).Count() == 0)
+                            UserConfigurationProject tmpProject = new UserConfigurationProject();
+
+                            tmpProject.Name = project.Name;
+                            if (tmpProject.Name != null)
                             {
-                                tmpProject.Value = TimeeBridge.TimeeValues.ContextProject.Value;
-                                tmpProject.Order = context.Projects.Count == 0 ? 1 : this.context.Projects.Max(i => i.Order + 1);
-                                tmpProject.OrderSpecified = true;
-                                this.context.Projects.Add(tmpProject);
+                                if (this.context.Projects.Where(i => i.Name == tmpProject.Name).Count() == 0)
+                                {
+                                    tmpProject.Value = project.Value;
+                                    tmpProject.Order = context.Projects.Count == 0 ? 1 : this.context.Projects.Max(i => i.Order + 1);
+                                    tmpProject.OrderSpecified = true;
+                                    this.context.Projects.Add(tmpProject);
+                                }
+
                             }
-
                         }
-
-                        tmpSubproject.Name = TimeeBridge.TimeeValues.ContextSubproject.Name;
-                        if (tmpSubproject.Name != null)
+                        foreach (var subProject in TimeeBridge.TimeeValues.ContextSubprojectCollection)
                         {
-                            if (this.context.Subprojects.Where(i => i.Name == tmpSubproject.Name).Count() == 0)
+                            UserConfigurationSubproject tmpSubproject = new UserConfigurationSubproject();
+                            tmpSubproject.Name = subProject.Name;
+                            if (tmpSubproject.Name != null)
                             {
-                                tmpSubproject.Value = TimeeBridge.TimeeValues.ContextSubproject.Value;
+                                tmpSubproject.Value = subProject.Value;
+                                tmpSubproject.Parent = subProject.Parent;
                                 tmpSubproject.Order = context.Subprojects.Count == 0 ? 1 : this.context.Subprojects.Max(i => i.Order + 1);
                                 tmpSubproject.OrderSpecified = true;
                                 this.context.Subprojects.Add(tmpSubproject);
                             }
-
+                        }
+                        foreach (var task in TimeeBridge.TimeeValues.ContextTaskCollection)
+                        {
+                            UserConfigurationTask tmpTask = new UserConfigurationTask();
+                            tmpTask.Name = task.Name;
+                            if (tmpTask.Name != null)
+                            {
+                                tmpTask.Value = task.Value;
+                                tmpTask.Parent = task.Parent;
+                                tmpTask.Order = context.Tasks.Count == 0 ? 1 : this.context.Tasks.Max(i => i.Order + 1);
+                                tmpTask.OrderSpecified = true;
+                                this.context.Tasks.Add(tmpTask);
+                            }
+                            
                         }
                         
 
@@ -165,7 +186,10 @@ namespace Timee.Services
 
                         Services.TimeeXMLService.Instance.SaveContext(context);
                         Services.TimeeXMLService.Instance.LoadContext();
-
+                        TimeeBridge.TimeeValues.ContextLocationCollection.Clear();
+                        TimeeBridge.TimeeValues.ContextProjectCollection.Clear();
+                        TimeeBridge.TimeeValues.ContextSubprojectCollection.Clear();
+                        TimeeBridge.TimeeValues.ContextTaskCollection.Clear();
                        // TimeeBridge.TimeeValues.Context.Locations.Where(l => l.Name.Length != 0).Select(l => l.Name);
                         break;
                     }

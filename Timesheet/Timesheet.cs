@@ -110,14 +110,18 @@ namespace Timesheet
         private Project[] ProjectsList {get; set;}
         private Subproject[] SubProjectsList;
         private Location[] LocationsList;
+        private Timesheet.TimesheetService.Task[] TasksList;
 
-        private Dictionary<string, int> Projects = new Dictionary<string,int>();
-        private Dictionary<string, int> SubProjects = new Dictionary<string, int>();
-        private Dictionary<string, int> Tasks = new Dictionary<string, int>();
-        private Dictionary<string, int> Locations = new Dictionary<string, int>();
+        private Dictionary<string, int> Projects;
+        private Dictionary<int, KeyValuePair<string, string>> SubProjects;
+        private Dictionary<int, KeyValuePair<string, string>> Tasks;
+        private Dictionary<string, int> Locations;
         public void Start()
         {
-            
+            Projects = new Dictionary<string, int>();
+            Locations = new Dictionary<string,int>();
+            SubProjects = new Dictionary<int, KeyValuePair<string, string>>();
+            Tasks = new Dictionary<int, KeyValuePair<string, string>>();
 
             using (var dlg = new LoginDialog())
             {
@@ -147,41 +151,60 @@ namespace Timesheet
                     }
                 }
 
-                this.LocationsList = client.GetLocations("LGBS");
-
+                
                 foreach (var project in this.Projects)
                 {
+                    TimeeBridge.TimeeValues.ContextProject = new TimeeBridge.UserConfigurationProject();
+                    TimeeBridge.TimeeValues.ContextProject.Name = project.Key;
+                    TimeeBridge.TimeeValues.ContextProject.Value = project.Value.ToString();
+                    TimeeBridge.TimeeValues.ContextProjectCollection.Add(TimeeBridge.TimeeValues.ContextProject);
                     this.SubProjectsList = client.GetAvailableSubprojects("LGBS",project.Value);
-                }
-                foreach (var subProject in SubProjectsList)
-                {
-                    this.SubProjects.Add(subProject.Name, subProject.Id);
-                }
 
+                    foreach (var subProject in SubProjectsList)
+                    {
+                        TimeeBridge.TimeeValues.ContextSubproject = new TimeeBridge.UserConfigurationSubproject();
+                        TimeeBridge.TimeeValues.ContextSubproject.Name = subProject.Name;
+                        TimeeBridge.TimeeValues.ContextSubproject.Value = subProject.Id.ToString();
+                        TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Key;
+                        TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(TimeeBridge.TimeeValues.ContextSubproject);
+                        this.TasksList = client.GetAvailableTasks("LGBS", project.Value, subProject.Id);
+
+                        foreach (var task in TasksList)
+                        {
+                                TimeeBridge.TimeeValues.ContextTask = new TimeeBridge.UserConfigurationTask();
+                                TimeeBridge.TimeeValues.ContextTask.Name = task.Value;
+                                TimeeBridge.TimeeValues.ContextTask.Value = task.Id.ToString();
+                                TimeeBridge.TimeeValues.ContextTask.Parent = subProject.Name;
+                                TimeeBridge.TimeeValues.ContextTaskCollection.Add(TimeeBridge.TimeeValues.ContextTask);
+                        }
+                    }
+
+                }
+                this.LocationsList = client.GetLocations("LGBS");
                 foreach (var location in LocationsList)
 	            {
-                    this.Locations.Add(location.Value, location.Id);
+                 TimeeBridge.TimeeValues.ContextLocation = new TimeeBridge.UserConfigurationLocation();
+                 TimeeBridge.TimeeValues.ContextLocation.Name = location.Value;
+                 TimeeBridge.TimeeValues.ContextLocation.Value = location.Id.ToString();
+                 TimeeBridge.TimeeValues.ContextLocationCollection.Add(TimeeBridge.TimeeValues.ContextLocation);
 	            }
-
+                
             }
                 //Projects.Keys.DefaultIfEmpty("");
-                TimeeBridge.TimeeValues.ContextProject.Name = Projects.Keys.FirstOrDefault();
-                TimeeBridge.TimeeValues.ContextProject.Value = Projects.Values.FirstOrDefault().ToString();
 
                 //SubProjects.Keys.DefaultIfEmpty("");
-                TimeeBridge.TimeeValues.ContextSubproject.Name = SubProjects.Keys.FirstOrDefault();
-                TimeeBridge.TimeeValues.ContextSubproject.Value = SubProjects.Values.FirstOrDefault().ToString();
+                
 
                 //TimeeBridge.TimeeValues.ContextTask.Name = Tasks.Keys.FirstOrDefault();
                 //TimeeBridge.TimeeValues.ContextTask.Value = Tasks.Values.FirstOrDefault().ToString();
                 //Locations.Keys.DefaultIfEmpty("");
-                TimeeBridge.TimeeValues.ContextLocation.Name = Locations.Keys.FirstOrDefault();
-                TimeeBridge.TimeeValues.ContextLocation.Value = Locations.Values.FirstOrDefault().ToString();
+               
            
 
             Locations.Clear();
             Projects.Clear();
             SubProjects.Clear();
+            Tasks.Clear();
         }
         
     }

@@ -171,6 +171,12 @@
     <Compile Include="Controls\TimeeEditComponent.Designer.cs">
       <DependentUpon>TimeeEditComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PrototypeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PrototypeDialog.Designer.cs">
+      <DependentUpon>PrototypeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\PluginsService.cs" />
     <Compile Include="Services\TimeeXMLService.cs" />
     <Compile Include="Dialogs\AboutDialog.cs">
@@ -242,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PredefinedTasksDialog.resx">
       <DependentUpon>PredefinedTasksDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PrototypeDialog.resx">
+      <DependentUpon>PrototypeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TimeeEditDialog.resx">
       <DependentUpon>TimeeEditDialog.cs</DependentUpon>
