@@ -41,16 +41,20 @@ namespace Timesheet
 
         private void chlProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Project item in chlProjects.CheckedItems)
+            if (!chkSelected.Checked)
             {
-                try
+                foreach (Project item in chlProjects.CheckedItems)
                 {
-                    this.Projects.Add(item.Name, item.Id);
+                    try
+                    {
+                        this.Projects.Add(item.Name, item.Id);
+
+                    }
+                    catch (Exception ex) { }
 
                 }
-                catch (Exception ex) { }
-
             }
+           
         }
 
         private void chkSelected_CheckedChanged(object sender, EventArgs e)

@@ -82,6 +82,11 @@ namespace Timee.Dialogs
 
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Abort;
+        }
+
 
     }
 }

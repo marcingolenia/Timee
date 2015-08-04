@@ -46,7 +46,7 @@ namespace Timesheet
                 client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
                 client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
                 client.ClientCredentials.Windows.ClientCredential.Password = this.password;
-                var projects = client.GetProjects("LGBS");
+                //var projects = client.GetProjects("LGBS");
                 
             for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
             {
@@ -56,22 +56,20 @@ namespace Timesheet
 
                         
 
-                        projectId = projects.Where(p => p.Name == row.Project)
-                            .Select(p => p.Id)
+                        projectId = TimeeBridge.TimeeValues.ContextProjectCollection.Where(p => p.Name == row.Project)
+                            .Select(p => Convert.ToInt32(p.Value))
                             .First();
 
-                        subId = client.Alt_GetSubprojectId("LGBS", projectId, row.SubProject);
-
-                        var tasks = client.GetAvailableTasks("LGBS", projectId, subId);
-
-                        taskId = tasks.Where(t => t.Value == row.Task)
-                            .Select(t => t.Id)
+                        subId = TimeeBridge.TimeeValues.ContextSubprojectCollection.Where(p=> p.Parent == row.Project).Where(p => p.Name == row.SubProject)
+                            .Select(p => Convert.ToInt32(p.Value))
                             .First();
 
-                        var locations = client.GetLocations("LGBS");
+                        taskId = TimeeBridge.TimeeValues.ContextTaskCollection.Where(t => t.Parent == row.SubProject).Where(t => t.Name == row.Task)
+                            .Select(t => Convert.ToInt32(t.Value))
+                            .First();
 
-                        locationId = locations.Where(l => l.Value == row.Location)
-                            .Select(l => l.Id)
+                        locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
+                            .Select(l => Convert.ToInt32(l.Value))
                             .First();
 
                         var record = new TimesheetRecord();
@@ -80,8 +78,8 @@ namespace Timesheet
                         record.PersonId = client.GetCurrentUser("LGBS").Id;
                         record.TaskId = taskId;
                         record.SubprojectId = subId;
-                        record.Hours = Math.Round(Math.Round((decimal)row.Time.TotalMinutes / 60, 2) * 4, MidpointRounding.ToEven) / 4; 
-                        record.LocationId = client.GetLocations("LGBS").First().Id;
+                        record.Hours = Math.Round(Math.Round((decimal)row.Time.TotalMinutes / 60, 2) * 4, MidpointRounding.ToEven) / 4;
+                        record.LocationId = locationId;
                         //record.StatusId = client.GetStatuses("LGBS").First().Id;
                         record.Date = row.Date;
                         record.CreativeStatusId = client.GetCreativeStatuses("LGBS").First().Id;
@@ -97,6 +95,7 @@ namespace Timesheet
                     }
                 }
             }
+            this.grdMainTasks.Clear();
         }
     }
     [Export(typeof(TimeeBridge.IPlugins))]
@@ -113,15 +112,9 @@ namespace Timesheet
         private Timesheet.TimesheetService.Task[] TasksList;
 
         private Dictionary<string, int> Projects;
-        private Dictionary<int, KeyValuePair<string, string>> SubProjects;
-        private Dictionary<int, KeyValuePair<string, string>> Tasks;
-        private Dictionary<string, int> Locations;
         public void Start()
         {
             Projects = new Dictionary<string, int>();
-            Locations = new Dictionary<string,int>();
-            SubProjects = new Dictionary<int, KeyValuePair<string, string>>();
-            Tasks = new Dictionary<int, KeyValuePair<string, string>>();
 
             using (var dlg = new LoginDialog())
             {
@@ -190,21 +183,10 @@ namespace Timesheet
 	            }
                 
             }
-                //Projects.Keys.DefaultIfEmpty("");
-
-                //SubProjects.Keys.DefaultIfEmpty("");
-                
-
-                //TimeeBridge.TimeeValues.ContextTask.Name = Tasks.Keys.FirstOrDefault();
-                //TimeeBridge.TimeeValues.ContextTask.Value = Tasks.Values.FirstOrDefault().ToString();
-                //Locations.Keys.DefaultIfEmpty("");
                
            
 
-            Locations.Clear();
             Projects.Clear();
-            SubProjects.Clear();
-            Tasks.Clear();
         }
         
     }

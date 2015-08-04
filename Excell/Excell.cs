@@ -130,7 +130,7 @@ namespace Excell
     {
             string fileName { get; set; }
             TimeeBridge.TimeeDataSet excellDataSet = new TimeeBridge.TimeeDataSet();
-            private DataTable source = TimeeBridge.TimeeValues.MainTasks;
+            private DataTable source = TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0];
         public void Start()
         {
 
@@ -186,23 +186,8 @@ namespace Excell
             } while(!worksheet.Row(i).IsEmpty());
             
             //this.newXml = ds.GetXml();
-            TimeeBridge.TimeeValues.MainTasks.Merge(source);
+            TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0].Merge(source);
         }
     }
-        [Export(typeof(TimeeBridge.IPlugins))]
-        [ExportMetadata("Name", "test")]
-        [ExportMetadata("Return", "MainTasksXml")]
-        [ExportMetadata("Group", "Misc")]
-
-        //[ExportMetadata("Return", "PredefineTasksXml", IsMultiple = true)]
-        public class test : TimeeBridge.IPlugins
-        {
-            public void Start()
-            {
-                string xml = TimeeBridge.TimeeValues.PredefineTasksXml;
-                TimeeBridge.TimeeValues.MainTasksXml = xml;
-                TimeeBridge.TimeeValues.PredefineTasksXml = TimeeBridge.TimeeValues.MainTasksXml;
-            }
-        }
     
 }
