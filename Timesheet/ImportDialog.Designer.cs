@@ -43,8 +43,7 @@
             this.chlProjects.Size = new System.Drawing.Size(229, 154);
             this.chlProjects.Sorted = true;
             this.chlProjects.TabIndex = 0;
-            this.chlProjects.SelectedIndexChanged += new System.EventHandler(this.chlProjects_SelectedIndexChanged);
-            // 
+            this.chlProjects.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chlProjects_ItemCheck);
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(82, 32);
@@ -100,6 +99,7 @@
             this.PerformLayout();
 
         }
+
 
         #endregion
 

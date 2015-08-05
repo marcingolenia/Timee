@@ -155,6 +155,7 @@ namespace Timee.Services
             {
                 UserConfigurationProject tmpProject = new UserConfigurationProject();
 
+
                 tmpProject.Name = project.Name;
                 if (tmpProject.Name != null)
                 {
@@ -175,10 +176,14 @@ namespace Timee.Services
                 if (tmpSubproject.Name != null)
                 {
                     tmpSubproject.Value = subProject.Value;
-                    tmpSubproject.Parent = subProject.Parent;
-                    tmpSubproject.Order = context.Subprojects.Count == 0 ? 1 : this.context.Subprojects.Max(i => i.Order + 1);
-                    tmpSubproject.OrderSpecified = true;
-                    this.context.Subprojects.Add(tmpSubproject);
+                    if (this.context.Subprojects.Where(i => i.Value == tmpSubproject.Value).Count() == 0)
+                    {
+                        tmpSubproject.Value = subProject.Value;
+                        tmpSubproject.Parent = subProject.Parent;
+                        tmpSubproject.Order = context.Subprojects.Count == 0 ? 1 : this.context.Subprojects.Max(i => i.Order + 1);
+                        tmpSubproject.OrderSpecified = true;
+                        this.context.Subprojects.Add(tmpSubproject);
+                    }
                 }
             }
             foreach (var task in TimeeBridge.TimeeValues.ContextTaskCollection)
@@ -188,10 +193,14 @@ namespace Timee.Services
                 if (tmpTask.Name != null)
                 {
                     tmpTask.Value = task.Value;
-                    tmpTask.Parent = task.Parent;
-                    tmpTask.Order = context.Tasks.Count == 0 ? 1 : this.context.Tasks.Max(i => i.Order + 1);
-                    tmpTask.OrderSpecified = true;
-                    this.context.Tasks.Add(tmpTask);
+                    if (this.context.Tasks.Where(i => i.Value == tmpTask.Value).Count() == 0)
+                    {
+                        tmpTask.Value = task.Value;
+                        tmpTask.Parent = task.Parent;
+                        tmpTask.Order = context.Tasks.Count == 0 ? 1 : this.context.Tasks.Max(i => i.Order + 1);
+                        tmpTask.OrderSpecified = true;
+                        this.context.Tasks.Add(tmpTask);
+                    }
                 }
 
             }
@@ -204,15 +213,8 @@ namespace Timee.Services
                 TimeeBridge.UserConfigurationLocation tmpLocation = new TimeeBridge.UserConfigurationLocation();
 
                 tmpLocation.Name = location.Name;
-                if (tmpLocation.Name != null)
-                {
-                    if (TimeeBridge.TimeeValues.ContextLocationCollection.Where(i => i.Name == tmpLocation.Name).Count() == 0)
-                    {
-                        tmpLocation.Value = location.Value;
-                        TimeeBridge.TimeeValues.ContextLocationCollection.Add(tmpLocation);
-                    }
-
-                }
+                tmpLocation.Value = location.Value;
+                TimeeBridge.TimeeValues.ContextLocationCollection.Add(tmpLocation); 
             }
 
 
@@ -221,37 +223,27 @@ namespace Timee.Services
                 TimeeBridge.UserConfigurationProject tmpProject = new TimeeBridge.UserConfigurationProject();
 
                 tmpProject.Name = project.Name;
-                if (tmpProject.Name != null)
-                {
-                    if (TimeeBridge.TimeeValues.ContextProjectCollection.Where(i => i.Name == tmpProject.Name).Count() == 0)
-                    {
-                        tmpProject.Value = project.Value;
-                        TimeeBridge.TimeeValues.ContextProjectCollection.Add(tmpProject);
-                    }
+                tmpProject.Value = project.Value;
+                TimeeBridge.TimeeValues.ContextProjectCollection.Add(tmpProject);
 
-                }
             }
             foreach (var subProject in context.Subprojects)
             {
                 TimeeBridge.UserConfigurationSubproject tmpSubproject = new TimeeBridge.UserConfigurationSubproject();
+
                 tmpSubproject.Name = subProject.Name;
-                if (tmpSubproject.Name != null)
-                {
-                    tmpSubproject.Value = subProject.Value;
-                    tmpSubproject.Parent = subProject.Parent;
-                    TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(tmpSubproject);
-                }
+                tmpSubproject.Value = subProject.Value;
+                tmpSubproject.Parent = subProject.Parent;
+                TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(tmpSubproject);
             }
             foreach (var task in context.Tasks)
             {
                 TimeeBridge.UserConfigurationTask tmpTask = new TimeeBridge.UserConfigurationTask();
+
                 tmpTask.Name = task.Name;
-                if (tmpTask.Name != null)
-                {
-                    tmpTask.Value = task.Value;
-                    tmpTask.Parent = task.Parent;
-                    TimeeBridge.TimeeValues.ContextTaskCollection.Add(tmpTask);
-                }
+                tmpTask.Value = task.Value;
+                tmpTask.Parent = task.Parent;
+                TimeeBridge.TimeeValues.ContextTaskCollection.Add(tmpTask);
 
             }
         }

@@ -284,30 +284,14 @@ namespace Timee
                         TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
                         row.Comment = this.tbComment.Text;
                         row.Date = this.dpWorkDate.Value;
-                        row.Project = dlg.Project;
-                        row.SubProject = dlg.SubProject;
-                        row.Task = dlg.Task;
+                        row.Project = dlg.Project.Name;
+                        row.SubProject = dlg.SubProject.Name;
+                        row.Task = dlg.Task.Name;
                         row.Time = TimeSpan.Zero;
-                        row.Location = dlg.Location;
+                        row.Location = dlg.Location.Name;
                         AddNewRow(row);
                         this.btnPause.Enabled = true;
                         this.btnPause.Text = "Pause";
-                    }
-                    if (dlg.DialogResult == DialogResult.Abort)
-                    {
-                        string tmpSelectedProject = dlg.Project;
-                        this.Context.Projects.Remove(this.Context.Projects.Where(p => p.Name == tmpSelectedProject).Select(p => p).First());
-                        var subProjectRemove = this.Context.Subprojects.Where(s => s.Parent == tmpSelectedProject).ToList();
-                        foreach (var item in subProjectRemove)
-                        {
-                            var taskRemove = this.Context.Tasks.Where(t => t.Parent == item.Name).ToList();
-                            foreach (var task in taskRemove)
-                            {
-                                this.Context.Tasks.Remove(task);
-                            }
-                            this.Context.Subprojects.Remove(item);
-                        }
-                        Services.TimeeXMLService.Instance.SaveContext(this.Context);
                     }
                 }
             }

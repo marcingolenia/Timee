@@ -13,8 +13,9 @@ namespace Timesheet
 {
     public partial class ImportDialog : Form
     {
-        public Project[] projects;
-        private Project[] searchedProjects;
+        public List<Project> projects = new List<Project>();
+        private List<Project> searchedProjects = new List<Project>();
+        public List<Project> selectedProjects = new List<Project>();
         public Dictionary<string, int> Projects { get; set; }
 
         public ImportDialog()
@@ -24,8 +25,8 @@ namespace Timesheet
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
-            searchedProjects = projects.Where(p => p.Name.Contains(txtSearch.Text))
-                                               .Select(p => p).ToArray();
+            searchedProjects = this.projects.Where(p => p.Name.Contains(txtSearch.Text))
+                                               .Select(p => p).ToList();
             chkSelected.Checked = false;
             chlProjects.DataSource = searchedProjects;
             chlProjects.DisplayMember = "Name";
@@ -34,39 +35,44 @@ namespace Timesheet
         private void ImportDialog_Load(object sender, EventArgs e)
         {
             Projects = new Dictionary<string, int>();
-            this.searchedProjects = this.projects;
+            this.searchedProjects = this.projects.ToList();
             chlProjects.DataSource = searchedProjects;
             chlProjects.DisplayMember = "Name";
         }
 
-        private void chlProjects_SelectedIndexChanged(object sender, EventArgs e)
+
+
+        private void chlProjects_ItemCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
         {
             if (!chkSelected.Checked)
             {
-                foreach (Project item in chlProjects.CheckedItems)
-                {
+                Project checkedProject = (Project)chlProjects.Items[e.Index];
                     try
                     {
-                        this.Projects.Add(item.Name, item.Id);
-
+                        if (!this.selectedProjects.Contains(checkedProject))
+                        {
+                            this.selectedProjects.Add(checkedProject);
+                            this.projects.Remove(checkedProject);
+                        }
                     }
                     catch (Exception ex) { }
-
-                }
             }
-           
         }
+           
 
         private void chkSelected_CheckedChanged(object sender, EventArgs e)
         {
             if (chkSelected.Checked)
             {
 
-                chlProjects.DataSource = Projects.ToArray();
+                chlProjects.DataSource = this.selectedProjects;
+                chlProjects.DisplayMember = "Name";
             }
             else
             {
-                chlProjects.DataSource = searchedProjects;
+                this.searchedProjects = projects.Where(p => p.Name.Contains(txtSearch.Text))
+                                               .Select(p => p).ToList();
+                chlProjects.DataSource = this.searchedProjects;
                 chlProjects.DisplayMember = "Name";
             }
         }

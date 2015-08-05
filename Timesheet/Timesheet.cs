@@ -46,7 +46,6 @@ namespace Timesheet
                 client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
                 client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
                 client.ClientCredentials.Windows.ClientCredential.Password = this.password;
-                //var projects = client.GetProjects("LGBS");
                 
             for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
             {
@@ -96,6 +95,8 @@ namespace Timesheet
                 }
             }
             this.grdMainTasks.Clear();
+            this.login = "";
+            this.password = "";
         }
     }
     [Export(typeof(TimeeBridge.IPlugins))]
@@ -106,16 +107,12 @@ namespace Timesheet
     {
         private string login;
         private string password;
-        private Project[] ProjectsList {get; set;}
+        private List<Project> ProjectsList = new List<Project>();
         private Subproject[] SubProjectsList;
         private Location[] LocationsList;
         private Timesheet.TimesheetService.Task[] TasksList;
-
-        private Dictionary<string, int> Projects;
         public void Start()
         {
-            Projects = new Dictionary<string, int>();
-
             using (var dlg = new LoginDialog())
             {
                 dlg.ShowDialog();
@@ -130,7 +127,7 @@ namespace Timesheet
                 client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
                 client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
                 client.ClientCredentials.Windows.ClientCredential.Password = this.password;
-                this.ProjectsList = client.GetProjects("LGBS");
+                this.ProjectsList = client.GetProjects("LGBS").ToList();
 
                 using (var dlg = new ImportDialog())
                 {
@@ -140,27 +137,27 @@ namespace Timesheet
 
                     if (dlg.DialogResult == DialogResult.OK)
                     {
-                        this.Projects = dlg.Projects;
+                        this.ProjectsList = dlg.selectedProjects;
                     }
                 }
 
                 
-                foreach (var project in this.Projects)
+                foreach (var project in this.ProjectsList)
                 {
                     TimeeBridge.TimeeValues.ContextProject = new TimeeBridge.UserConfigurationProject();
-                    TimeeBridge.TimeeValues.ContextProject.Name = project.Key;
-                    TimeeBridge.TimeeValues.ContextProject.Value = project.Value.ToString();
+                    TimeeBridge.TimeeValues.ContextProject.Name = project.Name;
+                    TimeeBridge.TimeeValues.ContextProject.Value = project.Id.ToString();
                     TimeeBridge.TimeeValues.ContextProjectCollection.Add(TimeeBridge.TimeeValues.ContextProject);
-                    this.SubProjectsList = client.GetAvailableSubprojects("LGBS",project.Value);
+                    this.SubProjectsList = client.GetAvailableSubprojects("LGBS",project.Id);
 
                     foreach (var subProject in SubProjectsList)
                     {
                         TimeeBridge.TimeeValues.ContextSubproject = new TimeeBridge.UserConfigurationSubproject();
                         TimeeBridge.TimeeValues.ContextSubproject.Name = subProject.Name;
                         TimeeBridge.TimeeValues.ContextSubproject.Value = subProject.Id.ToString();
-                        TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Key;
+                        TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Name;
                         TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(TimeeBridge.TimeeValues.ContextSubproject);
-                        this.TasksList = client.GetAvailableTasks("LGBS", project.Value, subProject.Id);
+                        this.TasksList = client.GetAvailableTasks("LGBS", project.Id, subProject.Id);
 
                         foreach (var task in TasksList)
                         {
@@ -183,10 +180,8 @@ namespace Timesheet
 	            }
                 
             }
-               
-           
-
-            Projects.Clear();
+            this.login = "";
+            this.password = "";
         }
         
     }
