@@ -74,6 +74,33 @@ namespace Timee.Controls
                 btnSaveRowClicked(sender, e);
             }
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+
+            if (keyData == Keys.Enter)
+            {
+                if (this.CurrentCell.ColumnIndex < ColumnCount - 1)
+                {
+                    this.CurrentCell = this.Rows[this.CurrentCell.RowIndex].Cells[this.CurrentCell.ColumnIndex + 1];
+                    return true;
+                }
+                else
+                {
+                    try
+                    {
+                        this.CurrentCell = this.Rows[this.CurrentCell.RowIndex + 1].Cells[0];
+                        return true;
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        return true;
+                    }
+
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
     }
 }

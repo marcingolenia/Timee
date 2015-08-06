@@ -24,12 +24,15 @@ namespace Timesheet
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            
-            searchedProjects = this.projects.Where(p => p.Name.Contains(txtSearch.Text))
-                                               .Select(p => p).ToList();
-            chkSelected.Checked = false;
-            chlProjects.DataSource = searchedProjects;
-            chlProjects.DisplayMember = "Name";
+            if (txtSearch.Text.Length > 2)
+            {
+                searchedProjects = this.projects.Where(p => p.Name.ToLower().Contains(txtSearch.Text.ToLower()))
+                                   .Select(p => p).ToList();
+                chkSelected.Checked = false;
+                chlProjects.DataSource = searchedProjects;
+                chlProjects.DisplayMember = "Name";
+            }
+
         }
 
         private void ImportDialog_Load(object sender, EventArgs e)
@@ -40,7 +43,10 @@ namespace Timesheet
             chlProjects.DisplayMember = "Name";
         }
 
-
+        private void ImportDialog_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            //this.DialogResult = DialogResult.Abort;
+        }
 
         private void chlProjects_ItemCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
         {

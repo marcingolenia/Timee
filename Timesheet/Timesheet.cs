@@ -43,55 +43,59 @@ namespace Timesheet
             }
             using (var client = new DataServiceClient())
             {
-                client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
-                client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
-                client.ClientCredentials.Windows.ClientCredential.Password = this.password;
+                try
+                {
+                    client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
+                    client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
+                    client.ClientCredentials.Windows.ClientCredential.Password = this.password;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 
             for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
             {
                 row = (TimeeBridge.TimeeDataSet.TimeSheetTableRow)grdMainTasks.Tables[0].Rows[i];
-                    try
+
+                projectId = TimeeBridge.TimeeValues.ContextProjectCollection.Where(p => p.Name == row.Project)
+                    .Select(p => Convert.ToInt32(p.Value))
+                    .First();
+
+                subId = TimeeBridge.TimeeValues.ContextSubprojectCollection.Where(s=> s.Parent == row.Project).Where(s => s.Name == row.SubProject)
+                    .Select(s => Convert.ToInt32(s.Value))
+                    .First();
+
+                taskId = TimeeBridge.TimeeValues.ContextTaskCollection.Where(t => t.Parent == row.SubProject).Where(t => t.Name == row.Task)
+                    .Select(t => Convert.ToInt32(t.Value))
+                    .First();
+
+                locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
+                    .Select(l => Convert.ToInt32(l.Value))
+                    .First();
+                var record = new TimesheetRecord();
+
+                using (var dlg = new ExportDialog())
+                {
+                    dlg.Creative = client.GetCreativeStatuses("LGBS").ToList();
+                    dlg.Status = client.GetStatuses("LGBS").ToList();
+                    dlg.ShowDialog();
+                    if (dlg.DialogResult == DialogResult.OK)
                     {
-
-                        
-
-                        projectId = TimeeBridge.TimeeValues.ContextProjectCollection.Where(p => p.Name == row.Project)
-                            .Select(p => Convert.ToInt32(p.Value))
-                            .First();
-
-                        subId = TimeeBridge.TimeeValues.ContextSubprojectCollection.Where(p=> p.Parent == row.Project).Where(p => p.Name == row.SubProject)
-                            .Select(p => Convert.ToInt32(p.Value))
-                            .First();
-
-                        taskId = TimeeBridge.TimeeValues.ContextTaskCollection.Where(t => t.Parent == row.SubProject).Where(t => t.Name == row.Task)
-                            .Select(t => Convert.ToInt32(t.Value))
-                            .First();
-
-                        locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
-                            .Select(l => Convert.ToInt32(l.Value))
-                            .First();
-
-                        var record = new TimesheetRecord();
-                        record.Comment = row.Comment;
-                        record.ProjectId = projectId;
-                        record.PersonId = client.GetCurrentUser("LGBS").Id;
-                        record.TaskId = taskId;
-                        record.SubprojectId = subId;
-                        record.Hours = Math.Round(Math.Round((decimal)row.Time.TotalMinutes / 60, 2) * 4, MidpointRounding.ToEven) / 4;
-                        record.LocationId = locationId;
-                        //record.StatusId = client.GetStatuses("LGBS").First().Id;
-                        record.Date = row.Date;
-                        record.CreativeStatusId = client.GetCreativeStatuses("LGBS").First().Id;
-                        client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
-                        MessageBox.Show("Export Completed!");
-
-
-
+                        record.CreativeStatusId = dlg.CreativeId;
+                        record.StatusId = dlg.StatusId;
                     }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                record.Comment = row.Comment;
+                record.ProjectId = projectId;
+                record.PersonId = client.GetCurrentUser("LGBS").Id;
+                record.TaskId = taskId;
+                record.SubprojectId = subId;
+                record.Hours = (decimal)row.Time.Hours + (decimal)row.Time.Minutes / 100;
+                record.LocationId = locationId;
+                record.Date = row.Date;
+                client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
+                MessageBox.Show("Export Completed!");
                 }
             }
             this.grdMainTasks.Clear();
@@ -124,10 +128,18 @@ namespace Timesheet
             }
             using (var client = new DataServiceClient())
             {
-                client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
-                client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
-                client.ClientCredentials.Windows.ClientCredential.Password = this.password;
-                this.ProjectsList = client.GetProjects("LGBS").ToList();
+                try
+                {
+                    client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
+                    client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
+                    client.ClientCredentials.Windows.ClientCredential.Password = this.password;
+                    this.ProjectsList = client.GetProjects("LGBS").ToList();
+                }
+                catch(Exception e)
+                {
+                    string t = e.GetType().Name;
+                }
+
 
                 using (var dlg = new ImportDialog())
                 {
@@ -140,45 +152,42 @@ namespace Timesheet
                         this.ProjectsList = dlg.selectedProjects;
                     }
                 }
-
-                
-                foreach (var project in this.ProjectsList)
-                {
-                    TimeeBridge.TimeeValues.ContextProject = new TimeeBridge.UserConfigurationProject();
-                    TimeeBridge.TimeeValues.ContextProject.Name = project.Name;
-                    TimeeBridge.TimeeValues.ContextProject.Value = project.Id.ToString();
-                    TimeeBridge.TimeeValues.ContextProjectCollection.Add(TimeeBridge.TimeeValues.ContextProject);
-                    this.SubProjectsList = client.GetAvailableSubprojects("LGBS",project.Id);
-
-                    foreach (var subProject in SubProjectsList)
+                    foreach (var project in this.ProjectsList)
                     {
-                        TimeeBridge.TimeeValues.ContextSubproject = new TimeeBridge.UserConfigurationSubproject();
-                        TimeeBridge.TimeeValues.ContextSubproject.Name = subProject.Name;
-                        TimeeBridge.TimeeValues.ContextSubproject.Value = subProject.Id.ToString();
-                        TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Name;
-                        TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(TimeeBridge.TimeeValues.ContextSubproject);
-                        this.TasksList = client.GetAvailableTasks("LGBS", project.Id, subProject.Id);
+                        TimeeBridge.TimeeValues.ContextProject = new TimeeBridge.UserConfigurationProject();
+                        TimeeBridge.TimeeValues.ContextProject.Name = project.Name;
+                        TimeeBridge.TimeeValues.ContextProject.Value = project.Id.ToString();
+                        TimeeBridge.TimeeValues.ContextProjectCollection.Add(TimeeBridge.TimeeValues.ContextProject);
+                        this.SubProjectsList = client.GetAvailableSubprojects("LGBS", project.Id);
 
-                        foreach (var task in TasksList)
+                        foreach (var subProject in SubProjectsList)
                         {
+                            TimeeBridge.TimeeValues.ContextSubproject = new TimeeBridge.UserConfigurationSubproject();
+                            TimeeBridge.TimeeValues.ContextSubproject.Name = subProject.Name;
+                            TimeeBridge.TimeeValues.ContextSubproject.Value = subProject.Id.ToString();
+                            TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Name;
+                            TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(TimeeBridge.TimeeValues.ContextSubproject);
+                            this.TasksList = client.GetAvailableTasks("LGBS", project.Id, subProject.Id);
+
+                            foreach (var task in TasksList)
+                            {
                                 TimeeBridge.TimeeValues.ContextTask = new TimeeBridge.UserConfigurationTask();
                                 TimeeBridge.TimeeValues.ContextTask.Name = task.Value;
                                 TimeeBridge.TimeeValues.ContextTask.Value = task.Id.ToString();
                                 TimeeBridge.TimeeValues.ContextTask.Parent = subProject.Name;
                                 TimeeBridge.TimeeValues.ContextTaskCollection.Add(TimeeBridge.TimeeValues.ContextTask);
+                            }
                         }
-                    }
 
-                }
-                this.LocationsList = client.GetLocations("LGBS");
-                foreach (var location in LocationsList)
-	            {
-                 TimeeBridge.TimeeValues.ContextLocation = new TimeeBridge.UserConfigurationLocation();
-                 TimeeBridge.TimeeValues.ContextLocation.Name = location.Value;
-                 TimeeBridge.TimeeValues.ContextLocation.Value = location.Id.ToString();
-                 TimeeBridge.TimeeValues.ContextLocationCollection.Add(TimeeBridge.TimeeValues.ContextLocation);
-	            }
-                
+                    }
+                    this.LocationsList = client.GetLocations("LGBS");
+                    foreach (var location in LocationsList)
+                    {
+                        TimeeBridge.TimeeValues.ContextLocation = new TimeeBridge.UserConfigurationLocation();
+                        TimeeBridge.TimeeValues.ContextLocation.Name = location.Value;
+                        TimeeBridge.TimeeValues.ContextLocation.Value = location.Id.ToString();
+                        TimeeBridge.TimeeValues.ContextLocationCollection.Add(TimeeBridge.TimeeValues.ContextLocation);
+                    }
             }
             this.login = "";
             this.password = "";

@@ -95,6 +95,7 @@ namespace Timee
             // 
             this.cmbLocations.DataSource = this.userConfigurationLocationBindingSource;
             this.cmbLocations.DisplayMember = "name";
+            this.cmbLocations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLocations.FormattingEnabled = true;
             this.cmbLocations.Location = new System.Drawing.Point(644, 49);
             this.cmbLocations.Name = "cmbLocations";
@@ -164,6 +165,7 @@ namespace Timee
             this.Project.DataPropertyName = "Project";
             this.Project.DataSource = this.userConfigurationProjectBindingSource;
             this.Project.DisplayMember = "Name";
+            this.Project.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.Project.FillWeight = 88.33056F;
             this.Project.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Project.HeaderText = "Project";
@@ -270,28 +272,33 @@ namespace Timee
             // 
             this.cmbProject.DataSource = this.userConfigurationProjectBindingSource;
             this.cmbProject.DisplayMember = "name";
+            this.cmbProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProject.FormattingEnabled = true;
             this.cmbProject.Location = new System.Drawing.Point(170, 49);
             this.cmbProject.Name = "cmbProject";
             this.cmbProject.Size = new System.Drawing.Size(121, 21);
             this.cmbProject.TabIndex = 4;
+            this.cmbProject.SelectedIndexChanged += new System.EventHandler(this.cmbProject_SelectedIndexChanged);
             this.cmbProject.Validating += new System.ComponentModel.CancelEventHandler(this.cmbProject_Validating);
             // 
             // cmbSubProject
             // 
             this.cmbSubProject.DataSource = this.userConfigurationSubprojectBindingSource;
             this.cmbSubProject.DisplayMember = "name";
+            this.cmbSubProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSubProject.FormattingEnabled = true;
             this.cmbSubProject.Location = new System.Drawing.Point(328, 49);
             this.cmbSubProject.Name = "cmbSubProject";
             this.cmbSubProject.Size = new System.Drawing.Size(121, 21);
             this.cmbSubProject.TabIndex = 5;
+            this.cmbSubProject.SelectedIndexChanged += new System.EventHandler(this.cmbSubProject_SelectedIndexChanged);
             this.cmbSubProject.Validating += new System.ComponentModel.CancelEventHandler(this.cmbSubProject_Validating);
             // 
             // cmbTask
             // 
             this.cmbTask.DataSource = this.userConfigurationTaskBindingSource;
             this.cmbTask.DisplayMember = "name";
+            this.cmbTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTask.FormattingEnabled = true;
             this.cmbTask.Location = new System.Drawing.Point(486, 49);
             this.cmbTask.Name = "cmbTask";

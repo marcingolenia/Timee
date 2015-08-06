@@ -180,14 +180,15 @@ namespace Timee
             if (row.HasValue)
             {
                 this.SwitchTimerToRow(row.Value);
-                this.ShowTimerSwitchNotification();
+                NotificationService.Instance.ShowTimerSwitchNotification
+                    (this.CurrentTimeCell.RowIndex,grdWorkSummary,timeeDataSet);
             }
             else
             {
                 switch (e.Key)
                 {
                     case Keys.F11:
-                        ShowTimerSummaryNotification();
+                        NotificationService.Instance.ShowTimerSummaryNotification(grdWorkSummary);
                         break;
                     case Keys.F12:
                         QuickNewRow();
@@ -235,7 +236,7 @@ namespace Timee
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                this.ShowNotification("Timee", "Timee has been minimized to system tray", ToolTipIcon.Info, 500);
+                NotificationService.Instance.SimpleNotification("Timee", "Timee has been minimized to system tray");
                 this.Hide();
             }
         }
@@ -605,7 +606,6 @@ namespace Timee
 
             Context.PredefinedTasks.TimeSheetTable.AddTimeSheetTableRow(tmpPredefinedTask);
             TimeeXMLService.Instance.SavePredefinedTasks(this.Context.PredefinedTasks);
-           
         }
 
         //--Grid drag and drop
@@ -810,39 +810,6 @@ namespace Timee
             }
         }
         /// <summary>
-        /// Show notification message
-        /// </summary>
-        /// <param name="rowIndex"></param>
-        private void ShowTimerSwitchNotification()
-        {
-            var rowIndex = this.CurrentTimeCell.RowIndex;
-            var currentRow = grdWorkSummary.Rows[rowIndex];
-            if (currentRow != null)
-            {
-                string projectName = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName].Value;
-                string subProjectName = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName].Value;
-                string comment = (string)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.CommentColumn.ColumnName].Value;
-                TimeSpan time = (TimeSpan)grdWorkSummary.Rows[rowIndex].Cells[timeeDataSet.TimeSheetTable.TimeColumn.ColumnName].Value;
-                string notificationText = string.Format("Timer has been switched to:{0}{1}. {2} - {3} - '{4}' ({5:hh\\:mm\\:ss}).", new object[] {Environment.NewLine, rowIndex + 1 , projectName, subProjectName, comment, time});
-                this.ShowNotification("Timee", notificationText, ToolTipIcon.Info, 500);
-            }
-        }
-        /// <summary>
-        /// Show possible switches
-        /// </summary>
-        /// <param name="rowIndex"></param>
-        private void ShowTimerSummaryNotification()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (DataGridViewRow row in grdWorkSummary.Rows)
-            {
-                var typedRow = (TimeeDataSet.TimeSheetTableRow)(row.DataBoundItem as DataRowView).Row;
-                sb.AppendFormat("{0}. {1} | {2} | {3} | {4}", row.Index + 1, typedRow.Project, typedRow.Task, typedRow.Comment, typedRow.Time.ToString("hh':'mm':'ss"));
-                sb.AppendLine();
-            }
-            this.ShowNotification("Timee", sb.ToString(), ToolTipIcon.Info, 1500);
-        }
-        /// <summary>
         /// CTRL + F12 by default -> Quickly create new empty row.
         /// </summary>
         /// <param name="rowIndex"></param>
@@ -853,23 +820,6 @@ namespace Timee
             TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
             row.Date = DateTime.Today;
             AddNewRow(row);
-        }
-        /// <summary>
-        /// Shows baloon tooltip in system tray.
-        /// </summary>
-        /// <param name="title">Tooltip title.</param>
-        /// <param name="text">Tooltip text.</param>
-        /// <param name="icon">Tooltip icon.</param>
-        /// <param name="showTime">Time to show.</param>
-        private void ShowNotification(string title, string text, ToolTipIcon icon, int showTime)
-        {
-            if (!String.IsNullOrWhiteSpace(text))
-            {
-                this.trayIcon.BalloonTipTitle = title;
-                this.trayIcon.BalloonTipText = text;
-                this.trayIcon.BalloonTipIcon = ToolTipIcon.Info;
-                this.trayIcon.ShowBalloonTip(showTime);
-            }
         }
         /// <summary>
         /// Initializes tray control.
@@ -884,13 +834,21 @@ namespace Timee
             trayIcon.ContextMenuStrip = trayMenu;
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void cmbProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (var dlg = new Dialogs.PrototypeDialog())
+            cmbSubProject.DataSource = Context.Subprojects.Where(s => s.Parent == cmbProject.Text).Select(s => s).ToList();
+            cmbSubProject.DisplayMember = "Name";
+
+            if (cmbSubProject.Items.Count == 0)
             {
-                dlg.Context = this.Context;
-                dlg.ShowDialog();
+                cmbTask.DataSource = null;
             }
+        }
+
+        private void cmbSubProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbTask.DataSource = Context.Tasks.Where(s => s.Parent == cmbSubProject.Text).Select(s => s).ToList();
+            cmbTask.DisplayMember = "Name";
         }
     }
 }
