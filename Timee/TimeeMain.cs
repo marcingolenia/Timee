@@ -31,15 +31,6 @@ namespace Timee
         /// Used in Alarm
         /// </summary>
         private AlarmService alarmService;
-
-        /// <summary>
-        /// Used to save task as predefined task
-        /// </summary>
-        public static List<TimeeDataSet.TimeSheetTableRow> newPredefinedTasks;
-        /// <summary>
-        /// used to load plugins
-        /// </summary>
-
         /// <summary>
         /// Hold context data
         /// </summary>
@@ -54,7 +45,7 @@ namespace Timee
         {
             InitializeComponent();
             this.InitializeTrayElements();
-            this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+            this.hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(this.hook_KeyPressed);
             //Show all records + shortcuts(or numbers)
             hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, Keys.F11);
             //Add new row
@@ -71,6 +62,9 @@ namespace Timee
         /// 
         private void Timee_Load(object sender, EventArgs e)
         {
+            NotificationService.Instance.InitializeNotification();
+            HotkeysService.Instance.InitializeKeys();
+
             //Prevent from losting saved tasks after update
             if (Properties.Settings.Default.UpgradeRequired)
             {
@@ -78,10 +72,6 @@ namespace Timee
                 Properties.Settings.Default.UpgradeRequired = false;
                 Properties.Settings.Default.Save();
             }
-            // Difine Catalog to load plugins
-           
-            // Create new plugin position in menu
-            
 
             Assembly mainAssembly = Assembly.GetEntryAssembly();
             this.Context = TimeeXMLService.Instance.LoadContext();
@@ -110,11 +100,7 @@ namespace Timee
             //register hotkeys to previous saved tasks
                 for (int row = 0; row < grdWorkSummary.Rows.Count; row++)
 			    {
-			      Keys keyToRegister = this.GetKeyByRowNumber(row);
-                       if (keyToRegister != Keys.None)
-                       {
-                           this.hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, keyToRegister);
-                       }
+                    HotkeysService.Instance.RegisterKey(hook, row);
 			    }
             }
            
@@ -142,59 +128,32 @@ namespace Timee
         /// <param name="e">KeyPressedEventArgs.</param>
         void hook_KeyPressed(object sender, KeyPressedEventArgs e)
         {
-            int? row = null;
 
-            switch (e.Key)
-            {
-                case Keys.F1:
-                    row = 0;
-                    break;
-                case Keys.F2:
-                    row = 1;
-                    break;
-                case Keys.F3:
-                    row = 2;
-                    break;
-                case Keys.F4:
-                    row = 3;
-                    break;
-                case Keys.F5:
-                    row = 4;
-                    break;
-                case Keys.F6:
-                    row = 5;
-                    break;
-                case Keys.F7:
-                    row = 6;
-                    break;
-                case Keys.F8:
-                    row = 7;
-                    break;
-                case Keys.F9:
-                    row = 8;
-                    break;
-                case Keys.F10:
-                    row = 9;
-                    break;
-            }
-            if (row.HasValue)
-            {
-                this.SwitchTimerToRow(row.Value);
-                NotificationService.Instance.ShowTimerSwitchNotification
-                    (this.CurrentTimeCell.RowIndex,grdWorkSummary,timeeDataSet);
-            }
-            else
-            {
-                switch (e.Key)
+            int? row = null;
+            
+
+            
+                string action = HotkeysService.Instance.KeysMap
+                    .Where(k => (Keys)Enum.Parse(typeof(Keys), k.Value.Value) == e.Key)
+                    .Select(k => k.Key.Key).FirstOrDefault();
+                switch (action)
                 {
-                    case Keys.F11:
+                    case "Switch":
+                        row = HotkeysService.Instance.KeysMap
+                            .Where(k => (Keys)Enum.Parse(typeof(Keys), k.Value.Value) == e.Key)
+                            .Select(v => v.Key.Value).FirstOrDefault();
+                        this.SwitchTimerToRow(row.Value);
+                            NotificationService.Instance.ShowTimerSwitchNotification
+                                (this.CurrentTimeCell.RowIndex,grdWorkSummary,timeeDataSet);
+                        break;
+                    case "Show Summary":
                         NotificationService.Instance.ShowTimerSummaryNotification(grdWorkSummary);
                         break;
-                    case Keys.F12:
+                    case "Add new row":
                         QuickNewRow();
                         break;
                 }
-            }
+            
         }
         /// <summary>
         /// Handling application exit via tray menu.
@@ -677,7 +636,7 @@ namespace Timee
         /// <param name="e"></param>
         private void countdownAlertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var dlg = new AlarmDialog())
+            using (var dlg = new AlarmDialog(((ToolStripMenuItem)mnu.Items[1]).DropDownItems))
             {
                 dlg.ShowDialog();
                 if (dlg.DialogResult == DialogResult.OK)
@@ -742,60 +701,12 @@ namespace Timee
                                          .Cells[0];
             grdWorkSummary.BeginEdit(true);
             // Register key
-            Keys keyToRegister = this.GetKeyByRowNumber(currentRowIndex);
-            if (keyToRegister != Keys.None)
-            {
-                this.hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, keyToRegister);
-            }
+            HotkeysService.Instance.RegisterKey(this.hook, currentRowIndex);
 
             this.timer.Start();
             this.btnPause.Text = "Pause";
         }
-        /// <summary>
-        /// Returns key (keyboard) representing given row number.
-        /// </summary>
-        /// <param name="rowNumber">Row index.</param>
-        /// <returns>Keys.</returns>
-        private Keys GetKeyByRowNumber(int rowNumber)
-        {
-            Keys key = Keys.None;
-            switch (rowNumber)
-            {
-                case 0:
-                    key = Keys.F1;
-                    break;
-                case 1:
-                    key = Keys.F2;
-                    break;
-                case 2:
-                    key = Keys.F3;
-                    break;
-                case 3:
-                    key = Keys.F4;
-                    break;
-                case 4:
-                    key = Keys.F5;
-                    break;
-                case 5:
-                    key = Keys.F6;
-                    break;
-                case 6:
-                    key = Keys.F7;
-                    break;
-                case 7:
-                    key = Keys.F8;
-                    break;
-                case 8:
-                    key = Keys.F9;
-                    break;
-                case 9:
-                    key = Keys.F10;
-                    break;
-                default:
-                    break;
-            }
-            return key;
-        }
+        
         /// <summary>
         /// Set time counting to specific row (used in deleting/adding/double click row).
         /// </summary>
@@ -849,6 +760,14 @@ namespace Timee
         {
             cmbTask.DataSource = Context.Tasks.Where(s => s.Parent == cmbSubProject.Text).Select(s => s).ToList();
             cmbTask.DisplayMember = "Name";
+        }
+
+        private void hotKeysSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new HotKeysDialog())
+            {
+                dlg.ShowDialog();
+            }
         }
     }
 }

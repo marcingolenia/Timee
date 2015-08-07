@@ -42,6 +42,7 @@ namespace Timee.Services
         public void ShowTimerSummaryNotification(DataGridView grd)
         {
             int size = 20 * grd.Rows.Count;
+            this.toolTip.ContentText = "";
             foreach (DataGridViewRow row in grd.Rows)
             {
                 var typedRow = (TimeeDataSet.TimeSheetTableRow)(row.DataBoundItem as DataRowView).Row;
@@ -51,7 +52,7 @@ namespace Timee.Services
             this.toolTip.TitleText = "Timee";
             this.toolTip.Delay = 500;
             this.toolTip.ShowCloseButton = true;
-            this.toolTip.Size = new Size(500, 20 + size);
+            this.toolTip.Size = new Size(400, 20 + size);
             this.toolTip.Popup();
         }
         /// <summary>
@@ -70,6 +71,11 @@ namespace Timee.Services
                 string notificationText = string.Format("Timer has been switched to:{0}{1}. {2} - {3} - '{4}' ({5:hh\\:mm\\:ss}).", new object[] { Environment.NewLine, rowIndex + 1, projectName, subProjectName, comment, time });
                 NotificationService.Instance.SimpleNotification("Timee", notificationText);
             }
+        }
+        public void InitializeNotification()
+        {
+            this.toolTip.Size = new Size(400,10);
+            this.toolTip.Popup();
         }
     }
 }

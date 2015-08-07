@@ -12,6 +12,7 @@ namespace Timee.Services
         private Timer alarmTimer;
         public DateTime AlarmDuration { get; set; }
         public List<AlarmOption> AlarmOptions { get; set; }
+        public ToolStripMenuItem Alarmplugin { get; set; }
         public string AlarmMessage { get; set; }
         public TimeSpan TimeLeft
         {
@@ -58,6 +59,12 @@ namespace Timee.Services
                 {
                     System.Media.SystemSounds.Hand.Play();
                 }
+                if (AlarmOptions.Contains(AlarmOption.StartPlugin))
+                {
+                    PluginsService pluginSelect = new PluginsService();
+                    Alarmplugin.Click += new EventHandler(pluginSelect.menuPluginClick);
+                    Alarmplugin.PerformClick();
+                }
             }
         }
     }
@@ -65,6 +72,7 @@ namespace Timee.Services
     public enum AlarmOption
     {
         ShowMessage,
-        PlaySound
+        PlaySound,
+        StartPlugin
     }
 }

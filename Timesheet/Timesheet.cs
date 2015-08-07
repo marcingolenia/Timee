@@ -20,12 +20,12 @@ namespace Timesheet
     {
             private string login;
             private string password;
-
             private int projectId;
             private int subId;
             private int taskId;
             private int locationId;
             private int creativeId;
+            private int statusId;
             private TimeeBridge.TimeeDataSet grdMainTasks = new TimeeBridge.TimeeDataSet();
             private TimeeBridge.TimeeDataSet.TimeSheetTableRow row;
         public void Start()
@@ -53,7 +53,19 @@ namespace Timesheet
                 {
                     MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+                var record = new TimesheetRecord();
+
+                using (var dlg = new ExportDialog())
+                {
+                    dlg.Creative = client.GetCreativeStatuses("LGBS").ToList();
+                    dlg.Status = client.GetStatuses("LGBS").ToList();
+                    dlg.ShowDialog();
+                    if (dlg.DialogResult == DialogResult.OK)
+                    {
+                        this.creativeId = dlg.CreativeId;
+                        this.statusId = dlg.StatusId;
+                    }
+                }
             for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
             {
                 row = (TimeeBridge.TimeeDataSet.TimeSheetTableRow)grdMainTasks.Tables[0].Rows[i];
@@ -73,19 +85,7 @@ namespace Timesheet
                 locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
                     .Select(l => Convert.ToInt32(l.Value))
                     .First();
-                var record = new TimesheetRecord();
 
-                using (var dlg = new ExportDialog())
-                {
-                    dlg.Creative = client.GetCreativeStatuses("LGBS").ToList();
-                    dlg.Status = client.GetStatuses("LGBS").ToList();
-                    dlg.ShowDialog();
-                    if (dlg.DialogResult == DialogResult.OK)
-                    {
-                        record.CreativeStatusId = dlg.CreativeId;
-                        record.StatusId = dlg.StatusId;
-                    }
-                }
                 record.Comment = row.Comment;
                 record.ProjectId = projectId;
                 record.PersonId = client.GetCurrentUser("LGBS").Id;
@@ -94,10 +94,12 @@ namespace Timesheet
                 record.Hours = (decimal)row.Time.Hours + (decimal)row.Time.Minutes / 100;
                 record.LocationId = locationId;
                 record.Date = row.Date;
+                record.StatusId = this.statusId;
+                record.CreativeStatusId = this.creativeId;
                 client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
-                MessageBox.Show("Export Completed!");
                 }
             }
+            MessageBox.Show("Export Completed!");
             this.grdMainTasks.Clear();
             this.login = "";
             this.password = "";

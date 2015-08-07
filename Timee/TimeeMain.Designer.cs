@@ -81,6 +81,7 @@ namespace Timee
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblAlarm = new System.Windows.Forms.Label();
             this.lblAlarmValue = new System.Windows.Forms.Label();
+            this.hotKeysSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -437,6 +438,7 @@ namespace Timee
             this.mnuTimee.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
             this.aboutToolStripMenuItem,
+            this.hotKeysSettingsToolStripMenuItem,
             this.countdownAlertToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.mnuTimee.Name = "mnuTimee";
@@ -557,6 +559,13 @@ namespace Timee
             this.lblAlarmValue.Size = new System.Drawing.Size(0, 13);
             this.lblAlarmValue.TabIndex = 27;
             // 
+            // hotKeysSettingsToolStripMenuItem
+            // 
+            this.hotKeysSettingsToolStripMenuItem.Name = "hotKeysSettingsToolStripMenuItem";
+            this.hotKeysSettingsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.hotKeysSettingsToolStripMenuItem.Text = "HotKeys Settings";
+            this.hotKeysSettingsToolStripMenuItem.Click += new System.EventHandler(this.hotKeysSettingsToolStripMenuItem_Click);
+            // 
             // TimeeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -661,6 +670,7 @@ namespace Timee
         private System.Windows.Forms.DataGridViewComboBoxColumn Location;
         private System.Windows.Forms.DataGridViewImageColumn Save;
         private System.Windows.Forms.DataGridViewImageColumn Remove;
+        private System.Windows.Forms.ToolStripMenuItem hotKeysSettingsToolStripMenuItem;
     }
 }
 

@@ -32,6 +32,10 @@ namespace Timee.Services
             this.main = main;
             this.context = context;
         }
+        public PluginsService()
+        {
+
+        }
         /// <summary>
         /// Create menu for plugins
         /// </summary>
@@ -72,7 +76,7 @@ namespace Timee.Services
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuPluginClick(object sender, EventArgs e)
+        public void menuPluginClick(object sender, EventArgs e)
         {
             ToolStripItem item = (ToolStripItem)sender;
             var action = from plugin in _plugins

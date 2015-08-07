@@ -37,6 +37,8 @@
             this.grbAlarmOptions = new System.Windows.Forms.GroupBox();
             this.chkSound = new System.Windows.Forms.CheckBox();
             this.chkMessage = new System.Windows.Forms.CheckBox();
+            this.cbPlugins = new System.Windows.Forms.ComboBox();
+            this.chkPlugin = new System.Windows.Forms.CheckBox();
             this.grbAlarmOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +99,7 @@
             // 
             // grbAlarmOptions
             // 
+            this.grbAlarmOptions.Controls.Add(this.chkPlugin);
             this.grbAlarmOptions.Controls.Add(this.chkSound);
             this.grbAlarmOptions.Controls.Add(this.chkMessage);
             this.grbAlarmOptions.Location = new System.Drawing.Point(44, 120);
@@ -128,11 +131,31 @@
             this.chkMessage.Text = "Show Message";
             this.chkMessage.UseVisualStyleBackColor = true;
             // 
+            // cbPlugins
+            // 
+            this.cbPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPlugins.FormattingEnabled = true;
+            this.cbPlugins.Location = new System.Drawing.Point(159, 105);
+            this.cbPlugins.Name = "cbPlugins";
+            this.cbPlugins.Size = new System.Drawing.Size(121, 21);
+            this.cbPlugins.TabIndex = 2;
+            // 
+            // chkPlugin
+            // 
+            this.chkPlugin.AutoSize = true;
+            this.chkPlugin.Location = new System.Drawing.Point(6, 65);
+            this.chkPlugin.Name = "chkPlugin";
+            this.chkPlugin.Size = new System.Drawing.Size(80, 17);
+            this.chkPlugin.TabIndex = 2;
+            this.chkPlugin.Text = "Start Plugin";
+            this.chkPlugin.UseVisualStyleBackColor = true;
+            // 
             // AlarmDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.cbPlugins);
             this.Controls.Add(this.grbAlarmOptions);
             this.Controls.Add(this.dtpAlarmDuration);
             this.Controls.Add(this.btnCancel);
@@ -161,5 +184,7 @@
         private System.Windows.Forms.GroupBox grbAlarmOptions;
         private System.Windows.Forms.CheckBox chkSound;
         private System.Windows.Forms.CheckBox chkMessage;
+        private System.Windows.Forms.ComboBox cbPlugins;
+        private System.Windows.Forms.CheckBox chkPlugin;
     }
 }

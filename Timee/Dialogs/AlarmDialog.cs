@@ -14,13 +14,16 @@ namespace Timee.Dialogs
     public partial class AlarmDialog : Form
     {
         public AlarmService AlarmService { get; set; }
-        public AlarmDialog()
+        private ToolStripItemCollection plugins;
+        public AlarmDialog(ToolStripItemCollection plugins)
         {
             InitializeComponent();
             this.AlarmService = new AlarmService();
+            this.plugins = plugins;
         }
         private void AlarmDialog_Load(object sender, EventArgs e)
         {
+            parseMenuItems(plugins);
             dtpAlarmDuration.CustomFormat = "H'h' mm'm'";
             dtpAlarmDuration.Value = DateTime.Today.AddHours(8);
         }
@@ -38,6 +41,7 @@ namespace Timee.Dialogs
             if (AlarmService.AlarmOptions.Count > 0)
             {
                 AlarmService.AlarmMessage = txtMessage.Text;
+                AlarmService.Alarmplugin = (ToolStripMenuItem)cbPlugins.SelectedItem;
                 DialogResult = DialogResult.OK;
             }
             else
@@ -49,6 +53,23 @@ namespace Timee.Dialogs
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void parseMenuItems(ToolStripItemCollection toolStripItemCollection)
+        {
+            foreach (ToolStripMenuItem theToolStripMenuItem in toolStripItemCollection)
+            {
+                // add the Item itself: you get a blank entry
+                // in the ComboBox, so we use the Text property
+                
+
+                if (theToolStripMenuItem.HasDropDownItems)
+                {
+                    parseMenuItems(theToolStripMenuItem.DropDownItems);
+                }
+                else cbPlugins.Items.Add(theToolStripMenuItem);
+            }
+            cbPlugins.DisplayMember = "Name";
+
         }
     }
 }
