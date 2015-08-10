@@ -62,7 +62,6 @@ namespace Timee
         /// 
         private void Timee_Load(object sender, EventArgs e)
         {
-            NotificationService.Instance.InitializeNotification();
             HotkeysService.Instance.InitializeKeys();
 
             //Prevent from losting saved tasks after update
@@ -134,14 +133,14 @@ namespace Timee
 
             
                 string action = HotkeysService.Instance.KeysMap
-                    .Where(k => (Keys)Enum.Parse(typeof(Keys), k.Value.Value) == e.Key)
-                    .Select(k => k.Key.Key).FirstOrDefault();
+                    .Where(k => (Keys)Enum.Parse(typeof(Keys), k.KeyName) == e.Key)
+                    .Select(k => k.Action).FirstOrDefault();
                 switch (action)
                 {
                     case "Switch":
                         row = HotkeysService.Instance.KeysMap
-                            .Where(k => (Keys)Enum.Parse(typeof(Keys), k.Value.Value) == e.Key)
-                            .Select(v => v.Key.Value).FirstOrDefault();
+                            .Where(k => (Keys)Enum.Parse(typeof(Keys), k.KeyName) == e.Key)
+                            .Select(v => v.RowId).FirstOrDefault();
                         this.SwitchTimerToRow(row.Value);
                             NotificationService.Instance.ShowTimerSwitchNotification
                                 (this.CurrentTimeCell.RowIndex,grdWorkSummary,timeeDataSet);
@@ -368,17 +367,21 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbProject_Validating(object sender, CancelEventArgs e)
         {
-            if (!String.IsNullOrEmpty(cmbProject.Text) &&
-                !Context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
+            //if (!String.IsNullOrEmpty(cmbProject.Text) &&
+            //    !Context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
+            //{
+            //    var newProject = new Models.UserConfigurationProject()
+            //    {
+            //        Name = cmbProject.Text.ToString(),
+            //        Order = this.Context.Projects.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    Context.Projects.Add(newProject);
+            //    cmbProject.SelectedItem = newProject;
+            //}
+            if (!Context.Projects.Any(p => p.Name.Equals(cmbProject.Text)))
             {
-                var newProject = new Models.UserConfigurationProject()
-                {
-                    Name = cmbProject.Text.ToString(),
-                    Order = this.Context.Projects.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                Context.Projects.Add(newProject);
-                cmbProject.SelectedItem = newProject;
+                cmbProject.SelectedItem = Context.Projects.FirstOrDefault();
             }
         }
         /// <summary>
@@ -388,17 +391,21 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbSubProject_Validating(object sender, CancelEventArgs e)
         {
-            if (!String.IsNullOrEmpty(cmbSubProject.Text) &&
-                !Context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
+            //if (!String.IsNullOrEmpty(cmbSubProject.Text) &&
+            //    !Context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
+            //{
+            //    var newSubProject = new Models.UserConfigurationSubproject()
+            //    {
+            //        Name = cmbSubProject.Text.ToString(),
+            //        Order = this.Context.Subprojects.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    Context.Subprojects.Add(newSubProject);
+            //    cmbSubProject.SelectedItem = newSubProject;
+            //}
+            if (!Context.Subprojects.Any(p => p.Name.Equals(cmbSubProject.Text)))
             {
-                var newSubProject = new Models.UserConfigurationSubproject()
-                {
-                    Name = cmbSubProject.Text.ToString(),
-                    Order = this.Context.Subprojects.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                Context.Subprojects.Add(newSubProject);
-                cmbSubProject.SelectedItem = newSubProject;
+                cmbSubProject.SelectedItem = Context.Subprojects.FirstOrDefault();
             }
         }
         /// <summary>
@@ -408,17 +415,21 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbTask_Validating(object sender, CancelEventArgs e)
         {
-            if (!String.IsNullOrEmpty(cmbTask.Text) &&
-                !Context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
+            //if (!String.IsNullOrEmpty(cmbTask.Text) &&
+            //    !Context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
+            //{
+            //    var newTask = new Models.UserConfigurationTask()
+            //    {
+            //        Name = cmbSubProject.Text.ToString(),
+            //        Order = this.Context.Tasks.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    Context.Tasks.Add(newTask);
+            //    cmbSubProject.SelectedItem = newTask;
+            //}
+            if (!Context.Tasks.Any(p => p.Name.Equals(cmbTask.Text)))
             {
-                var newTask = new Models.UserConfigurationTask()
-                {
-                    Name = cmbSubProject.Text.ToString(),
-                    Order = this.Context.Tasks.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                Context.Tasks.Add(newTask);
-                cmbSubProject.SelectedItem = newTask;
+                cmbTask.SelectedItem = Context.Tasks.FirstOrDefault();
             }
         }
         /// <summary>
@@ -428,17 +439,21 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbLocations_Validating(object sender, CancelEventArgs e)
         {
-            if (!String.IsNullOrEmpty(cmbLocations.Text) &&
-    !Context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
+    //        if (!String.IsNullOrEmpty(cmbLocations.Text) &&
+    //!Context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
+    //        {
+    //            var newLocation = new Models.UserConfigurationLocation()
+    //            {
+    //                Name = cmbSubProject.Text.ToString(),
+    //                Order = this.Context.Locations.Max(p => p.Order) + 1,
+    //                OrderSpecified = true
+    //            };
+    //            Context.Locations.Add(newLocation);
+    //            cmbSubProject.SelectedItem = newLocation;
+    //        }
+            if (!Context.Locations.Any(p => p.Name.Equals(cmbLocations.Text)))
             {
-                var newLocation = new Models.UserConfigurationLocation()
-                {
-                    Name = cmbSubProject.Text.ToString(),
-                    Order = this.Context.Locations.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                Context.Locations.Add(newLocation);
-                cmbSubProject.SelectedItem = newLocation;
+                cmbLocations.SelectedItem = Context.Locations.FirstOrDefault();
             }
         }
 
@@ -453,60 +468,76 @@ namespace Timee
             //Projects
             var cell = ((DataGridView)sender).CurrentCell;
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
-                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && this.Context.Projects.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                var newProject = new Models.UserConfigurationProject()
-                {
-                    Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Projects.Count == 0 ? 1 : this.Context.Projects.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                this.Context.Projects.Add(newProject);
-                cell.Value = newProject.Name;
+                cell.Value = cell.EditedFormattedValue.ToString();
             }
-            //Subprojects
+            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+            //    && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            //{
+            //    var newProject = new Models.UserConfigurationProject()
+            //    {
+            //        Name = cell.EditedFormattedValue.ToString(),
+            //        Order = this.Context.Projects.Count == 0 ? 1 : this.Context.Projects.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    this.Context.Projects.Add(newProject);
+            //    cell.Value = newProject.Name;
+            //}
+            ////Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
-                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && this.Context.Subprojects.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                var newSubProject = new Models.UserConfigurationSubproject()
-                {
-                    Name = cell.EditedFormattedValue.ToString(),
-                    Order =  this.Context.Subprojects.Count == 0 ? 1 : this.Context.Subprojects.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                this.Context.Subprojects.Add(newSubProject);
-                cell.Value = newSubProject.Name;
+                cell.Value = cell.EditedFormattedValue.ToString();
             }
-            //Tasks
+            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+            //    && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            //{
+            //    var newSubProject = new Models.UserConfigurationSubproject()
+            //    {
+            //        Name = cell.EditedFormattedValue.ToString(),
+            //        Order =  this.Context.Subprojects.Count == 0 ? 1 : this.Context.Subprojects.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    this.Context.Subprojects.Add(newSubProject);
+            //    cell.Value = newSubProject.Name;
+            //}
+            ////Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
-                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                && this.Context.Tasks.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                var newTask = new Models.UserConfigurationTask()
-                {
-                    Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Tasks.Count == 0 ? 1 : this.Context.Tasks.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                this.Context.Tasks.Add(newTask);
-                cell.Value = newTask.Name;
+                cell.Value = cell.EditedFormattedValue.ToString();
             }
-            //Locations
+            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+            //    && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            //{
+            //    var newTask = new Models.UserConfigurationTask()
+            //    {
+            //        Name = cell.EditedFormattedValue.ToString(),
+            //        Order = this.Context.Tasks.Count == 0 ? 1 : this.Context.Tasks.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    this.Context.Tasks.Add(newTask);
+            //    cell.Value = newTask.Name;
+            //}
+            ////Locations
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
-                && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-                && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+                 && this.Context.Locations.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                var newLocation = new Models.UserConfigurationLocation()
-                {
-                    Name = cell.EditedFormattedValue.ToString(),
-                    Order = this.Context.Locations.Count == 0 ? 1 : this.Context.Locations.Max(p => p.Order) + 1,
-                    OrderSpecified = true
-                };
-                this.Context.Locations.Add(newLocation);
-                cell.Value = newLocation.Name;
+                cell.Value = cell.EditedFormattedValue.ToString();
             }
+            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
+            //    && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
+            //{
+            //    var newLocation = new Models.UserConfigurationLocation()
+            //    {
+            //        Name = cell.EditedFormattedValue.ToString(),
+            //        Order = this.Context.Locations.Count == 0 ? 1 : this.Context.Locations.Max(p => p.Order) + 1,
+            //        OrderSpecified = true
+            //    };
+            //    this.Context.Locations.Add(newLocation);
+            //    cell.Value = newLocation.Name;
+            //}
              //Time
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
             {
@@ -517,6 +548,15 @@ namespace Timee
                     grdWorkSummary.CancelEdit();
                 }
                 //cell.EditedFormattedValue
+            }
+        }
+        private void grdWorkSummary_EditingControlShowing(object sender, System.Windows.Forms.DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (e.Control is DataGridViewComboBoxEditingControl)
+            {
+                ((ComboBox)e.Control).DropDownStyle = ComboBoxStyle.DropDown;
+                ((ComboBox)e.Control).AutoCompleteSource = AutoCompleteSource.ListItems;
+                ((ComboBox)e.Control).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             }
         }
         /// <summary>
@@ -769,5 +809,6 @@ namespace Timee
                 dlg.ShowDialog();
             }
         }
+
     }
 }

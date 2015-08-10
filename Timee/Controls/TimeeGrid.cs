@@ -62,7 +62,11 @@ namespace Timee.Controls
                 this.CurrentCell.Value = ((DataGridViewComboBoxEditingControl)sender).EditingControlFormattedValue;
             }
         }
-
+        /// <summary>
+        /// check with icon were clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimeeGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (this.Columns[e.ColumnIndex].Name == "Remove")
@@ -74,6 +78,12 @@ namespace Timee.Controls
                 btnSaveRowClicked(sender, e);
             }
         }
+        /// <summary>
+        /// Replace Enter action with Tab (used in grdWorkSummary
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
 

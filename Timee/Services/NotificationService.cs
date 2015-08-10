@@ -17,6 +17,8 @@ namespace Timee.Services
         private NotificationService()
         {
             _instance = this;
+            this.toolTip.Size = new Size(400, 75);
+
         }
         public static NotificationService Instance
         {
@@ -25,14 +27,18 @@ namespace Timee.Services
                 return _instance == null ? new NotificationService() : _instance;
             }
         }
+        /// <summary>
+        /// Display notification with given text
+        /// </summary>
+        /// <param name="titleText"></param>
+        /// <param name="contentText"></param>
+        /// <param name="icon"></param>
         public void SimpleNotification(string titleText, string contentText, Image icon = null)
         {
             this.toolTip.ContentText = "";
             this.toolTip.TitleText = titleText;
             this.toolTip.Image = icon;
             this.toolTip.ContentText = contentText;
-            this.toolTip.Size = new Size(400, 75);
-
             this.toolTip.Popup();
         }
         /// <summary>
@@ -41,19 +47,20 @@ namespace Timee.Services
         /// <param name="rowIndex"></param>
         public void ShowTimerSummaryNotification(DataGridView grd)
         {
+            PopupNotifier toolTip = new PopupNotifier();
             int size = 20 * grd.Rows.Count;
-            this.toolTip.ContentText = "";
+            toolTip.ContentText = "";
             foreach (DataGridViewRow row in grd.Rows)
             {
                 var typedRow = (TimeeDataSet.TimeSheetTableRow)(row.DataBoundItem as DataRowView).Row;
                 string strRow = string.Format("{0}. {1} | {2} | {3} | {4}", row.Index + 1, typedRow.Project, typedRow.Task, typedRow.Comment, typedRow.Time.ToString("hh':'mm':'ss"));
-                this.toolTip.ContentText += Environment.NewLine + strRow;
+                toolTip.ContentText += Environment.NewLine + strRow;
             }
-            this.toolTip.TitleText = "Timee";
-            this.toolTip.Delay = 500;
-            this.toolTip.ShowCloseButton = true;
-            this.toolTip.Size = new Size(400, 20 + size);
-            this.toolTip.Popup();
+            toolTip.TitleText = "Timee";
+            toolTip.Delay = 500;
+            toolTip.ShowCloseButton = true;
+            toolTip.Size = new Size(400, 20 + size);
+            toolTip.Popup();
         }
         /// <summary>
         /// Show notification message
@@ -71,11 +78,6 @@ namespace Timee.Services
                 string notificationText = string.Format("Timer has been switched to:{0}{1}. {2} - {3} - '{4}' ({5:hh\\:mm\\:ss}).", new object[] { Environment.NewLine, rowIndex + 1, projectName, subProjectName, comment, time });
                 NotificationService.Instance.SimpleNotification("Timee", notificationText);
             }
-        }
-        public void InitializeNotification()
-        {
-            this.toolTip.Size = new Size(400,10);
-            this.toolTip.Popup();
         }
     }
 }

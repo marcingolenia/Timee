@@ -68,6 +68,7 @@ namespace Timee
             this.mnuTimee = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hotKeysSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.countdownAlertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calendarColumn1 = new Timee.Controls.CalendarColumn.CalendarColumn();
@@ -81,7 +82,6 @@ namespace Timee
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblAlarm = new System.Windows.Forms.Label();
             this.lblAlarmValue = new System.Windows.Forms.Label();
-            this.hotKeysSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationLocationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdWorkSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userConfigurationProjectBindingSource)).BeginInit();
@@ -94,9 +94,10 @@ namespace Timee
             // 
             // cmbLocations
             // 
+            this.cmbLocations.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbLocations.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbLocations.DataSource = this.userConfigurationLocationBindingSource;
             this.cmbLocations.DisplayMember = "name";
-            this.cmbLocations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLocations.FormattingEnabled = true;
             this.cmbLocations.Location = new System.Drawing.Point(644, 49);
             this.cmbLocations.Name = "cmbLocations";
@@ -144,6 +145,7 @@ namespace Timee
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);
+            this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
             // 
             // Date
             // 
@@ -271,9 +273,10 @@ namespace Timee
             // 
             // cmbProject
             // 
+            this.cmbProject.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbProject.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbProject.DataSource = this.userConfigurationProjectBindingSource;
             this.cmbProject.DisplayMember = "name";
-            this.cmbProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProject.FormattingEnabled = true;
             this.cmbProject.Location = new System.Drawing.Point(170, 49);
             this.cmbProject.Name = "cmbProject";
@@ -284,9 +287,10 @@ namespace Timee
             // 
             // cmbSubProject
             // 
+            this.cmbSubProject.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbSubProject.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbSubProject.DataSource = this.userConfigurationSubprojectBindingSource;
             this.cmbSubProject.DisplayMember = "name";
-            this.cmbSubProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSubProject.FormattingEnabled = true;
             this.cmbSubProject.Location = new System.Drawing.Point(328, 49);
             this.cmbSubProject.Name = "cmbSubProject";
@@ -297,9 +301,10 @@ namespace Timee
             // 
             // cmbTask
             // 
+            this.cmbTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbTask.DataSource = this.userConfigurationTaskBindingSource;
             this.cmbTask.DisplayMember = "name";
-            this.cmbTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTask.FormattingEnabled = true;
             this.cmbTask.Location = new System.Drawing.Point(486, 49);
             this.cmbTask.Name = "cmbTask";
@@ -457,6 +462,13 @@ namespace Timee
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // hotKeysSettingsToolStripMenuItem
+            // 
+            this.hotKeysSettingsToolStripMenuItem.Name = "hotKeysSettingsToolStripMenuItem";
+            this.hotKeysSettingsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.hotKeysSettingsToolStripMenuItem.Text = "HotKeys Settings";
+            this.hotKeysSettingsToolStripMenuItem.Click += new System.EventHandler(this.hotKeysSettingsToolStripMenuItem_Click);
+            // 
             // countdownAlertToolStripMenuItem
             // 
             this.countdownAlertToolStripMenuItem.Name = "countdownAlertToolStripMenuItem";
@@ -558,13 +570,6 @@ namespace Timee
             this.lblAlarmValue.Name = "lblAlarmValue";
             this.lblAlarmValue.Size = new System.Drawing.Size(0, 13);
             this.lblAlarmValue.TabIndex = 27;
-            // 
-            // hotKeysSettingsToolStripMenuItem
-            // 
-            this.hotKeysSettingsToolStripMenuItem.Name = "hotKeysSettingsToolStripMenuItem";
-            this.hotKeysSettingsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.hotKeysSettingsToolStripMenuItem.Text = "HotKeys Settings";
-            this.hotKeysSettingsToolStripMenuItem.Click += new System.EventHandler(this.hotKeysSettingsToolStripMenuItem_Click);
             // 
             // TimeeMain
             // 

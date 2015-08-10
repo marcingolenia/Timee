@@ -13,14 +13,9 @@ namespace Timesheet
     public partial class ExportDialog : Form
     {
         public List<TimesheetService.CreativeStatus> Creative { get; set; }
-        public List<TimesheetService.Status> Status { get; set; }
         public int CreativeId
         {
             get { return this.Creative.Where(c => c.Value == this.cbCreative.Text).Select(c => c.Id).First(); }
-        }
-        public int StatusId
-        {
-            get { return this.Status.Where(s => s.Value == this.cbStatus.Text).Select(s => s.Id).First(); }
         }
         public ExportDialog()
         {
@@ -31,8 +26,6 @@ namespace Timesheet
         {
             cbCreative.DataSource = this.Creative;
             cbCreative.DisplayMember = "Value";
-            cbStatus.DataSource = this.Status;
-            cbStatus.DisplayMember = "Value";
         }
 
         private void btnOk_Click(object sender, EventArgs e)

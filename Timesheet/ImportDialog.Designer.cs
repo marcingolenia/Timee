@@ -95,7 +95,6 @@
             this.Name = "ImportDialog";
             this.Text = "ImportDialog";
             this.Load += new System.EventHandler(this.ImportDialog_Load);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImportDialog_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

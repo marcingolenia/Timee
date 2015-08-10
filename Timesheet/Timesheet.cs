@@ -25,13 +25,17 @@ namespace Timesheet
             private int taskId;
             private int locationId;
             private int creativeId;
-            private int statusId;
             private TimeeBridge.TimeeDataSet grdMainTasks = new TimeeBridge.TimeeDataSet();
             private TimeeBridge.TimeeDataSet.TimeSheetTableRow row;
         public void Start()
         {
 
             this.grdMainTasks.Merge(TimeeBridge.TimeeValues.MainTasksDataSet);
+            if (this.grdMainTasks.Tables[0].Rows.Count == 0)
+            {
+                MessageBox.Show("Nothing to Export!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             using (var dlg = new LoginDialog())
             {
                 dlg.ShowDialog();
@@ -41,6 +45,8 @@ namespace Timesheet
                     this.password = dlg.Password;
                 }
             }
+            var record = new TimesheetRecord();
+
             using (var client = new DataServiceClient())
             {
                 try
@@ -48,24 +54,29 @@ namespace Timesheet
                     client.ClientCredentials.Windows.ClientCredential.Domain = "LGBSPL";
                     client.ClientCredentials.Windows.ClientCredential.UserName = this.login;
                     client.ClientCredentials.Windows.ClientCredential.Password = this.password;
+
+
+                    using (var dlg = new ExportDialog())
+                    {
+                        dlg.Creative = client.GetCreativeStatuses("LGBS").ToList();
+                        dlg.ShowDialog();
+                        if (dlg.DialogResult == DialogResult.OK)
+                        {
+                            this.creativeId = dlg.CreativeId;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Export Cancelled!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                var record = new TimesheetRecord();
-
-                using (var dlg = new ExportDialog())
-                {
-                    dlg.Creative = client.GetCreativeStatuses("LGBS").ToList();
-                    dlg.Status = client.GetStatuses("LGBS").ToList();
-                    dlg.ShowDialog();
-                    if (dlg.DialogResult == DialogResult.OK)
-                    {
-                        this.creativeId = dlg.CreativeId;
-                        this.statusId = dlg.StatusId;
-                    }
-                }
+                
             for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
             {
                 row = (TimeeBridge.TimeeDataSet.TimeSheetTableRow)grdMainTasks.Tables[0].Rows[i];
@@ -94,7 +105,6 @@ namespace Timesheet
                 record.Hours = (decimal)row.Time.Hours + (decimal)row.Time.Minutes / 100;
                 record.LocationId = locationId;
                 record.Date = row.Date;
-                record.StatusId = this.statusId;
                 record.CreativeStatusId = this.creativeId;
                 client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
                 }
@@ -139,7 +149,8 @@ namespace Timesheet
                 }
                 catch(Exception e)
                 {
-                    string t = e.GetType().Name;
+                    MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
 
@@ -153,7 +164,14 @@ namespace Timesheet
                     {
                         this.ProjectsList = dlg.selectedProjects;
                     }
+                    else
+                    {
+                        MessageBox.Show("Import Cancelled!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
+                try
+                {
                     foreach (var project in this.ProjectsList)
                     {
                         TimeeBridge.TimeeValues.ContextProject = new TimeeBridge.UserConfigurationProject();
@@ -179,9 +197,9 @@ namespace Timesheet
                                 TimeeBridge.TimeeValues.ContextTask.Parent = subProject.Name;
                                 TimeeBridge.TimeeValues.ContextTaskCollection.Add(TimeeBridge.TimeeValues.ContextTask);
                             }
-                        }
+                         }   
 
-                    }
+                     }
                     this.LocationsList = client.GetLocations("LGBS");
                     foreach (var location in LocationsList)
                     {
@@ -190,6 +208,12 @@ namespace Timesheet
                         TimeeBridge.TimeeValues.ContextLocation.Value = location.Id.ToString();
                         TimeeBridge.TimeeValues.ContextLocationCollection.Add(TimeeBridge.TimeeValues.ContextLocation);
                     }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Nothing to Import!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             this.login = "";
             this.password = "";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ namespace Timee.Services
     public class HotkeysService
     {
         private static HotkeysService _instance;
-        public Dictionary<KeyValuePair<string, int>,KeyValuePair<string, string>> KeysMap { get; set; } 
+        //public Dictionary<KeyValuePair<string, int>,KeyValuePair<string, string>> KeysMap { get; set; }
+        //Keep HotKeys information
+        public List<HotKeys> KeysMap = new List<HotKeys>();
         private HotkeysService()
         {
             _instance = this;
@@ -67,9 +70,9 @@ namespace Timee.Services
             //    default:
             //        break;
             //}
-            string keyName = this.KeysMap.Where(k => k.Key.Key == "Switch")
-                .Where(v => v.Key.Value == rowNumber)
-                .Select(k => k.Value.Value).First();
+            string keyName = this.KeysMap.Where(k => k.Action == "Switch")
+                .Where(v => v.RowId == rowNumber)
+                .Select(k => k.KeyName).First();
                 key = (Keys)Enum.Parse(typeof(Keys), keyName,true);
             return key;
         }
@@ -77,8 +80,8 @@ namespace Timee.Services
         {
             Keys keyToRegister = HotkeysService.Instance.GetKeyByRowNumber(index);
             string test = this.KeysMap
-                    .Where(k => (Keys)Enum.Parse(typeof(Keys),k.Value.Value) == keyToRegister)
-                    .Select(k=>k.Value.Key).FirstOrDefault();
+                    .Where(k => (Keys)Enum.Parse(typeof(Keys),k.KeyName) == keyToRegister)
+                    .Select(k=>k.ModifierKey).FirstOrDefault();
 
             Timee.Services.Hotkeys.ModifierKeys modifier = (Timee.Services.Hotkeys.ModifierKeys)
                     Enum.Parse(typeof(Timee.Services.Hotkeys.ModifierKeys), test);
@@ -86,21 +89,64 @@ namespace Timee.Services
 
             if (keyToRegister != Keys.None)
             {
-                hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, keyToRegister);
+                hook.RegisterHotKey(modifier, keyToRegister);
             }
         }
+        /// <summary>
+        /// InitializeHotKeys
+        /// </summary>
         public void InitializeKeys()
         {
-            this.KeysMap = new Dictionary<KeyValuePair<string, int>, KeyValuePair<string, string>>();
-            for (int i = 0; i < 10; i++)
+            //this.KeysMap = new Dictionary<KeyValuePair<string, int>, KeyValuePair<string, string>>();
+            this.KeysMap = new List<HotKeys>();
+            if (!(Properties.Settings.Default.HotKeys.Length == 0))
             {
-                    this.KeysMap.Add(new KeyValuePair<string, int>("Switch", i),
-                        new KeyValuePair<string,string>(string.Format("Control"),string.Format("F{0}",i+1)));
+                StringReader hotKeysXml = new StringReader(Properties.Settings.Default.HotKeys);
+                HotkeysService.Instance.KeysMap.Clear();
+                HotkeysService.Instance.KeysMap = Extensions.DeserializeObject(HotkeysService.Instance.KeysMap, hotKeysXml);
             }
-            this.KeysMap.Add(new KeyValuePair<string, int>("Show Summary", 0),
-                        new KeyValuePair<string, string>(string.Format("Control"), string.Format("F{0}", 11)));
-            this.KeysMap.Add(new KeyValuePair<string, int>("Add new row", 0),
-                        new KeyValuePair<string, string>(string.Format("Control"), string.Format("F{0}", 12)));
+            else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    HotKeys item = new HotKeys();
+                    item.Action = "Switch";
+                    item.RowId = i;
+                    item.ModifierKey = "Control";
+                    item.KeyName = string.Format("F{0}", i + 1);
+                    //this.KeysMap.Add(new KeyValuePair<string, int>("Switch", i),
+                    //    new KeyValuePair<string,string>(string.Format("Control"),string.Format("F{0}",i+1)));
+                    this.KeysMap.Add(item);
+                }
+                HotKeys tmpItemSummary = new HotKeys();
+                tmpItemSummary.Action = "Show Summary";
+                tmpItemSummary.RowId = 0;
+                tmpItemSummary.ModifierKey = "Control";
+                tmpItemSummary.KeyName = string.Format("F{0}", 11);
+                this.KeysMap.Add(tmpItemSummary);
+                HotKeys tmpItemRow = new HotKeys();
+                tmpItemRow.Action = "Add new row";
+                tmpItemRow.RowId = 0;
+                tmpItemRow.ModifierKey = "Control";
+                tmpItemRow.KeyName = string.Format("F{0}", 12);
+                this.KeysMap.Add(tmpItemRow);
+                //this.KeysMap.Add(new KeyValuePair<string, int>("Show Summary", 0),
+                //            new KeyValuePair<string, string>(string.Format("Control"), string.Format("F{0}", 11)));
+                //this.KeysMap.Add(new KeyValuePair<string, int>("Add new row", 0),
+                //            new KeyValuePair<string, string>(string.Format("Control"), string.Format("F{0}", 12)));
+            }
+
         }
+    }
+    /// <summary>
+    /// Class for holding Hotkeys information
+    /// </summary>
+    public class HotKeys
+    {
+        public string Action { get; set; }
+        public int RowId { get; set; }
+        public string ModifierKey { get; set; }
+        public string KeyName { get; set; }
+        public HotKeys() { }
     }
 }

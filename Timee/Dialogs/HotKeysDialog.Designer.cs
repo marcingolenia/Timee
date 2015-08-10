@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.grdHotKeys = new System.Windows.Forms.DataGridView();
+            this.btnOk = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.ActionName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ModifierKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Action = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ModifierKeys = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdHotKeys)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,14 +45,24 @@
             this.grdHotKeys.AllowUserToDeleteRows = false;
             this.grdHotKeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdHotKeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ActionName,
-            this.ModifierKey,
-            this.Key});
+            this.Action,
+            this.ModifierKeys,
+            this.KeyName});
             this.grdHotKeys.Location = new System.Drawing.Point(12, 12);
             this.grdHotKeys.Name = "grdHotKeys";
             this.grdHotKeys.Size = new System.Drawing.Size(343, 282);
             this.grdHotKeys.TabIndex = 0;
             this.grdHotKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdHotKeys_KeyDown);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Location = new System.Drawing.Point(305, 300);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 1;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -74,35 +84,27 @@
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // btnOk
+            // Action
             // 
-            this.btnOk.Location = new System.Drawing.Point(305, 300);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 1;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.Action.HeaderText = "Action";
+            this.Action.Name = "Action";
+            this.Action.ReadOnly = true;
             // 
-            // ActionName
+            // ModifierKeys
             // 
-            this.ActionName.HeaderText = "Action Name";
-            this.ActionName.Name = "ActionName";
-            this.ActionName.ReadOnly = true;
+            this.ModifierKeys.HeaderText = "Modifier Keys";
+            this.ModifierKeys.Items.AddRange(new object[] {
+            "Alt",
+            "Control",
+            "Shift",
+            "Win"});
+            this.ModifierKeys.Name = "ModifierKeys";
             // 
-            // ModifierKey
+            // KeyName
             // 
-            this.ModifierKey.HeaderText = "Modifier Key";
-            this.ModifierKey.Name = "ModifierKey";
-            this.ModifierKey.ReadOnly = true;
-            this.ModifierKey.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ModifierKey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Key
-            // 
-            this.Key.HeaderText = "Key";
-            this.Key.Name = "Key";
-            this.Key.ReadOnly = true;
+            this.KeyName.HeaderText = "KeyName";
+            this.KeyName.Name = "KeyName";
+            this.KeyName.ReadOnly = true;
             // 
             // HotKeysDialog
             // 
@@ -126,9 +128,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ActionName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ModifierKey;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Key;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Action;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ModifierKeys;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KeyName;
     }
 }
