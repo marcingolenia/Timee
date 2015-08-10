@@ -146,6 +146,7 @@ namespace Timee
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);
             this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
+            this.grdWorkSummary.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellValueChanged);
             // 
             // Date
             // 
@@ -622,6 +623,8 @@ namespace Timee
             this.PerformLayout();
 
         }
+
+
 
         #endregion
 

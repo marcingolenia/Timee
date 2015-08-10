@@ -57,9 +57,9 @@ namespace Timee.Services
                 toolTip.ContentText += Environment.NewLine + strRow;
             }
             toolTip.TitleText = "Timee";
-            toolTip.Delay = 500;
+            toolTip.Delay = 1000;
             toolTip.ShowCloseButton = true;
-            toolTip.Size = new Size(400, 20 + size);
+            toolTip.Size = new Size(400, 40 + size);
             toolTip.Popup();
         }
         /// <summary>

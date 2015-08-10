@@ -78,19 +78,23 @@ namespace Timee.Services
         }
         public void RegisterKey(KeyboardHook hook, int index)
         {
-            Keys keyToRegister = HotkeysService.Instance.GetKeyByRowNumber(index);
-            string test = this.KeysMap
-                    .Where(k => (Keys)Enum.Parse(typeof(Keys),k.KeyName) == keyToRegister)
-                    .Select(k=>k.ModifierKey).FirstOrDefault();
-
-            Timee.Services.Hotkeys.ModifierKeys modifier = (Timee.Services.Hotkeys.ModifierKeys)
-                    Enum.Parse(typeof(Timee.Services.Hotkeys.ModifierKeys), test);
-
-
-            if (keyToRegister != Keys.None)
+            if (index < 10)
             {
-                hook.RegisterHotKey(modifier, keyToRegister);
+                Keys keyToRegister = HotkeysService.Instance.GetKeyByRowNumber(index);
+                string test = this.KeysMap
+                        .Where(k => (Keys)Enum.Parse(typeof(Keys), k.KeyName) == keyToRegister)
+                        .Select(k => k.ModifierKey).FirstOrDefault();
+
+                Timee.Services.Hotkeys.ModifierKeys modifier = (Timee.Services.Hotkeys.ModifierKeys)
+                        Enum.Parse(typeof(Timee.Services.Hotkeys.ModifierKeys), test);
+
+
+                if (keyToRegister != Keys.None)
+                {
+                    hook.RegisterHotKey(modifier, keyToRegister);
+                }
             }
+
         }
         /// <summary>
         /// InitializeHotKeys

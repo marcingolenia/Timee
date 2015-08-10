@@ -550,13 +550,52 @@ namespace Timee
                 //cell.EditedFormattedValue
             }
         }
+        /// <summary>
+        /// Turn on AutoComplete to grdWorkSummary comboboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grdWorkSummary_EditingControlShowing(object sender, System.Windows.Forms.DataGridViewEditingControlShowingEventArgs e)
         {
+
             if (e.Control is DataGridViewComboBoxEditingControl)
             {
                 ((ComboBox)e.Control).DropDownStyle = ComboBoxStyle.DropDown;
                 ((ComboBox)e.Control).AutoCompleteSource = AutoCompleteSource.ListItems;
                 ((ComboBox)e.Control).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            }
+        }
+        /// <summary>
+        /// Changing comboboxes Datasource to match selected project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grdWorkSummary_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            var dgv = sender as DataGridView;
+           
+            if (e.ColumnIndex == 2 && e.RowIndex > -1)
+            {
+                var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+                var cellValue = ((DataGridView)sender).CurrentCell;
+                if (cell == null) return;
+
+                cell.DataSource = Context.Subprojects.Where(s => s.Parent ==cellValue.Value.ToString()).Select(s => s).ToList();
+                cell.DisplayMember = "Name";
+                if (cell.Items.Count == 0)
+                {
+                    cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+                    cell.DataSource = null;
+                }
+            }
+            else if (e.ColumnIndex == 3 && e.RowIndex > -1)
+            {
+                var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+                var cellValue = ((DataGridView)sender).CurrentCell;
+                if (cell == null) return;
+
+                cell.DataSource = Context.Tasks.Where(s => s.Parent == cellValue.Value.ToString()).Select(s => s).ToList();
+                cell.DisplayMember = "Name";
             }
         }
         /// <summary>
@@ -770,6 +809,11 @@ namespace Timee
             this.WindowState = FormWindowState.Normal;
             TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
             row.Date = DateTime.Today;
+            row.Project = "";
+            row.SubProject = "";
+            row.Task = "";
+            row.Comment = "";
+            row.Location = "";
             AddNewRow(row);
         }
         /// <summary>
@@ -807,6 +851,17 @@ namespace Timee
             using (var dlg = new HotKeysDialog())
             {
                 dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    for (int i = 0; i < grdWorkSummary.Rows.Count; i++)
+                    {
+                        hook.UnregisterLastHotKey();
+                    }
+                    for (int i = 0; i < grdWorkSummary.Rows.Count; i++)
+                    {
+                        HotkeysService.Instance.RegisterKey(hook, i);
+                    }
+                }
             }
         }
 
