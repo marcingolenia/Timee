@@ -184,6 +184,7 @@ namespace Timee.Services
                     {
                         tmpSubproject.Value = subProject.Value;
                         tmpSubproject.Parent = subProject.Parent;
+                        tmpSubproject.ParentId = subProject.ParentId;
                         tmpSubproject.Order = context.Subprojects.Count == 0 ? 1 : this.context.Subprojects.Max(i => i.Order + 1);
                         tmpSubproject.OrderSpecified = true;
                         this.context.Subprojects.Add(tmpSubproject);
@@ -201,6 +202,7 @@ namespace Timee.Services
                     {
                         tmpTask.Value = task.Value;
                         tmpTask.Parent = task.Parent;
+                        tmpTask.ParentId = task.ParentId;
                         tmpTask.Order = context.Tasks.Count == 0 ? 1 : this.context.Tasks.Max(i => i.Order + 1);
                         tmpTask.OrderSpecified = true;
                         this.context.Tasks.Add(tmpTask);
