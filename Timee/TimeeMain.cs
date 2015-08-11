@@ -312,45 +312,45 @@ namespace Timee
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnConfigureComponent_Click(object sender, EventArgs e)
-        {
-            TimeeComponentType component = TimeeComponentType.Undefined;
-            if (sender.Equals(btnProject))
-            {
-                component = TimeeComponentType.Project;
-            }
-            else if (sender.Equals(btnSubProject))
-            {
-                component = TimeeComponentType.Subproject;
-            }
-            else if (sender.Equals(btnTask))
-            {
-                component = TimeeComponentType.Task;
-            }
-            else if (sender.Equals(btnLocation))
-            {
+        //private void btnConfigureComponent_Click(object sender, EventArgs e)
+        //{
+        //    TimeeComponentType component = TimeeComponentType.Undefined;
+        //    if (sender.Equals(btnProject))
+        //    {
+        //        component = TimeeComponentType.Project;
+        //    }
+        //    else if (sender.Equals(btnSubProject))
+        //    {
+        //        component = TimeeComponentType.Subproject;
+        //    }
+        //    else if (sender.Equals(btnTask))
+        //    {
+        //        component = TimeeComponentType.Task;
+        //    }
+        //    else if (sender.Equals(btnAddRow))
+        //    {
 
-                component = TimeeComponentType.Location;
-            }
-            using (var dlgEdit = new TimeeEditDialog(this.Context, component))
-            {
-                dlgEdit.ShowDialog();
-                if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    TimeeXMLService.Instance.SaveContext(this.Context);
-                    this.Context.ResetAllBindings();
-                }
-                else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
-                {
-                    this.Context = TimeeXMLService.Instance.LoadContext();
+        //        component = TimeeComponentType.Location;
+        //    }
+        //    using (var dlgEdit = new TimeeEditDialog(this.Context, component))
+        //    {
+        //        dlgEdit.ShowDialog();
+        //        if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
+        //        {
+        //            TimeeXMLService.Instance.SaveContext(this.Context);
+        //            this.Context.ResetAllBindings();
+        //        }
+        //        else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+        //        {
+        //            this.Context = TimeeXMLService.Instance.LoadContext();
 
-                    cmbProject.DataSource = Context.Projects;
-                    cmbTask.DataSource = Context.Tasks;
-                    cmbSubProject.DataSource = Context.Subprojects;
-                    cmbLocations.DataSource = Context.Locations;
-                }
-            }
-        }
+        //            cmbProject.DataSource = Context.Projects;
+        //            cmbTask.DataSource = Context.Tasks;
+        //            cmbSubProject.DataSource = Context.Subprojects;
+        //            cmbLocations.DataSource = Context.Locations;
+        //        }
+        //    }
+        //}
         /// <summary>
         /// Update cell value while counting time.
         /// </summary>
@@ -572,6 +572,7 @@ namespace Timee
                 ((ComboBox)e.Control).DropDownStyle = ComboBoxStyle.DropDown;
                 ((ComboBox)e.Control).AutoCompleteSource = AutoCompleteSource.ListItems;
                 ((ComboBox)e.Control).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+
             }
         }
         /// <summary>
@@ -840,12 +841,14 @@ namespace Timee
 
         private void cmbProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             cmbSubProject.DataSource = Context.Subprojects.Where(s => s.Parent == cmbProject.Text).Select(s => s).ToList();
             cmbSubProject.DisplayMember = "Name";
 
             if (cmbSubProject.Items.Count == 0)
             {
                 cmbTask.DataSource = null;
+                cmbSubProject.Text = "";
             }
         }
 
@@ -871,6 +874,28 @@ namespace Timee
                         HotkeysService.Instance.RegisterKey(hook, i);
                     }
                 }
+            }
+        }
+
+        private void btnAddRow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                row.Comment = this.tbComment.Text;
+                row.Date = this.dpWorkDate.Value;
+                row.Project = this.cmbProject.Text;
+                row.SubProject = this.cmbSubProject.Text;
+                row.Task = this.cmbTask.Text;
+                row.Time = TimeSpan.Zero;
+                row.Location = this.cmbLocations.Text;
+                this.AddNewRow(row);
+                this.btnPause.Enabled = true;
+                this.btnPause.Text = "Pause";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Incomplete Data!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -51,10 +51,7 @@ namespace Timee
             this.cmbProject = new System.Windows.Forms.ComboBox();
             this.cmbSubProject = new System.Windows.Forms.ComboBox();
             this.cmbTask = new System.Windows.Forms.ComboBox();
-            this.btnProject = new System.Windows.Forms.Button();
-            this.btnSubProject = new System.Windows.Forms.Button();
-            this.btnTask = new System.Windows.Forms.Button();
-            this.btnLocation = new System.Windows.Forms.Button();
+            this.btnAddRow = new System.Windows.Forms.Button();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.dpWorkDate = new System.Windows.Forms.DateTimePicker();
@@ -99,7 +96,7 @@ namespace Timee
             this.cmbLocations.DataSource = this.userConfigurationLocationBindingSource;
             this.cmbLocations.DisplayMember = "name";
             this.cmbLocations.FormattingEnabled = true;
-            this.cmbLocations.Location = new System.Drawing.Point(644, 49);
+            this.cmbLocations.Location = new System.Drawing.Point(551, 49);
             this.cmbLocations.Name = "cmbLocations";
             this.cmbLocations.Size = new System.Drawing.Size(121, 21);
             this.cmbLocations.TabIndex = 0;
@@ -141,12 +138,12 @@ namespace Timee
             this.grdWorkSummary.btnDeleteRowClicked += new System.EventHandler<System.Windows.Forms.DataGridViewCellEventArgs>(this.grdWorkSummary_btnDeleteRowClicked);
             this.grdWorkSummary.btnSaveRowClicked += new System.EventHandler<System.Windows.Forms.DataGridViewCellEventArgs>(this.grdWorkSummary_btnSaveRowClicked);
             this.grdWorkSummary.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.grdWorkSummary_CellValidating);
+            this.grdWorkSummary.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellValueChanged);
+            this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
             this.grdWorkSummary.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grdWorkSummary_RowHeaderMouseDoubleClick);
             this.grdWorkSummary.DragDrop += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragDrop);
             this.grdWorkSummary.DragEnter += new System.Windows.Forms.DragEventHandler(this.grdWorkSummary_DragEnter);
             this.grdWorkSummary.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grdWorkSummary_MouseMove);
-            this.grdWorkSummary.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.grdWorkSummary_EditingControlShowing);
-            this.grdWorkSummary.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkSummary_CellValueChanged);
             // 
             // Date
             // 
@@ -293,7 +290,7 @@ namespace Timee
             this.cmbSubProject.DataSource = this.userConfigurationSubprojectBindingSource;
             this.cmbSubProject.DisplayMember = "name";
             this.cmbSubProject.FormattingEnabled = true;
-            this.cmbSubProject.Location = new System.Drawing.Point(328, 49);
+            this.cmbSubProject.Location = new System.Drawing.Point(297, 49);
             this.cmbSubProject.Name = "cmbSubProject";
             this.cmbSubProject.Size = new System.Drawing.Size(121, 21);
             this.cmbSubProject.TabIndex = 5;
@@ -307,57 +304,27 @@ namespace Timee
             this.cmbTask.DataSource = this.userConfigurationTaskBindingSource;
             this.cmbTask.DisplayMember = "name";
             this.cmbTask.FormattingEnabled = true;
-            this.cmbTask.Location = new System.Drawing.Point(486, 49);
+            this.cmbTask.Location = new System.Drawing.Point(424, 49);
             this.cmbTask.Name = "cmbTask";
             this.cmbTask.Size = new System.Drawing.Size(121, 21);
             this.cmbTask.TabIndex = 6;
             this.cmbTask.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTask_Validating);
             // 
-            // btnProject
+            // btnAddRow
             // 
-            this.btnProject.Location = new System.Drawing.Point(297, 49);
-            this.btnProject.Name = "btnProject";
-            this.btnProject.Size = new System.Drawing.Size(25, 21);
-            this.btnProject.TabIndex = 9;
-            this.btnProject.Text = "+";
-            this.btnProject.UseVisualStyleBackColor = true;
-            this.btnProject.Click += new System.EventHandler(this.btnConfigureComponent_Click);
-            // 
-            // btnSubProject
-            // 
-            this.btnSubProject.Location = new System.Drawing.Point(455, 49);
-            this.btnSubProject.Name = "btnSubProject";
-            this.btnSubProject.Size = new System.Drawing.Size(25, 21);
-            this.btnSubProject.TabIndex = 10;
-            this.btnSubProject.Text = "+";
-            this.btnSubProject.UseVisualStyleBackColor = true;
-            this.btnSubProject.Click += new System.EventHandler(this.btnConfigureComponent_Click);
-            // 
-            // btnTask
-            // 
-            this.btnTask.Location = new System.Drawing.Point(613, 49);
-            this.btnTask.Name = "btnTask";
-            this.btnTask.Size = new System.Drawing.Size(25, 21);
-            this.btnTask.TabIndex = 11;
-            this.btnTask.Text = "+";
-            this.btnTask.UseVisualStyleBackColor = true;
-            this.btnTask.Click += new System.EventHandler(this.btnConfigureComponent_Click);
-            // 
-            // btnLocation
-            // 
-            this.btnLocation.Location = new System.Drawing.Point(771, 49);
-            this.btnLocation.Name = "btnLocation";
-            this.btnLocation.Size = new System.Drawing.Size(25, 21);
-            this.btnLocation.TabIndex = 12;
-            this.btnLocation.Text = "+";
-            this.btnLocation.UseVisualStyleBackColor = true;
-            this.btnLocation.Click += new System.EventHandler(this.btnConfigureComponent_Click);
+            this.btnAddRow.Location = new System.Drawing.Point(703, 49);
+            this.btnAddRow.Name = "btnAddRow";
+            this.btnAddRow.Size = new System.Drawing.Size(75, 21);
+            this.btnAddRow.TabIndex = 12;
+            this.btnAddRow.Text = "Add row";
+            this.btnAddRow.UseVisualStyleBackColor = true;
+            this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
             // 
             // tbComment
             // 
             this.tbComment.Location = new System.Drawing.Point(12, 76);
             this.tbComment.Name = "tbComment";
-            this.tbComment.Size = new System.Drawing.Size(753, 20);
+            this.tbComment.Size = new System.Drawing.Size(766, 20);
             this.tbComment.TabIndex = 13;
             this.tbComment.Text = "Comment";
             // 
@@ -393,7 +360,7 @@ namespace Timee
             // lblSubProject
             // 
             this.lblSubProject.AutoSize = true;
-            this.lblSubProject.Location = new System.Drawing.Point(325, 32);
+            this.lblSubProject.Location = new System.Drawing.Point(294, 32);
             this.lblSubProject.Name = "lblSubProject";
             this.lblSubProject.Size = new System.Drawing.Size(61, 13);
             this.lblSubProject.TabIndex = 17;
@@ -402,7 +369,7 @@ namespace Timee
             // lblLocation
             // 
             this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(641, 32);
+            this.lblLocation.Location = new System.Drawing.Point(548, 32);
             this.lblLocation.Name = "lblLocation";
             this.lblLocation.Size = new System.Drawing.Size(48, 13);
             this.lblLocation.TabIndex = 18;
@@ -411,7 +378,7 @@ namespace Timee
             // lblTask
             // 
             this.lblTask.AutoSize = true;
-            this.lblTask.Location = new System.Drawing.Point(483, 32);
+            this.lblTask.Location = new System.Drawing.Point(421, 33);
             this.lblTask.Name = "lblTask";
             this.lblTask.Size = new System.Drawing.Size(31, 13);
             this.lblTask.TabIndex = 19;
@@ -590,10 +557,7 @@ namespace Timee
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.dpWorkDate);
             this.Controls.Add(this.tbComment);
-            this.Controls.Add(this.btnLocation);
-            this.Controls.Add(this.btnTask);
-            this.Controls.Add(this.btnSubProject);
-            this.Controls.Add(this.btnProject);
+            this.Controls.Add(this.btnAddRow);
             this.Controls.Add(this.cmbTask);
             this.Controls.Add(this.cmbSubProject);
             this.Controls.Add(this.cmbProject);
@@ -634,10 +598,7 @@ namespace Timee
         private System.Windows.Forms.ComboBox cmbProject;
         private System.Windows.Forms.ComboBox cmbSubProject;
         private System.Windows.Forms.ComboBox cmbTask;
-        private System.Windows.Forms.Button btnProject;
-        private System.Windows.Forms.Button btnSubProject;
-        private System.Windows.Forms.Button btnTask;
-        private System.Windows.Forms.Button btnLocation;
+        private System.Windows.Forms.Button btnAddRow;
         private System.Windows.Forms.TextBox tbComment;
         public System.Windows.Forms.Timer timer;
         private System.Windows.Forms.DateTimePicker dpWorkDate;

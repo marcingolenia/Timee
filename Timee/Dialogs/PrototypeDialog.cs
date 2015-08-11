@@ -128,7 +128,7 @@ namespace Timee.Dialogs
         private void btnDeleteSubProject_Click(object sender, EventArgs e)
         {
             string tmpSelectedSubProject = this.SubProject.Name;
-            this.Context.Subprojects.Remove(this.Context.Subprojects.Where(p => p.Name == tmpSelectedSubProject).Select(p => p).First());
+            this.Context.Subprojects.Remove(this.Context.Subprojects.Where(p=>p.Parent == this.Project.Name).Where(p => p.Name == tmpSelectedSubProject).Select(p => p).First());
             var taskRemove = this.Context.Tasks.Where(s => s.Parent == tmpSelectedSubProject).ToList();
             foreach (var item in taskRemove)
             {
@@ -146,7 +146,7 @@ namespace Timee.Dialogs
         private void btnDeleteTask_Click(object sender, EventArgs e)
         {
             string tmpSelectedTask = this.Task.Name;
-            this.Context.Tasks.Remove(this.Context.Tasks.Where(t => t.Name == tmpSelectedTask).Select(t => t).First());
+            this.Context.Tasks.Remove(this.Context.Tasks.Where(t=>t.Parent == this.SubProject.Name).Where(t => t.Name == tmpSelectedTask).Select(t => t).First());
             this.Task = (Models.UserConfigurationTask)lbTasks.SelectedItem;
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
             lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
