@@ -234,23 +234,32 @@ namespace Timee
         private void btnStart_Click(object sender, EventArgs e)
         {
             {
-                using (var dlg = new Dialogs.PrototypeDialog())
+                using (var dlg = new Dialogs.PrototypeDialog(this))
                 {
                     dlg.Context = this.Context;
                     dlg.ShowDialog();
                     if (dlg.DialogResult == DialogResult.OK)
                     {
-                        TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-                        row.Comment = this.tbComment.Text;
-                        row.Date = this.dpWorkDate.Value;
-                        row.Project = dlg.Project.Name;
-                        row.SubProject = dlg.SubProject.Name;
-                        row.Task = dlg.Task.Name;
-                        row.Time = TimeSpan.Zero;
-                        row.Location = dlg.Location.Name;
-                        AddNewRow(row);
-                        this.btnPause.Enabled = true;
-                        this.btnPause.Text = "Pause";
+                        //try
+                        //{
+                        //    TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
+                        //    row.Comment = this.tbComment.Text;
+                        //    row.Date = this.dpWorkDate.Value;
+                        //    row.Project = dlg.Project.Name;
+                        //    row.SubProject = dlg.SubProject.Name;
+                        //    row.Task = dlg.Task.Name;
+                        //    row.Time = TimeSpan.Zero;
+                        //    row.Location = dlg.Location.Name;
+                        //    AddNewRow(row);
+                        //    this.btnPause.Enabled = true;
+                        //    this.btnPause.Text = "Pause";
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    MessageBox.Show("Incomplete Data!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+
                     }
                 }
             }
@@ -760,7 +769,7 @@ namespace Timee
         /// Add new row with default values or a predefined one.
         /// </summary>
         /// <param name="row">TimeSheetTableRow</param>
-        private void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
+        public void AddNewRow(TimeeDataSet.TimeSheetTableRow row = null)
         {
             if (row == null)
             {

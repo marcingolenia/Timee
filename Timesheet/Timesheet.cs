@@ -16,17 +16,20 @@ namespace Timesheet
     [ExportMetadata("Name", "Export to Timesheet")]
     [ExportMetadata("Return", "None")]
     [ExportMetadata("Group", "Timesheet")]
-    public class TimesheetExport :TimeeBridge.IPlugins
+    public class TimesheetExport : TimeeBridge.IPlugins
     {
-            private string login;
-            private string password;
-            private int projectId;
-            private int subId;
-            private int taskId;
-            private int locationId;
-            private int creativeId;
-            private TimeeBridge.TimeeDataSet grdMainTasks = new TimeeBridge.TimeeDataSet();
-            private TimeeBridge.TimeeDataSet.TimeSheetTableRow row;
+        private string login;
+        private string password;
+        private int projectId;
+        private int subId;
+        private int taskId;
+        private int locationId;
+        private int creativeId;
+        private TimeeBridge.TimeeDataSet grdMainTasks = new TimeeBridge.TimeeDataSet();
+        private TimeeBridge.TimeeDataSet.TimeSheetTableRow row;
+        private List<Project> Projects = new List<Project>();
+        private List<Timesheet.TimesheetService.Task> Tasks = new List<TimesheetService.Task>();
+        private List<Location> Locations = new List<Location>();
         public void Start()
         {
 
@@ -76,37 +79,95 @@ namespace Timesheet
                     MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
-            for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
-            {
-                row = (TimeeBridge.TimeeDataSet.TimeSheetTableRow)grdMainTasks.Tables[0].Rows[i];
 
-                projectId = TimeeBridge.TimeeValues.ContextProjectCollection.Where(p => p.Name == row.Project)
-                    .Select(p => Convert.ToInt32(p.Value))
-                    .First();
+                for (int i = 0; i < grdMainTasks.Tables[0].Rows.Count; i++)
+                {
+                    row = (TimeeBridge.TimeeDataSet.TimeSheetTableRow)grdMainTasks.Tables[0].Rows[i];
 
-                subId = TimeeBridge.TimeeValues.ContextSubprojectCollection.Where(s=> s.Parent == row.Project).Where(s => s.Name == row.SubProject)
-                    .Select(s => Convert.ToInt32(s.Value))
-                    .First();
+                    projectId = TimeeBridge.TimeeValues.ContextProjectCollection.Where(p => p.Name == row.Project)
+                        .Select(p => Convert.ToInt32(p.Value))
+                        .First();
+                    if (projectId < 0)
+                    {
+                        if (this.Projects.Count == 0)
+                        {
+                            this.Projects = client.GetProjects("LGBS").ToList();
+                        }
+                        try
+                        {
+                            projectId = this.Projects.Where(p => p.Name == row.Project).Select(p => p.Id).First();
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(string.Format("Project: {0} doesn't exist!", row.Project), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
 
-                taskId = TimeeBridge.TimeeValues.ContextTaskCollection.Where(t => t.Parent == row.SubProject).Where(t => t.Name == row.Task)
-                    .Select(t => Convert.ToInt32(t.Value))
-                    .First();
+                    subId = TimeeBridge.TimeeValues.ContextSubprojectCollection.Where(s => s.Parent == row.Project).Where(s => s.Name == row.SubProject)
+                        .Select(s => Convert.ToInt32(s.Value))
+                        .First();
+                    if (subId < 0)
+                    {
+                        try
+                        {
+                            subId = client.Alt_GetSubprojectId("LGBS", projectId, row.SubProject);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(string.Format("Sub Project: {0} doesn't exist!", row.SubProject), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    taskId = TimeeBridge.TimeeValues.ContextTaskCollection.Where(t => t.Parent == row.SubProject).Where(t => t.Name == row.Task)
+                        .Select(t => Convert.ToInt32(t.Value))
+                        .First();
+                    if (taskId < 0)
+                    {
+                        if (this.Tasks.Count == 0)
+                        {
+                            this.Tasks = client.GetAvailableTasks("LGBS", projectId, subId).ToList();
+                        }
+                        try
+                        {
+                            taskId = this.Tasks.Where(p => p.Value == row.Task).Select(p => p.Id).First();
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(string.Format("Task: {0} doesn't exist!", row.Task), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
+                        .Select(l => Convert.ToInt32(l.Value))
+                        .First();
+                    if (locationId < 0)
+                    {
+                        if (this.Locations.Count == 0)
+                        {
+                            this.Locations = client.GetLocations("LGBS").ToList();
+                        }
+                        try
+                        {
+                            locationId = this.Locations.Where(p => p.Value == row.Location).Select(p => p.Id).First();
 
-                locationId = TimeeBridge.TimeeValues.ContextLocationCollection.Where(l => l.Name == row.Location)
-                    .Select(l => Convert.ToInt32(l.Value))
-                    .First();
-
-                record.Comment = row.Comment;
-                record.ProjectId = projectId;
-                record.PersonId = client.GetCurrentUser("LGBS").Id;
-                record.TaskId = taskId;
-                record.SubprojectId = subId;
-                record.Hours = (decimal)row.Time.Hours + (decimal)row.Time.Minutes / 100;
-                record.LocationId = locationId;
-                record.Date = row.Date;
-                record.CreativeStatusId = this.creativeId;
-                client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(string.Format("Location: {0} doesn't exist!", row.Location), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    record.Comment = row.Comment;
+                    record.ProjectId = projectId;
+                    record.PersonId = client.GetCurrentUser("LGBS").Id;
+                    record.TaskId = taskId;
+                    record.SubprojectId = subId;
+                    record.Hours = (decimal)row.Time.Hours + (decimal)row.Time.Minutes / 100;
+                    record.LocationId = locationId;
+                    record.Date = row.Date;
+                    record.CreativeStatusId = this.creativeId;
+                    client.Alt_InsertRecords("LGBS", record, 1, false, record.SubprojectName, record.TaskName);
                 }
             }
             MessageBox.Show("Export Completed!");
@@ -147,7 +208,7 @@ namespace Timesheet
                     client.ClientCredentials.Windows.ClientCredential.Password = this.password;
                     this.ProjectsList = client.GetProjects("LGBS").ToList();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show("Unauthorized Login!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -197,9 +258,9 @@ namespace Timesheet
                                 TimeeBridge.TimeeValues.ContextTask.Parent = subProject.Name;
                                 TimeeBridge.TimeeValues.ContextTaskCollection.Add(TimeeBridge.TimeeValues.ContextTask);
                             }
-                         }   
+                        }
 
-                     }
+                    }
                     this.LocationsList = client.GetLocations("LGBS");
                     foreach (var location in LocationsList)
                     {
@@ -218,6 +279,6 @@ namespace Timesheet
             this.login = "";
             this.password = "";
         }
-        
+
     }
 }

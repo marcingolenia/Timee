@@ -35,6 +35,11 @@ namespace Excell
             StringReader tmpXml = new StringReader(xml);
             DataSet ds = new DataSet();
             ds.ReadXml(tmpXml);
+            if (ds.Tables.Count == 0)
+            {
+                MessageBox.Show("Nothing to Export!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             DataRowCollection entries = ds.Tables[0].Rows;
 
             var workbook = new XLWorkbook();
@@ -143,6 +148,9 @@ namespace Excell
                 {
                     if (!String.IsNullOrWhiteSpace(dlg.FileName))
                     {
+                        MessageBox.Show("Import Cancelled!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
                     }
                 }
                 catch (IOException ex)
