@@ -477,9 +477,10 @@ namespace Timee
             //Projects
             var cell = ((DataGridView)sender).CurrentCell;
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
-                && this.Context.Projects.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
+                && this.Context.Projects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
-                cell.Value = cell.EditedFormattedValue.ToString();
+                cell.Value = this.Context.Projects.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(p => p.Name).FirstOrDefault();
+
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -497,7 +498,8 @@ namespace Timee
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
                 && this.Context.Subprojects.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                cell.Value = cell.EditedFormattedValue.ToString();
+                cell.Value = this.Context.Subprojects.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(s => s.Name).FirstOrDefault();
+
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -515,7 +517,7 @@ namespace Timee
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
                 && this.Context.Tasks.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                cell.Value = cell.EditedFormattedValue.ToString();
+                cell.Value = this.Context.Tasks.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(t => t.Name).FirstOrDefault();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -533,7 +535,7 @@ namespace Timee
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
                  && this.Context.Locations.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
             {
-                cell.Value = cell.EditedFormattedValue.ToString();
+                cell.Value = this.Context.Locations.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(l => l.Name).FirstOrDefault();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -588,23 +590,27 @@ namespace Timee
             {
                 var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
                 var cellValue = ((DataGridView)sender).CurrentCell;
+                var taskCell = dgv[e.ColumnIndex + 2, e.RowIndex] as DataGridViewComboBoxCell;
                 if (cell == null) return;
 
-                cell.DataSource = Context.Subprojects.Where(s => s.Parent ==cellValue.Value.ToString()).Select(s => s).ToList();
+                cell.DataSource = Context.Subprojects.Where(s => s.ParentId == Context.Projects.Where(p=>p.Name == cellValue.Value.ToString()).Select(p=>p.Value).FirstOrDefault()).Select(s => s).ToList();
                 cell.DisplayMember = "Name";
+                taskCell.DataSource = Context.Tasks.Where(s => s.ParentId == Context.Subprojects.Where(p=>p.Name == cell.Value.ToString()).Select(p=>p.Value).FirstOrDefault()).Select(s => s).ToList();
+                taskCell.DisplayMember = "Name";
                 if (cell.Items.Count == 0)
                 {
                     cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
                     cell.DataSource = null;
+                    cell.Value = "";
                 }
             }
-            else if (e.ColumnIndex == 3 && e.RowIndex > -1)
+            if (e.ColumnIndex == 3 && e.RowIndex > -1)
             {
                 var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
                 var cellValue = ((DataGridView)sender).CurrentCell;
                 if (cell == null) return;
 
-                cell.DataSource = Context.Tasks.Where(s => s.Parent == cellValue.Value.ToString()).Select(s => s).ToList();
+                cell.DataSource = Context.Tasks.Where(s => s.ParentId == Context.Subprojects.Where(p => p.Name == cellValue.Value.ToString()).Select(p => p.Value).FirstOrDefault()).Select(s => s).ToList();
                 cell.DisplayMember = "Name";
             }
         }
@@ -841,8 +847,7 @@ namespace Timee
 
         private void cmbProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            cmbSubProject.DataSource = Context.Subprojects.Where(s => s.Parent == cmbProject.Text).Select(s => s).ToList();
+            cmbSubProject.DataSource = Context.Subprojects.Where(s => s.ParentId == Context.Projects.Where(p=>p.Name ==cmbProject.Text).Select(p=>p.Value).FirstOrDefault()).Select(s => s).ToList();
             cmbSubProject.DisplayMember = "Name";
 
             if (cmbSubProject.Items.Count == 0)
@@ -854,7 +859,7 @@ namespace Timee
 
         private void cmbSubProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbTask.DataSource = Context.Tasks.Where(s => s.Parent == cmbSubProject.Text).Select(s => s).ToList();
+            cmbTask.DataSource = Context.Tasks.Where(s => s.ParentId == Context.Subprojects.Where(p => p.Name == cmbSubProject.Text).Select(p => p.Value).FirstOrDefault()).Select(s => s).ToList();
             cmbTask.DisplayMember = "Name";
         }
 

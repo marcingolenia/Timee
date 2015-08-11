@@ -47,7 +47,7 @@ namespace Timee.Dialogs
 
             this.Project = (Models.UserConfigurationProject)lbProjects.SelectedItem;
             if (this.Project == null) this.Project = tmpProject;
-            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Select(s => s).ToList();
+            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Where(s=>s.ParentId == this.Project.Value).Select(s => s).ToList();
             lbSubProjects.DisplayMember = "Name";
             this.txtSubProject.Enabled = true;
             this.txtTask.Enabled = true;
@@ -64,7 +64,7 @@ namespace Timee.Dialogs
         {
             this.SubProject = (Models.UserConfigurationSubproject)lbSubProjects.SelectedItem;
 
-                lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+                lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(s=>s.ParentId == this.SubProject.Value).Select(s => s).ToList();
                 lbTasks.DisplayMember = "Name";
         }
 
@@ -94,7 +94,6 @@ namespace Timee.Dialogs
         private void lbTasks_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Task = (Models.UserConfigurationTask)lbTasks.SelectedItem;
-
         }
 
         private void lbLocations_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,9 +116,9 @@ namespace Timee.Dialogs
                 this.Context.Subprojects.Remove(item);
             }
             this.Project = (Models.UserConfigurationProject)lbProjects.SelectedItem;
-            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Select(s => s).ToList();
+            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Where(s=>s.ParentId == this.Project.Value).Select(s => s).ToList();
             lbSubProjects.DisplayMember = "Name";
-            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(s=>s.ParentId == this.SubProject.Value).Select(s => s).ToList();
             lbTasks.DisplayMember = "Name";
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
 
@@ -128,16 +127,17 @@ namespace Timee.Dialogs
         private void btnDeleteSubProject_Click(object sender, EventArgs e)
         {
             string tmpSelectedSubProject = this.SubProject.Name;
+            string tmpSelectedSubProjectId = this.SubProject.Value;
             this.Context.Subprojects.Remove(this.Context.Subprojects.Where(p=>p.Parent == this.Project.Name).Where(p => p.Name == tmpSelectedSubProject).Select(p => p).First());
-            var taskRemove = this.Context.Tasks.Where(s => s.Parent == tmpSelectedSubProject).ToList();
+            var taskRemove = this.Context.Tasks.Where(s => s.Parent == tmpSelectedSubProject).Where(s=>s.ParentId == tmpSelectedSubProjectId).ToList();
             foreach (var item in taskRemove)
             {
                 this.Context.Tasks.Remove(item);
             }
             this.SubProject = (Models.UserConfigurationSubproject)lbSubProjects.SelectedItem;
-            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Select(s => s).ToList();
+            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Where(s=>s.ParentId == this.Project.Value).Select(s => s).ToList();
             lbSubProjects.DisplayMember = "Name";
-            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(t=>t.ParentId == this.SubProject.Value).Select(s => s).ToList();
             lbTasks.DisplayMember = "Name";
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
 
@@ -146,10 +146,10 @@ namespace Timee.Dialogs
         private void btnDeleteTask_Click(object sender, EventArgs e)
         {
             string tmpSelectedTask = this.Task.Name;
-            this.Context.Tasks.Remove(this.Context.Tasks.Where(t=>t.Parent == this.SubProject.Name).Where(t => t.Name == tmpSelectedTask).Select(t => t).First());
+            this.Context.Tasks.Remove(this.Context.Tasks.Where(t => t.Name == tmpSelectedTask).Select(t => t).First());
             this.Task = (Models.UserConfigurationTask)lbTasks.SelectedItem;
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
-            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(s=>s.ParentId == this.SubProject.Value).Select(s => s).ToList();
             lbTasks.DisplayMember = "Name";
 
             this.ListBoxesValidate();
@@ -206,15 +206,16 @@ namespace Timee.Dialogs
                 }
                 tmpSubproject.Value = tmpValue.ToString();
                 tmpSubproject.Parent = this.Project.Name;
+                tmpSubproject.ParentId = this.Project.Value;
                 tmpSubproject.Order = Context.Subprojects.Count == 0 ? 1 : this.Context.Subprojects.Max(i => i.Order + 1);
                 tmpSubproject.OrderSpecified = true;
                 this.Context.Subprojects.Add(tmpSubproject);
                 this.SubProject = tmpSubproject;
             }
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
-            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Select(s => s).ToList();
+            lbSubProjects.DataSource = Context.Subprojects.Where(s => s.Parent == this.Project.Name).Where(s=>s.ParentId == this.Project.Value).Select(s => s).ToList();
             lbSubProjects.DisplayMember = "Name";
-            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(s=>s.ParentId == this.SubProject.Value).Select(s => s).ToList();
             lbTasks.DisplayMember = "Name";
             this.ListBoxesValidate();
 
@@ -233,13 +234,14 @@ namespace Timee.Dialogs
                 }
                 tmpTask.Value = tmpValue.ToString();
                 tmpTask.Parent = this.SubProject.Name;
+                tmpTask.ParentId = this.SubProject.Value;
                 tmpTask.Order = Context.Tasks.Count == 0 ? 1 : this.Context.Tasks.Max(i => i.Order + 1);
                 tmpTask.OrderSpecified = true;
                 this.Context.Tasks.Add(tmpTask);
                 this.Task = tmpTask;
             }
             Services.TimeeXMLService.Instance.SaveContext(this.Context);
-            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Select(s => s).ToList();
+            lbTasks.DataSource = Context.Tasks.Where(s => s.Parent == this.SubProject.Name).Where(t=>t.ParentId == this.SubProject.Value).Select(s => s).ToList();
             lbTasks.DisplayMember = "Name";
             this.ListBoxesValidate();
 

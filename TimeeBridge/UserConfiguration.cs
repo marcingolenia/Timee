@@ -259,6 +259,7 @@ namespace TimeeBridge
         private string valueField;
 
         private string parentField;
+        private string parentIdField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -312,6 +313,18 @@ namespace TimeeBridge
             set
             {
                 this.parentField = value;
+            }
+        }
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string ParentId
+        {
+            get
+            {
+                return this.parentIdField;
+            }
+            set
+            {
+                this.parentIdField = value;
             }
         }
 
@@ -348,6 +361,7 @@ namespace TimeeBridge
         private string valueField;
 
         private string parentField;
+        private string parentIdField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -401,6 +415,19 @@ namespace TimeeBridge
             set
             {
                 this.parentField = value;
+            }
+        }
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string ParentId
+        {
+            get
+            {
+                return this.parentIdField;
+            }
+            set
+            {
+                this.parentIdField = value;
             }
         }
 

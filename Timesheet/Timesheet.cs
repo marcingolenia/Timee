@@ -247,6 +247,7 @@ namespace Timesheet
                             TimeeBridge.TimeeValues.ContextSubproject.Name = subProject.Name;
                             TimeeBridge.TimeeValues.ContextSubproject.Value = subProject.Id.ToString();
                             TimeeBridge.TimeeValues.ContextSubproject.Parent = project.Name;
+                            TimeeBridge.TimeeValues.ContextSubproject.ParentId = project.Id.ToString();
                             TimeeBridge.TimeeValues.ContextSubprojectCollection.Add(TimeeBridge.TimeeValues.ContextSubproject);
                             this.TasksList = client.GetAvailableTasks("LGBS", project.Id, subProject.Id);
 
@@ -256,6 +257,7 @@ namespace Timesheet
                                 TimeeBridge.TimeeValues.ContextTask.Name = task.Value;
                                 TimeeBridge.TimeeValues.ContextTask.Value = task.Id.ToString();
                                 TimeeBridge.TimeeValues.ContextTask.Parent = subProject.Name;
+                                TimeeBridge.TimeeValues.ContextTask.ParentId = subProject.Id.ToString();
                                 TimeeBridge.TimeeValues.ContextTaskCollection.Add(TimeeBridge.TimeeValues.ContextTask);
                             }
                         }
