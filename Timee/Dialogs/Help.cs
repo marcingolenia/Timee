@@ -15,18 +15,22 @@ namespace Timee.Dialogs
     public partial class Help : Form
     {
         private int selectedHint = 1;
-        private int hintsNumber = 5;
+
         Configuration configuration;
+        static string curDir = AppDomain.CurrentDomain.BaseDirectory;
+            
+        static List<string> timeeHints = new List<string>(Directory.GetFiles(string.Format("{0}Hints",curDir),"*.html",SearchOption.TopDirectoryOnly));
+        static List<string> pluginHints = new List<string>(Directory.GetFiles(string.Format("{0}Plugins\\Hints", curDir), "*.html", SearchOption.TopDirectoryOnly));
+        private int  hintsNumber = timeeHints.Count;
+        private int pluginHintsNumber = pluginHints.Count;
         public Help()
         {
             InitializeComponent();
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string curDir = AppDomain.CurrentDomain.BaseDirectory;
-            wbHints.Url = new Uri(String.Format("file:///{0}Hints/{1}.html",curDir, selectedHint));
+            wbHints.Url = new Uri(timeeHints.ElementAt(selectedHint-1));
             this.chkGoAway.Checked = !Properties.Settings.Default.ShowHints;
-            lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber);
+            lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber+pluginHintsNumber);
 
- 
         }
 
         private void Help_FormClosing(object sender, FormClosingEventArgs e)
@@ -39,19 +43,35 @@ namespace Timee.Dialogs
             if (selectedHint < hintsNumber)
             {
                 selectedHint++;
-                wbHints.Url = new Uri(String.Format("file:///D:/LGBS/Projekty/Timee/Timee/Dialogs/Hints/{0}.html", selectedHint));
-                lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber);
+                wbHints.Url = new Uri(timeeHints.ElementAt(selectedHint-1));               
+                lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber+pluginHintsNumber);
 
+            }
+            else if (selectedHint < hintsNumber + pluginHintsNumber && selectedHint >= hintsNumber)
+            {
+                selectedHint++;
+                wbHints.Url = new Uri(pluginHints.ElementAt((selectedHint - hintsNumber)-1));
+                lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber + pluginHintsNumber);
             }
         }
 
         private void linkPrev_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (selectedHint > 0)
+            if (selectedHint > 1)
             {
-                selectedHint--;
-                wbHints.Url = new Uri(String.Format("file:///D:/LGBS/Projekty/Timee/Timee/Dialogs/Hints/{0}.html", selectedHint));
-                lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber);
+                if (selectedHint <= hintsNumber+1)
+                {
+                    selectedHint--;
+                    wbHints.Url = new Uri(timeeHints.ElementAt(selectedHint-1));
+                    lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber + pluginHintsNumber);
+                }
+                else
+                {
+                    selectedHint--;
+                    wbHints.Url = new Uri(pluginHints.ElementAt((selectedHint-hintsNumber)));
+                    lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber + pluginHintsNumber);
+                }
+
             }
         }
 
