@@ -30,6 +30,16 @@ namespace Timesheet
                 chlProjects.DataSource = this.projects.Where(p => p.Name.ToLower().Contains(txtSearch.Text.ToLower()))
                                                 .Select(p => p).ToList();
                 chlProjects.DisplayMember = "Name";
+                foreach (int item in chlProjects.CheckedIndices)
+                {
+                    chlProjects.SetItemChecked(item, false);
+                }
+                foreach (Project item in this.selectedProjects)
+                {
+                    
+                    int index = chlProjects.Items.IndexOf(item);
+                    if (index >= 0) chlProjects.SetItemChecked(index, true);
+                }
             }
 
 
@@ -44,7 +54,7 @@ namespace Timesheet
         {
             try
             {
-                if (!chkSelected.Checked && !this.selectedProjects.Contains((Project)chlProjects.Items[e.Index]))
+                if (!chkSelected.Checked && !this.selectedProjects.Contains((Project)chlProjects.Items[e.Index]) && e.NewValue == CheckState.Checked)
                 {
                    this.selectedProjects.Add((Project)chlProjects.Items[e.Index]);
 
@@ -71,6 +81,8 @@ namespace Timesheet
                 chlProjects.DataSource = this.selectedProjects;
                 chlProjects.DisplayMember = "Name";
 
+
+
             }
             else
             {
@@ -79,10 +91,11 @@ namespace Timesheet
 
                 chlProjects.DisplayMember = "Name";
 
-                foreach (Project item in this.selectedProjects)
-                {
-                    chlProjects.SetItemChecked(chlProjects.Items.IndexOf(item), true);                    
-                }
+            }
+            foreach (Project item in this.selectedProjects)
+            {
+                int index = chlProjects.Items.IndexOf(item);
+                if (index >= 0) chlProjects.SetItemChecked(index, true);
             }
 
         }

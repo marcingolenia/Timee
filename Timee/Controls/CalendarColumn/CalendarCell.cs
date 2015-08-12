@@ -22,7 +22,7 @@ namespace Timee.Controls.CalendarColumn
                 dataGridViewCellStyle);
             CalendarEditingControl ctl =
                 DataGridView.EditingControl as CalendarEditingControl;
-            ctl.Value = (DateTime)this.Value;
+            ctl.Value = this.RowIndex == -1 ? DateTime.Now : (DateTime)this.Value;
         }
 
         public override Type EditType

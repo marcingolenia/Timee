@@ -22,7 +22,7 @@ namespace Timesheet
 
         private void LoginDialog_Load(object sender, EventArgs e)
         {
-
+           // txtLogin.Text = Environment.UserName;
         }
 
         private void txtLogin_TextChanged(object sender, EventArgs e)

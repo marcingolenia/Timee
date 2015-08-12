@@ -37,31 +37,6 @@ namespace Timee.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<UserConfiguration>
-  <Location>
-    <Location Order=""0"" Name=""Gliwice""/>
-  </Location>
-  <Project>
-    <Project Order=""0"" Name=""Sample Project""/>
-  </Project>
-  <Sub-project>
-    <Sub-project Order=""0"" Name=""Sample Subproject""/>
-  </Sub-project>
-  <Task>
-    <Task Order=""0"" Name=""Sample task""/>
-  </Task>
-</UserConfiguration>")]
-        public string UserConfiguration {
-            get {
-                return ((string)(this["UserConfiguration"]));
-            }
-            set {
-                this["UserConfiguration"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MainTasks {
             get {
@@ -105,6 +80,34 @@ namespace Timee.Properties {
             }
             set {
                 this["HotKeys"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<UserConfiguration>
+        <Location>
+          <Location Order=""1"" Name=""LGBS Gliwice"">1</Location>
+        </Location>
+        <Project>
+          <Project Order=""1"" Name=""LGBS | Timesheet"">465</Project>
+        </Project>
+        <Sub-project>
+          <Sub-project Order=""1"" Name=""Timee"" Parent=""LGBS | Timesheet"" ParentId=""465"">12655</Sub-project>
+        </Sub-project>
+        <Task>
+          <Task Order=""1"" Name=""Development"" Parent=""Timee"" ParentId=""12655"">10291</Task>
+          <Task Order=""2"" Name=""Research"" Parent=""Timee"" ParentId=""12655"">15832</Task>
+          <Task Order=""3"" Name=""Testing"" Parent=""Timee"" ParentId=""12655"">20740</Task>
+          <Task Order=""4"" Name=""Wsparcie dla praktykanta"" Parent=""Timee"" ParentId=""12655"">56062</Task>
+        </Task>
+</UserConfiguration>")]
+        public string UserConfiguration {
+            get {
+                return ((string)(this["UserConfiguration"]));
+            }
+            set {
+                this["UserConfiguration"] = value;
             }
         }
     }

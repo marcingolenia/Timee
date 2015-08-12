@@ -76,8 +76,8 @@ namespace Timee.Dialogs
                 row.Comment = this.tbComment.Text;
                 row.Date = this.dpWorkDate.Value;
                 row.Project = this.Project.Name;
-                row.SubProject = this.SubProject.Name;
-                row.Task = this.Task.Name;
+                row.SubProject = this.SubProject.Name == null? "" : this.SubProject.Name;
+                row.Task = this.Task.Name == null ? "" : this.Task.Name;
                 row.Time = TimeSpan.Zero;
                 row.Location = this.Location.Name;
                 this.main.AddNewRow(row);

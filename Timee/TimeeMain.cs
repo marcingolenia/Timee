@@ -41,6 +41,9 @@ namespace Timee
         private DataGridViewCell CurrentTimeCell { get; set; }
         //private DataGridViewCell TmpCurrentTimeCell { get; set; }
         private readonly KeyboardHook hook = new KeyboardHook();
+
+        private string parent = "";
+        private string parentId = "";
         public TimeeMain()
         {
             InitializeComponent();
@@ -222,6 +225,7 @@ namespace Timee
 
                 }
             }
+            else Properties.Settings.Default.MainTasks = null;
  
         }
 
@@ -476,11 +480,12 @@ namespace Timee
         {
             //Projects
             var cell = ((DataGridView)sender).CurrentCell;
+
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
                 && this.Context.Projects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
                 cell.Value = this.Context.Projects.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(p => p.Name).FirstOrDefault();
-
+                parent = cell.Value.ToString();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -496,10 +501,11 @@ namespace Timee
             //}
             ////Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
-                && this.Context.Subprojects.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
+                && this.Context.Subprojects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
-                cell.Value = this.Context.Subprojects.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(s => s.Name).FirstOrDefault();
-
+                cell.Value = this.Context.Subprojects.Where(p=>p.Parent == parent).Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(s => s.Name).FirstOrDefault();
+                parentId = this.Context.Subprojects.Where(p => p.Parent == parent).Where(p=>p.Name == cell.Value.ToString()).Select(p => p.Value).FirstOrDefault();                
+                parent = cell.Value.ToString();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -515,9 +521,9 @@ namespace Timee
             //}
             ////Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
-                && this.Context.Tasks.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
+                && this.Context.Tasks.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
-                cell.Value = this.Context.Tasks.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(t => t.Name).FirstOrDefault();
+                cell.Value = this.Context.Tasks.Where(p=>p.ParentId == parentId).Where(p=> p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(t => t.Name).FirstOrDefault();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
@@ -533,9 +539,9 @@ namespace Timee
             //}
             ////Locations
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
-                 && this.Context.Locations.Any(p => p.Name.Equals(cell.EditedFormattedValue.ToString())))
+                 && this.Context.Locations.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
-                cell.Value = this.Context.Locations.Where(p => p.Name.Equals(cell.EditedFormattedValue.ToString())).Select(l => l.Name).FirstOrDefault();
+                cell.Value = this.Context.Locations.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(l => l.Name).FirstOrDefault();
             }
             //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
             //    && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))

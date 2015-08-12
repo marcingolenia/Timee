@@ -5,22 +5,6 @@
     <Setting Name="ShowHints" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="UserConfiguration" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;UserConfiguration&gt;
-  &lt;Location&gt;
-    &lt;Location Order="0" Name="Gliwice"/&gt;
-  &lt;/Location&gt;
-  &lt;Project&gt;
-    &lt;Project Order="0" Name="Sample Project"/&gt;
-  &lt;/Project&gt;
-  &lt;Sub-project&gt;
-    &lt;Sub-project Order="0" Name="Sample Subproject"/&gt;
-  &lt;/Sub-project&gt;
-  &lt;Task&gt;
-    &lt;Task Order="0" Name="Sample task"/&gt;
-  &lt;/Task&gt;
-&lt;/UserConfiguration&gt;</Value>
-    </Setting>
     <Setting Name="MainTasks" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -32,6 +16,25 @@
     </Setting>
     <Setting Name="HotKeys" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UserConfiguration" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;UserConfiguration&gt;
+        &lt;Location&gt;
+          &lt;Location Order="1" Name="LGBS Gliwice"&gt;1&lt;/Location&gt;
+        &lt;/Location&gt;
+        &lt;Project&gt;
+          &lt;Project Order="1" Name="LGBS | Timesheet"&gt;465&lt;/Project&gt;
+        &lt;/Project&gt;
+        &lt;Sub-project&gt;
+          &lt;Sub-project Order="1" Name="Timee" Parent="LGBS | Timesheet" ParentId="465"&gt;12655&lt;/Sub-project&gt;
+        &lt;/Sub-project&gt;
+        &lt;Task&gt;
+          &lt;Task Order="1" Name="Development" Parent="Timee" ParentId="12655"&gt;10291&lt;/Task&gt;
+          &lt;Task Order="2" Name="Research" Parent="Timee" ParentId="12655"&gt;15832&lt;/Task&gt;
+          &lt;Task Order="3" Name="Testing" Parent="Timee" ParentId="12655"&gt;20740&lt;/Task&gt;
+          &lt;Task Order="4" Name="Wsparcie dla praktykanta" Parent="Timee" ParentId="12655"&gt;56062&lt;/Task&gt;
+        &lt;/Task&gt;
+&lt;/UserConfiguration&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
