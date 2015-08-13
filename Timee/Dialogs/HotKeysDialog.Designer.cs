@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotKeysDialog));
             this.grdHotKeys = new System.Windows.Forms.DataGridView();
+            this.Action = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ModifierKeys = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnOk = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Action = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ModifierKeys = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.KeyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdHotKeys)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,13 +51,35 @@
             this.KeyName});
             this.grdHotKeys.Location = new System.Drawing.Point(12, 12);
             this.grdHotKeys.Name = "grdHotKeys";
-            this.grdHotKeys.Size = new System.Drawing.Size(343, 282);
+            this.grdHotKeys.Size = new System.Drawing.Size(350, 288);
             this.grdHotKeys.TabIndex = 0;
             this.grdHotKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdHotKeys_KeyDown);
             // 
+            // Action
+            // 
+            this.Action.HeaderText = "Action";
+            this.Action.Name = "Action";
+            this.Action.ReadOnly = true;
+            // 
+            // ModifierKeys
+            // 
+            this.ModifierKeys.HeaderText = "Modifier Keys";
+            this.ModifierKeys.Items.AddRange(new object[] {
+            "Alt",
+            "Control",
+            "Shift",
+            "Win"});
+            this.ModifierKeys.Name = "ModifierKeys";
+            // 
+            // KeyName
+            // 
+            this.KeyName.HeaderText = "KeyName";
+            this.KeyName.Name = "KeyName";
+            this.KeyName.ReadOnly = true;
+            // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(305, 300);
+            this.btnOk.Location = new System.Drawing.Point(312, 306);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
@@ -84,37 +107,16 @@
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // Action
-            // 
-            this.Action.HeaderText = "Action";
-            this.Action.Name = "Action";
-            this.Action.ReadOnly = true;
-            // 
-            // ModifierKeys
-            // 
-            this.ModifierKeys.HeaderText = "Modifier Keys";
-            this.ModifierKeys.Items.AddRange(new object[] {
-            "Alt",
-            "Control",
-            "Shift",
-            "Win"});
-            this.ModifierKeys.Name = "ModifierKeys";
-            // 
-            // KeyName
-            // 
-            this.KeyName.HeaderText = "KeyName";
-            this.KeyName.Name = "KeyName";
-            this.KeyName.ReadOnly = true;
-            // 
             // HotKeysDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 335);
+            this.ClientSize = new System.Drawing.Size(399, 341);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.grdHotKeys);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HotKeysDialog";
-            this.Text = "HotKeysDialog";
+            this.Text = "HotKeys Configuration";
             this.Load += new System.EventHandler(this.HotKeysDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdHotKeys)).EndInit();
             this.ResumeLayout(false);

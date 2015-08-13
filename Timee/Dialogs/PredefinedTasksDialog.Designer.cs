@@ -29,16 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PredefinedTasksDialog));
             this.grdPredefinedSummary = new System.Windows.Forms.DataGridView();
-            this.timeeDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.timeeDataSet = new Timee.DAL.TimeeDataSet();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Project = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +40,15 @@
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Add = new System.Windows.Forms.DataGridViewImageColumn();
             this.Remove = new System.Windows.Forms.DataGridViewImageColumn();
+            this.timeeDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.timeeDataSet = new Timee.DAL.TimeeDataSet();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdPredefinedSummary)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSet)).BeginInit();
@@ -83,68 +84,6 @@
             this.grdPredefinedSummary.Size = new System.Drawing.Size(880, 149);
             this.grdPredefinedSummary.TabIndex = 2;
             this.grdPredefinedSummary.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdPredefinedSummary_CellContentClick);
-            // 
-            // timeeDataSetBindingSource
-            // 
-            this.timeeDataSetBindingSource.DataSource = this.timeeDataSet;
-            this.timeeDataSetBindingSource.Position = 0;
-            // 
-            // timeeDataSet
-            // 
-            this.timeeDataSet.DataSetName = "TimeeDataSet";
-            this.timeeDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Time";
-            this.dataGridViewTextBoxColumn1.FillWeight = 88.52315F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Time";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Visible = false;
-            this.dataGridViewTextBoxColumn1.Width = 789;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Project";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Project";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 112;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "SubProject";
-            this.dataGridViewTextBoxColumn3.HeaderText = "SubProject";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 113;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Task";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Task";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 113;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Location";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Location";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 113;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Comment";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Comment";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 112;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "Time";
-            this.dataGridViewTextBoxColumn7.HeaderText = "Time";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.Visible = false;
-            this.dataGridViewTextBoxColumn7.Width = 113;
             // 
             // Date
             // 
@@ -210,14 +149,77 @@
             this.Remove.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Remove.Width = 25;
             // 
+            // timeeDataSetBindingSource
+            // 
+            this.timeeDataSetBindingSource.DataSource = this.timeeDataSet;
+            this.timeeDataSetBindingSource.Position = 0;
+            // 
+            // timeeDataSet
+            // 
+            this.timeeDataSet.DataSetName = "TimeeDataSet";
+            this.timeeDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Time";
+            this.dataGridViewTextBoxColumn1.FillWeight = 88.52315F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.dataGridViewTextBoxColumn1.Width = 789;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Project";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Project";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 112;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "SubProject";
+            this.dataGridViewTextBoxColumn3.HeaderText = "SubProject";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 113;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Task";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Task";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 113;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Location";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Location";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 113;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Comment";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Comment";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 112;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "Time";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.Visible = false;
+            this.dataGridViewTextBoxColumn7.Width = 113;
+            // 
             // PredefinedTasksDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 261);
             this.Controls.Add(this.grdPredefinedSummary);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PredefinedTasksDialog";
-            this.Text = "PredefinedTasks";
+            this.Text = "Predefined Tasks";
             this.Load += new System.EventHandler(this.PredefinedTasks_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdPredefinedSummary)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeeDataSetBindingSource)).EndInit();

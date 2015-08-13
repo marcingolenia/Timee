@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportDialog));
             this.chlProjects = new System.Windows.Forms.CheckedListBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
@@ -44,6 +45,7 @@
             this.chlProjects.Sorted = true;
             this.chlProjects.TabIndex = 0;
             this.chlProjects.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chlProjects_ItemCheck);
+            // 
             // txtSearch
             // 
             this.txtSearch.Location = new System.Drawing.Point(82, 32);
@@ -92,8 +94,9 @@
             this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.chlProjects);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImportDialog";
-            this.Text = "ImportDialog";
+            this.Text = "Import";
             this.Load += new System.EventHandler(this.ImportDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

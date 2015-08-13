@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginDialog));
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.lblLogin = new System.Windows.Forms.Label();
@@ -90,8 +91,9 @@
             this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtLogin);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginDialog";
-            this.Text = "LoginDialog";
+            this.Text = "Login";
             this.Load += new System.EventHandler(this.LoginDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

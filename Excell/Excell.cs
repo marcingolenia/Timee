@@ -128,14 +128,14 @@ namespace Excell
 
         [Export(typeof(TimeeBridge.IPlugins))]
         [ExportMetadata("Name", "Import from Excell")]
-        [ExportMetadata("Return", "MainTasks")]
+        [ExportMetadata("Return", "None")]
         [ExportMetadata("Group", "Excell")]
 
     public class ExcellImport : TimeeBridge.IPlugins
     {
             string fileName { get; set; }
             TimeeBridge.TimeeDataSet excellDataSet = new TimeeBridge.TimeeDataSet();
-            private DataTable source = TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0];
+
         public void Start()
         {
 
@@ -189,12 +189,9 @@ namespace Excell
                 row.Comment = worksheet.Row(i).Cell(7).Value.ToString();
                 // dataRange.Cell(i + 1, 8).Value = IsCreative;
                 row.Location = worksheet.Row(i).Cell(9).Value.ToString();
-                source.Rows.Add(row.ItemArray);
+                TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0].Rows.Add(row.ItemArray);
                 i++;
             } while(!worksheet.Row(i).IsEmpty());
-            
-            //this.newXml = ds.GetXml();
-            TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0].Merge(source);
         }
     }
     

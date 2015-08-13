@@ -1,6 +1,6 @@
 ﻿namespace Timee.Dialogs
 {
-    partial class PrototypeDialog
+    partial class TimeeItemsDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimeeItemsDialog));
             this.lbProjects = new System.Windows.Forms.ListBox();
             this.lbSubProjects = new System.Windows.Forms.ListBox();
             this.lbTasks = new System.Windows.Forms.ListBox();
@@ -301,8 +302,9 @@
             this.Controls.Add(this.lbTasks);
             this.Controls.Add(this.lbSubProjects);
             this.Controls.Add(this.lbProjects);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PrototypeDialog";
-            this.Text = "PrototypeDialog";
+            this.Text = "Timee Items";
             this.Load += new System.EventHandler(this.PrototypeDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

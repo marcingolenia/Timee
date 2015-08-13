@@ -93,12 +93,13 @@ namespace Timee.Services
             {
                 case "MainTasks":
                     {
-                        this.main.timeeDataSet.Tables[0].Merge(TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0]);
+                        //this.main.timeeDataSet.Tables[0].Clear();
+                        //this.main.timeeDataSet.Tables[0].Merge(TimeeBridge.TimeeValues.MainTasksDataSet.Tables[0]);
                         break;
                     }
-                case "PredefineTasks":
+                case "PredefinedTasks":
                     {
-                        this.main.timeeDataSet.Tables[0].Merge(TimeeBridge.TimeeValues.PredefineTasksDataSet.Tables[0]);
+                        //this.main.timeeDataSet.Tables[0].Merge(TimeeBridge.TimeeValues.PredefineTasksDataSet.Tables[0]);
                         break;
                     }
                 case "MainTasksXml":
@@ -107,7 +108,7 @@ namespace Timee.Services
                         this.main.timeeDataSet.ReadXml(xml);
                         break;
                     }
-                case "PredefineTasksXml":
+                case "PredefinedTasksXml":
                     {
                         xml = new StringReader(TimeeBridge.TimeeValues.PredefineTasksXml);
                         this.context.PredefinedTasks.ReadXml(xml);

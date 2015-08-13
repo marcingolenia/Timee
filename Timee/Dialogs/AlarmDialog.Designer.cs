@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AlarmDialog));
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.lblAlarmDuration = new System.Windows.Forms.Label();
             this.lblMessage = new System.Windows.Forms.Label();
@@ -35,10 +36,10 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.dtpAlarmDuration = new System.Windows.Forms.DateTimePicker();
             this.grbAlarmOptions = new System.Windows.Forms.GroupBox();
+            this.chkPlugin = new System.Windows.Forms.CheckBox();
             this.chkSound = new System.Windows.Forms.CheckBox();
             this.chkMessage = new System.Windows.Forms.CheckBox();
             this.cbPlugins = new System.Windows.Forms.ComboBox();
-            this.chkPlugin = new System.Windows.Forms.CheckBox();
             this.grbAlarmOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,6 +110,16 @@
             this.grbAlarmOptions.TabStop = false;
             this.grbAlarmOptions.Text = "Alarm Options";
             // 
+            // chkPlugin
+            // 
+            this.chkPlugin.AutoSize = true;
+            this.chkPlugin.Location = new System.Drawing.Point(6, 65);
+            this.chkPlugin.Name = "chkPlugin";
+            this.chkPlugin.Size = new System.Drawing.Size(80, 17);
+            this.chkPlugin.TabIndex = 2;
+            this.chkPlugin.Text = "Start Plugin";
+            this.chkPlugin.UseVisualStyleBackColor = true;
+            // 
             // chkSound
             // 
             this.chkSound.AutoSize = true;
@@ -140,16 +151,6 @@
             this.cbPlugins.Size = new System.Drawing.Size(121, 21);
             this.cbPlugins.TabIndex = 2;
             // 
-            // chkPlugin
-            // 
-            this.chkPlugin.AutoSize = true;
-            this.chkPlugin.Location = new System.Drawing.Point(6, 65);
-            this.chkPlugin.Name = "chkPlugin";
-            this.chkPlugin.Size = new System.Drawing.Size(80, 17);
-            this.chkPlugin.TabIndex = 2;
-            this.chkPlugin.Text = "Start Plugin";
-            this.chkPlugin.UseVisualStyleBackColor = true;
-            // 
             // AlarmDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,8 +164,9 @@
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.lblAlarmDuration);
             this.Controls.Add(this.txtMessage);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AlarmDialog";
-            this.Text = "AlarmDialog";
+            this.Text = "Alarm";
             this.Load += new System.EventHandler(this.AlarmDialog_Load);
             this.grbAlarmOptions.ResumeLayout(false);
             this.grbAlarmOptions.PerformLayout();

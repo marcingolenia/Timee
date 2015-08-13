@@ -12,7 +12,7 @@ using Timee.Models;
 
 namespace Timee.Dialogs
 {
-    public partial class PrototypeDialog : Form
+    public partial class TimeeItemsDialog : Form
     {
         public Models.TimeeContext Context { get; set; }
         public Models.UserConfigurationProject Project { get; set; }
@@ -22,7 +22,7 @@ namespace Timee.Dialogs
         private Models.UserConfigurationProject tmpProject;
         private TimeeMain main;
 
-        public PrototypeDialog(TimeeMain main)
+        public TimeeItemsDialog(TimeeMain main)
         {
             this.main = main;
             InitializeComponent();

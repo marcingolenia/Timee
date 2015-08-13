@@ -238,7 +238,7 @@ namespace Timee
         private void btnStart_Click(object sender, EventArgs e)
         {
             {
-                using (var dlg = new Dialogs.PrototypeDialog(this))
+                using (var dlg = new Dialogs.TimeeItemsDialog(this))
                 {
                     dlg.Context = this.Context;
                     dlg.ShowDialog();

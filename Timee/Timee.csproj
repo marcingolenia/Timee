@@ -180,11 +180,11 @@
     <Compile Include="Dialogs\HotKeysDialog.Designer.cs">
       <DependentUpon>HotKeysDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\PrototypeDialog.cs">
+    <Compile Include="Dialogs\TimeeItemsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\PrototypeDialog.Designer.cs">
-      <DependentUpon>PrototypeDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\TimeeItemsDialog.Designer.cs">
+      <DependentUpon>TimeeItemsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PluginsService.cs" />
@@ -262,8 +262,8 @@
     <EmbeddedResource Include="Dialogs\PredefinedTasksDialog.resx">
       <DependentUpon>PredefinedTasksDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\PrototypeDialog.resx">
-      <DependentUpon>PrototypeDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\TimeeItemsDialog.resx">
+      <DependentUpon>TimeeItemsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TimeeEditDialog.resx">
       <DependentUpon>TimeeEditDialog.cs</DependentUpon>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExportDialog));
             this.lblCreative = new System.Windows.Forms.Label();
             this.cbCreative = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
@@ -69,8 +70,9 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cbCreative);
             this.Controls.Add(this.lblCreative);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ExportDialog";
-            this.Text = "ExportDialog";
+            this.Text = "Export Settings";
             this.Load += new System.EventHandler(this.ExportDialog_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
