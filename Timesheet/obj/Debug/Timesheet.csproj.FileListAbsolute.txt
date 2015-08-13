@@ -1,8 +1,0 @@
-D:\LGBS\Projekty\Timee\release\Plugins\Timesheet.dll.config
-D:\LGBS\Projekty\Timee\release\Plugins\Timesheet.dll
-D:\LGBS\Projekty\Timee\release\Plugins\Timesheet.pdb
-D:\LGBS\Projekty\Timee\Timesheet\obj\Debug\Timesheet.csprojResolveAssemblyReference.cache
-D:\LGBS\Projekty\Timee\Timesheet\obj\Debug\Timesheet.dll
-D:\LGBS\Projekty\Timee\Timesheet\obj\Debug\Timesheet.pdb
-D:\LGBS\Projekty\Timee\Timesheet\obj\Debug\Timesheet.LoginDialog.resources
-D:\LGBS\Projekty\Timee\Timesheet\obj\Debug\Timesheet.csproj.GenerateResource.Cache
