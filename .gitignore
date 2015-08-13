@@ -46,6 +46,8 @@ Temporary Items
 *.suo
 *.user
 Timee/bin
+NotificationWindow/bin
+NotificationWindow/obj
 Timee/obj
 Timee.Setup/bin
 Timee.Setup/obj
@@ -55,10 +57,7 @@ UpgradeLog.htm
 
 # Click-Once directory
 publish/
-AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-AutoUpdater.NET/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-release/Timee.exe
-release/Timee.pdb
-release/Timee.exe
+AutoUpdater.NET/obj
+AutoUpdater.NET/bin
+release/
 *.exe
