@@ -46,8 +46,12 @@ Temporary Items
 *.suo
 *.user
 Timee/bin
+TimeeBridge/bin
+TimeeBridge/obj
 NotificationWindow/bin
 NotificationWindow/obj
+Excell/bin
+Excell/obj
 Timee/obj
 Timee.Setup/bin
 Timee.Setup/obj
