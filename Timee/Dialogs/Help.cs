@@ -18,18 +18,30 @@ namespace Timee.Dialogs
 
         Configuration configuration;
         static string curDir = AppDomain.CurrentDomain.BaseDirectory;
-            
-        static List<string> timeeHints = new List<string>(Directory.GetFiles(string.Format("{0}Hints",curDir),"*.html",SearchOption.TopDirectoryOnly));
-        static List<string> pluginHints = new List<string>(Directory.GetFiles(string.Format("{0}Plugins\\Hints", curDir), "*.html", SearchOption.TopDirectoryOnly));
-        private int  hintsNumber = timeeHints.Count;
-        private int pluginHintsNumber = pluginHints.Count;
+        private string pluginHintsDir = Path.Combine(curDir, @"Plugins\Hints");
+        private string timeeHintsDir = Path.Combine(curDir, @"Dialogs\Hints");
+        private List<string> timeeHints;
+        private List<string> pluginHints; 
+        private int hintsNumber;
+        private int pluginHintsNumber;
         public Help()
         {
             InitializeComponent();
+            if (!Directory.Exists(pluginHintsDir)) Directory.CreateDirectory(pluginHintsDir);
+            if (!Directory.Exists(timeeHintsDir)) Directory.CreateDirectory(timeeHintsDir);
+
+            timeeHints = new List<string>(Directory.GetFiles(timeeHintsDir, "*.html", SearchOption.TopDirectoryOnly));
+            pluginHints = new List<string>(Directory.GetFiles(pluginHintsDir, "*.html", SearchOption.TopDirectoryOnly));
+
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             wbHints.Url = new Uri(timeeHints.ElementAt(selectedHint-1));
             this.chkGoAway.Checked = !Properties.Settings.Default.ShowHints;
+
+            hintsNumber = timeeHints.Count;
+            pluginHintsNumber = pluginHints.Count;
+
             lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber+pluginHintsNumber);
+
 
         }
 
@@ -40,6 +52,7 @@ namespace Timee.Dialogs
         }
         private void linkNext_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+
             if (selectedHint < hintsNumber)
             {
                 selectedHint++;
