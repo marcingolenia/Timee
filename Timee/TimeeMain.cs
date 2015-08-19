@@ -86,7 +86,7 @@ namespace Timee
 
             //checking if there is new version
             AutoUpdater.CurrentCulture = CultureInfo.CreateSpecificCulture("en");
-            AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/Timee/timee.xml");
+            AutoUpdater.Start("https://raw.githubusercontent.com/marcingolenia/Timee/master/release/timee.xml");
 
             //Load saved tasks
             StringReader mainTasksXml = new StringReader(Properties.Settings.Default.MainTasks);
@@ -225,7 +225,11 @@ namespace Timee
 
                 }
             }
-            else Properties.Settings.Default.MainTasks = null;
+            else
+            {
+                Properties.Settings.Default.MainTasks = null;
+                Properties.Settings.Default.Save();
+            }
  
         }
 
