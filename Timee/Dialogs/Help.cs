@@ -19,7 +19,7 @@ namespace Timee.Dialogs
         Configuration configuration;
         static string curDir = AppDomain.CurrentDomain.BaseDirectory;
         private string pluginHintsDir = Path.Combine(curDir, @"Plugins\Hints");
-        private string timeeHintsDir = Path.Combine(curDir, @"Dialogs\Hints");
+        private string timeeHintsDir = Path.Combine(curDir, @"Hints");
         private List<string> timeeHints;
         private List<string> pluginHints; 
         private int hintsNumber;

@@ -362,19 +362,59 @@
     <Content Include="Dialogs\Hints\Images\2.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Hints\1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\3.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\4.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\5.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\Images\1.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\Images\2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\Images\3.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\Images\4.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Hints\Images\5.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\DataSources\zegar-2_318-11614.jpg" />
-    <None Include="Resources\new.png" />
-    <None Include="Resources\folder.png" />
-    <None Include="Resources\save.png" />
+    <None Include="Resources\new.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\folder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\remove.bmp" />
-    <Content Include="Resources\remove.png" />
+    <Content Include="Resources\remove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\timee-transparent_347x358.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\timee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\timee_347x358.png" />
+    <Content Include="Resources\timee_347x358.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="timee.xml" />
     <Content Include="userConfiguration.xml" />
   </ItemGroup>
@@ -414,10 +454,6 @@
     <ProjectReference Include="..\TimeeBridge\TimeeBridge.csproj">
       <Project>{28ebd454-1bff-44d8-b387-3983a45b11f5}</Project>
       <Name>TimeeBridge</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Timesheet\Timesheet.csproj">
-      <Project>{3ad240c7-18f9-4c89-8fcf-ab1cee7cb0f9}</Project>
-      <Name>Timesheet</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

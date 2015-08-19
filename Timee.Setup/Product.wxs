@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-    <Product Id="26F2D3B3-3F44-48D0-ACD9-C601CDEF628C" Name="Timee" Language="1033" Version="1.0.0.0" Manufacturer="Marcin" UpgradeCode="a825d3df-1c57-4617-9ecc-4deb3569bc36">
+    <Product Id="26F2D3B3-3F44-48D0-ACD9-C601CDEF628C" Name="Timee" Language="1033" Version="1.0.0.0" Manufacturer="LGBS" UpgradeCode="a825d3df-1c57-4617-9ecc-4deb3569bc36">
         <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -23,7 +23,11 @@
                     <Directory Id="ResourcesFolder" Name="Resources">
                     </Directory>
                     <Directory Id="PluginsFolder" Name="Plugins">
-                        <Directory Id="LGBSExcelExportFolder" Name="LGBSExcelExport">
+                        <Directory Id="PluginsHintsFolder" Name="Hints">
+                        </Directory>
+                    </Directory>
+                    <Directory Id="HintsFolder" Name="Hints">
+                        <Directory Id="ImagesFolder" Name="Images">
                         </Directory>
                     </Directory>
                 </Directory>
@@ -47,21 +51,77 @@
                 <File Source="$(var.Timee.TargetDir)\Timee.exe.config" />
             </Component>
             <Component Directory="INSTALLFOLDER">
-                <File Source="$(var.Timee.TargetDir)\ClosedXML.dll" />
+                <File Source="$(var.Timee.TargetDir)\AutoUpdater.Net.dll" />
             </Component>
             <Component Directory="INSTALLFOLDER">
-                <File Source="$(var.Timee.TargetDir)\DocumentFormat.OpenXml.dll" />
+                <File Source="$(var.Timee.TargetDir)\AutoUpdater.Net.xml" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\NotificationWindow.dll" />
             </Component>
             <Component Directory="ResourcesFolder">
                 <File Source="$(var.Timee.TargetDir)\Resources\timee.ico"/>
             </Component>
             <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\folder.png"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\new.png"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\remove.png"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\save.png"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
+                <File Source="$(var.Timee.TargetDir)\Resources\timee_347x358.png"/>
+            </Component>
+            <Component Directory="ResourcesFolder">
                 <File Source="$(var.Timee.TargetDir)\Resources\timee-transparent_347x358.png"/>
             </Component>
-            <Component Directory="LGBSExcelExportFolder">
-                <File Source="$(var.Timee.TargetDir)\Plugins\LGBSExcelExport\LGBSExcelExportConfiguration.xml" />
+            <Component Directory="PluginsFolder">
+                <File Source="$(var.Timee.TargetDir)\Plugins\ClosedXML.dll" />
             </Component>
-
+            <Component Directory="PluginsFolder">
+                <File Source="$(var.Timee.TargetDir)\Plugins\ClosedXML.xml" />
+            </Component>
+            <Component Directory="PluginsFolder">
+                <File Source="$(var.Timee.TargetDir)\Plugins\Excell.dll" />
+            </Component>
+            <Component Directory="INSTALLFOLDER">
+                <File Source="$(var.Timee.TargetDir)\Plugins\TimeeBridge.dll" />
+            </Component>
+            <Component Directory="HintsFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\1.html"/>
+            </Component>
+            <Component Directory="HintsFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\2.html"/>
+            </Component>
+            <Component Directory="HintsFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\3.html"/>
+            </Component>
+            <Component Directory="HintsFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\4.html"/>
+            </Component>
+            <Component Directory="HintsFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\5.html"/>
+            </Component>
+            <Component Directory="ImagesFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\Images\1.gif"/>
+            </Component>
+            <Component Directory="ImagesFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\Images\2.gif"/>
+            </Component>
+            <Component Directory="ImagesFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\Images\3.gif"/>
+            </Component>
+            <Component Directory="ImagesFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\Images\4.gif"/>
+            </Component>
+            <Component Directory="ImagesFolder">
+                <File Source="$(var.Timee.TargetDir)\Hints\Images\5.gif"/>
+            </Component>
         </ComponentGroup>
     </Fragment>
 
