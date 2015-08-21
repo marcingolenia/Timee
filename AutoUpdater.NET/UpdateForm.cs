@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Net;
+using System.IO;
 
 namespace AutoUpdaterDotNET
 {
@@ -32,7 +34,11 @@ namespace AutoUpdaterDotNET
 
         private void UpdateFormLoad(object sender, EventArgs e)
         {
-            webBrowser.Navigate(AutoUpdater.ChangeLogURL);
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(AutoUpdater.ChangeLogURL, "CHANGELOG.txt");
+            }
+            webBrowser.Url = new Uri( Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DownloadUpdateDialog.GetFileName(AutoUpdater.ChangeLogURL)));
         }
 
         private void ButtonUpdateClick(object sender, EventArgs e)

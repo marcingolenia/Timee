@@ -28,8 +28,7 @@ namespace AutoUpdaterDotNET
             _webClient = new WebClient();
 
             var uri = new Uri(_downloadURL);
-
-            _tempPath = Path.Combine(Path.GetTempPath(), GetFileName(_downloadURL));
+            _tempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFileName(_downloadURL));
 
             _webClient.DownloadProgressChanged += OnDownloadProgressChanged;
 
@@ -45,23 +44,26 @@ namespace AutoUpdaterDotNET
 
         private void OnDownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            FileChange.Rename();
-            string _exePath = Application.ExecutablePath;
-            File.Copy(_tempPath, _exePath);
-            Application.Restart();
-            var processStartInfo = new ProcessStartInfo { FileName = _exePath, UseShellExecute = true };
-            Process.Start(processStartInfo);
-            if (Application.MessageLoop)
+
+            if (!e.Cancelled)
             {
+                var processStartInfo = new ProcessStartInfo { FileName = _tempPath, UseShellExecute = true };
+                var process = Process.Start(processStartInfo);
+
+                if (AutoUpdater.IsWinFormsApplication)
+                {
                 Application.Exit();
-            }
-            else
-            {
-                Environment.Exit(1);
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+
+
+
             }
         }
-
-        private static string GetFileName(string url)
+        public static string GetFileName(string url)
         {
             var fileName = string.Empty;
             var uri = new Uri(url);
@@ -76,7 +78,7 @@ namespace AutoUpdaterDotNET
                     httpWebResponse.StatusCode.Equals(HttpStatusCode.Moved) ||
                     httpWebResponse.StatusCode.Equals(HttpStatusCode.MovedPermanently))
                 {
-                    if (httpWebResponse.Headers["Location"] != null)
+                    if (httpWebResponse.Headers["Location"] == null)
                     {
                         var location = httpWebResponse.Headers["Location"];
                         fileName = GetFileName(location);
