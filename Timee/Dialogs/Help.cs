@@ -22,23 +22,25 @@ namespace Timee.Dialogs
         private string timeeHintsDir = Path.Combine(curDir, @"Hints");
         private List<string> timeeHints;
         private List<string> pluginHints; 
-        private int hintsNumber;
-        private int pluginHintsNumber;
+        private int hintsNumber = 0;
+        private int pluginHintsNumber = 0;
         public Help()
         {
             InitializeComponent();
-            if (!Directory.Exists(pluginHintsDir)) Directory.CreateDirectory(pluginHintsDir);
-            if (!Directory.Exists(timeeHintsDir)) Directory.CreateDirectory(timeeHintsDir);
-
-            timeeHints = new List<string>(Directory.GetFiles(timeeHintsDir, "*.html", SearchOption.TopDirectoryOnly));
-            pluginHints = new List<string>(Directory.GetFiles(pluginHintsDir, "*.html", SearchOption.TopDirectoryOnly));
-
+            if (Directory.Exists(pluginHintsDir))
+            {
+                pluginHints = new List<string>(Directory.GetFiles(pluginHintsDir, "*.html", SearchOption.TopDirectoryOnly));
+                pluginHintsNumber = pluginHints.Count;               
+            } 
+            if (Directory.Exists(timeeHintsDir))
+            {
+                timeeHints = new List<string>(Directory.GetFiles(timeeHintsDir, "*.html", SearchOption.TopDirectoryOnly));
+                hintsNumber = timeeHints.Count;
+            }
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             wbHints.Url = new Uri(timeeHints.ElementAt(selectedHint-1));
             this.chkGoAway.Checked = !Properties.Settings.Default.ShowHints;
 
-            hintsNumber = timeeHints.Count;
-            pluginHintsNumber = pluginHints.Count;
 
             lblCurrentHint.Text = String.Format("{0} of {1}", selectedHint, hintsNumber+pluginHintsNumber);
 
