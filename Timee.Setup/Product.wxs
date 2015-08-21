@@ -45,6 +45,9 @@
     <Fragment>
         <ComponentGroup Id="ProductComponents">
             <Component Directory="INSTALLFOLDER">
+              <CreateFolder>
+                <Permission User="Everyone" GenericAll="yes" />
+              </CreateFolder>
                 <File Source="$(var.Timee.TargetDir)\Timee.exe" />
             </Component>
             <Component Directory="INSTALLFOLDER">
