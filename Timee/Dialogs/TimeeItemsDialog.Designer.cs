@@ -256,7 +256,7 @@
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 22;
-            this.lblDate.Text = "Data";
+            this.lblDate.Text = "Date";
             // 
             // dpWorkDate
             // 
@@ -273,7 +273,7 @@
             this.tbComment.TabIndex = 23;
             this.tbComment.Text = "Comment";
             // 
-            // PrototypeDialog
+            // TimeeItemsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -303,7 +303,7 @@
             this.Controls.Add(this.lbSubProjects);
             this.Controls.Add(this.lbProjects);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "PrototypeDialog";
+            this.Name = "TimeeItemsDialog";
             this.Text = "Timee Items";
             this.Load += new System.EventHandler(this.PrototypeDialog_Load);
             this.ResumeLayout(false);

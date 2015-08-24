@@ -346,7 +346,7 @@ namespace Timee
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 15;
-            this.lblDate.Text = "Data";
+            this.lblDate.Text = "Date";
             // 
             // lblProject
             // 
