@@ -32,6 +32,7 @@
             this.picTimee = new System.Windows.Forms.PictureBox();
             this.linkToProject = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkHints = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picTimee)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,11 +67,22 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Time monitoring application.";
             // 
+            // chkHints
+            // 
+            this.chkHints.AutoSize = true;
+            this.chkHints.Location = new System.Drawing.Point(12, 284);
+            this.chkHints.Name = "chkHints";
+            this.chkHints.Size = new System.Drawing.Size(80, 17);
+            this.chkHints.TabIndex = 3;
+            this.chkHints.Text = "Show Hints";
+            this.chkHints.UseVisualStyleBackColor = true;
+            // 
             // AboutDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(233, 288);
+            this.ClientSize = new System.Drawing.Size(230, 306);
+            this.Controls.Add(this.chkHints);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.linkToProject);
             this.Controls.Add(this.picTimee);
@@ -85,13 +97,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.picTimee)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AboutDialog_FormClosing);
         }
-
         #endregion
 
         private System.Windows.Forms.PictureBox picTimee;
         private System.Windows.Forms.LinkLabel linkToProject;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkHints;
     }
 }

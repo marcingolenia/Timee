@@ -12,6 +12,7 @@ namespace Timee.Dialogs
 {
     public partial class AboutDialog : Form
     {
+        public bool Hints { get; set; }
         public AboutDialog()
         {
             InitializeComponent();
@@ -24,7 +25,13 @@ namespace Timee.Dialogs
 
         private void AboutDialog_Load(object sender, EventArgs e)
         {
+            this.chkHints.Checked = (this.Hints) ? true : false;
+        }
 
+        private void AboutDialog_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        {
+            this.Hints = this.chkHints.Checked ? true : false;
+            this.DialogResult = DialogResult.Abort;
         }
     }
 }

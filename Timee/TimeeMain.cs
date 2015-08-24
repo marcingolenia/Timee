@@ -505,6 +505,7 @@ namespace Timee
 
             Context.PredefinedTasks.TimeSheetTable.AddTimeSheetTableRow(tmpPredefinedTask);
             TimeeXMLService.Instance.SavePredefinedTasks(this.Context.PredefinedTasks);
+            Services.NotificationService.Instance.SimpleNotification("Timee", "Task saved");
         }
 
         //--Grid drag and drop
@@ -567,7 +568,16 @@ namespace Timee
         //--Menu
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new AboutDialog().Show();
+            using (var dlg = new AboutDialog())
+            {
+                dlg.Hints = Properties.Settings.Default.ShowHints;
+                dlg.ShowDialog();
+                if (dlg.DialogResult == DialogResult.Abort)
+                {
+                    Properties.Settings.Default.ShowHints = dlg.Hints;
+                    Properties.Settings.Default.Save();
+                }
+            }
         }
         /// <summary>
         /// Dialog for starting count-down alarm.
