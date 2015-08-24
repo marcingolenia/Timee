@@ -82,11 +82,10 @@ namespace Timee.Services
             var action = from plugin in _plugins
                          where plugin.Metadata.Name == item.Name
                          select plugin;
-
             TimeeBridge.TimeeValues.MainTasksXml = main.timeeDataSet.GetXml();
             TimeeBridge.TimeeValues.PredefineTasksXml = context.PredefinedTasks.GetXml();
             TimeeBridge.TimeeValues.MainTasksDataSet = main.timeeDataSet;
-
+            
             ExportContext(this.context);
             action.First().Value.Start();
             switch (action.First().Metadata.Return)  

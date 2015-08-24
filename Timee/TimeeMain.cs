@@ -22,7 +22,6 @@ namespace Timee
 {
     public partial class TimeeMain : Form
     {
-
         /// <summary>
         /// Used in drag&drop
         /// </summary>
@@ -55,7 +54,6 @@ namespace Timee
             hook.RegisterHotKey(Timee.Services.Hotkeys.ModifierKeys.Control, Keys.F12);
             //Hints
         }
-
         //Events
         /// <summary>
         /// Main form loaded -> get data, init grid.
@@ -74,7 +72,6 @@ namespace Timee
                 Properties.Settings.Default.UpgradeRequired = false;
                 Properties.Settings.Default.Save();
             }
-
             Assembly mainAssembly = Assembly.GetEntryAssembly();
             this.Context = TimeeXMLService.Instance.LoadContext();
             cmbProject.DataSource = Context.Projects;
@@ -105,11 +102,9 @@ namespace Timee
                     HotkeysService.Instance.RegisterKey(hook, row);
 			    }
             }
-           
             //Show help
             PluginsService initializePlugins = new PluginsService(this, this.Context);
             initializePlugins.InitializeMenu(mnu);
-
         }
         /// <summary>
         /// Show hints
@@ -132,9 +127,6 @@ namespace Timee
         {
 
             int? row = null;
-            
-
-            
                 string action = HotkeysService.Instance.KeysMap
                     .Where(k => (Keys)Enum.Parse(typeof(Keys), k.KeyName) == e.Key)
                     .Select(k => k.Action).FirstOrDefault();
@@ -155,7 +147,6 @@ namespace Timee
                         QuickNewRow();
                         break;
                 }
-            
         }
         /// <summary>
         /// Handling application exit via tray menu.
@@ -222,7 +213,6 @@ namespace Timee
                 {
                     Properties.Settings.Default.MainTasks = null;
                     Properties.Settings.Default.Save();
-
                 }
             }
             else
@@ -230,7 +220,6 @@ namespace Timee
                 Properties.Settings.Default.MainTasks = null;
                 Properties.Settings.Default.Save();
             }
- 
         }
 
         //--GUI besides grid
@@ -242,36 +231,18 @@ namespace Timee
         private void btnStart_Click(object sender, EventArgs e)
         {
             {
+                int tmpRowsCount = this.grdWorkSummary.Rows.Count;
                 using (var dlg = new Dialogs.TimeeItemsDialog(this))
                 {
                     dlg.Context = this.Context;
                     dlg.ShowDialog();
-                    if (dlg.DialogResult == DialogResult.OK)
-                    {
-                        //try
-                        //{
-                        //    TimeeDataSet.TimeSheetTableRow row = this.timeeDataSet.TimeSheetTable.NewTimeSheetTableRow();
-                        //    row.Comment = this.tbComment.Text;
-                        //    row.Date = this.dpWorkDate.Value;
-                        //    row.Project = dlg.Project.Name;
-                        //    row.SubProject = dlg.SubProject.Name;
-                        //    row.Task = dlg.Task.Name;
-                        //    row.Time = TimeSpan.Zero;
-                        //    row.Location = dlg.Location.Name;
-                        //    AddNewRow(row);
-                        //    this.btnPause.Enabled = true;
-                        //    this.btnPause.Text = "Pause";
-                        //}
-                        //catch (Exception ex)
-                        //{
-                        //    MessageBox.Show("Incomplete Data!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //}
-
-
-                    }
+                }
+                if (tmpRowsCount < this.grdWorkSummary.Rows.Count)
+                {
+                    this.btnPause.Enabled = true;
+                    this.btnPause.Text = "Pause";
                 }
             }
-            
         }
         /// <summary>
         /// Open table with PredefinedTasks.
@@ -316,50 +287,6 @@ namespace Timee
             }
         }
         /// <summary>
-        /// Edit selected List.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void btnConfigureComponent_Click(object sender, EventArgs e)
-        //{
-        //    TimeeComponentType component = TimeeComponentType.Undefined;
-        //    if (sender.Equals(btnProject))
-        //    {
-        //        component = TimeeComponentType.Project;
-        //    }
-        //    else if (sender.Equals(btnSubProject))
-        //    {
-        //        component = TimeeComponentType.Subproject;
-        //    }
-        //    else if (sender.Equals(btnTask))
-        //    {
-        //        component = TimeeComponentType.Task;
-        //    }
-        //    else if (sender.Equals(btnAddRow))
-        //    {
-
-        //        component = TimeeComponentType.Location;
-        //    }
-        //    using (var dlgEdit = new TimeeEditDialog(this.Context, component))
-        //    {
-        //        dlgEdit.ShowDialog();
-        //        if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.OK)
-        //        {
-        //            TimeeXMLService.Instance.SaveContext(this.Context);
-        //            this.Context.ResetAllBindings();
-        //        }
-        //        else if (dlgEdit.DialogResult == System.Windows.Forms.DialogResult.Cancel)
-        //        {
-        //            this.Context = TimeeXMLService.Instance.LoadContext();
-
-        //            cmbProject.DataSource = Context.Projects;
-        //            cmbTask.DataSource = Context.Tasks;
-        //            cmbSubProject.DataSource = Context.Subprojects;
-        //            cmbLocations.DataSource = Context.Locations;
-        //        }
-        //    }
-        //}
-        /// <summary>
         /// Update cell value while counting time.
         /// </summary>
         /// <param name="sender"></param>
@@ -384,18 +311,7 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbProject_Validating(object sender, CancelEventArgs e)
         {
-            //if (!String.IsNullOrEmpty(cmbProject.Text) &&
-            //    !Context.Projects.Select(p => p.Name).Contains(cmbProject.Text))
-            //{
-            //    var newProject = new Models.UserConfigurationProject()
-            //    {
-            //        Name = cmbProject.Text.ToString(),
-            //        Order = this.Context.Projects.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    Context.Projects.Add(newProject);
-            //    cmbProject.SelectedItem = newProject;
-            //}
+           
             if (!Context.Projects.Any(p => p.Name.Equals(cmbProject.Text)))
             {
                 cmbProject.SelectedItem = Context.Projects.FirstOrDefault();
@@ -408,18 +324,7 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbSubProject_Validating(object sender, CancelEventArgs e)
         {
-            //if (!String.IsNullOrEmpty(cmbSubProject.Text) &&
-            //    !Context.Projects.Select(p => p.Name).Contains(cmbSubProject.Text))
-            //{
-            //    var newSubProject = new Models.UserConfigurationSubproject()
-            //    {
-            //        Name = cmbSubProject.Text.ToString(),
-            //        Order = this.Context.Subprojects.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    Context.Subprojects.Add(newSubProject);
-            //    cmbSubProject.SelectedItem = newSubProject;
-            //}
+           
             if (!Context.Subprojects.Any(p => p.Name.Equals(cmbSubProject.Text)))
             {
                 cmbSubProject.SelectedItem = Context.Subprojects.FirstOrDefault();
@@ -432,18 +337,7 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbTask_Validating(object sender, CancelEventArgs e)
         {
-            //if (!String.IsNullOrEmpty(cmbTask.Text) &&
-            //    !Context.Tasks.Select(p => p.Name).Contains(cmbTask.Text))
-            //{
-            //    var newTask = new Models.UserConfigurationTask()
-            //    {
-            //        Name = cmbSubProject.Text.ToString(),
-            //        Order = this.Context.Tasks.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    Context.Tasks.Add(newTask);
-            //    cmbSubProject.SelectedItem = newTask;
-            //}
+           
             if (!Context.Tasks.Any(p => p.Name.Equals(cmbTask.Text)))
             {
                 cmbTask.SelectedItem = Context.Tasks.FirstOrDefault();
@@ -456,24 +350,12 @@ namespace Timee
         /// <param name="e"></param>
         private void cmbLocations_Validating(object sender, CancelEventArgs e)
         {
-    //        if (!String.IsNullOrEmpty(cmbLocations.Text) &&
-    //!Context.Locations.Select(p => p.Name).Contains(cmbLocations.Text))
-    //        {
-    //            var newLocation = new Models.UserConfigurationLocation()
-    //            {
-    //                Name = cmbSubProject.Text.ToString(),
-    //                Order = this.Context.Locations.Max(p => p.Order) + 1,
-    //                OrderSpecified = true
-    //            };
-    //            Context.Locations.Add(newLocation);
-    //            cmbSubProject.SelectedItem = newLocation;
-    //        }
+   
             if (!Context.Locations.Any(p => p.Name.Equals(cmbLocations.Text)))
             {
                 cmbLocations.SelectedItem = Context.Locations.FirstOrDefault();
             }
         }
-
         //--Grid events
         /// <summary>
         /// Handling editable comboboxes - Adding new values.
@@ -491,18 +373,7 @@ namespace Timee
                 cell.Value = this.Context.Projects.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(p => p.Name).FirstOrDefault();
                 parent = cell.Value.ToString();
             }
-            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-            //    && (this.Context.Projects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
-            //{
-            //    var newProject = new Models.UserConfigurationProject()
-            //    {
-            //        Name = cell.EditedFormattedValue.ToString(),
-            //        Order = this.Context.Projects.Count == 0 ? 1 : this.Context.Projects.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    this.Context.Projects.Add(newProject);
-            //    cell.Value = newProject.Name;
-            //}
+           
             ////Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
                 && this.Context.Subprojects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
@@ -511,54 +382,21 @@ namespace Timee
                 parentId = this.Context.Subprojects.Where(p => p.Parent == parent).Where(p=>p.Name == cell.Value.ToString()).Select(p => p.Value).FirstOrDefault();                
                 parent = cell.Value.ToString();
             }
-            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-            //    && (this.Context.Subprojects.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
-            //{
-            //    var newSubProject = new Models.UserConfigurationSubproject()
-            //    {
-            //        Name = cell.EditedFormattedValue.ToString(),
-            //        Order =  this.Context.Subprojects.Count == 0 ? 1 : this.Context.Subprojects.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    this.Context.Subprojects.Add(newSubProject);
-            //    cell.Value = newSubProject.Name;
-            //}
+          
             ////Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
                 && this.Context.Tasks.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
                 cell.Value = this.Context.Tasks.Where(p=>p.ParentId == parentId).Where(p=> p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(t => t.Name).FirstOrDefault();
             }
-            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-            //    && (this.Context.Tasks.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
-            //{
-            //    var newTask = new Models.UserConfigurationTask()
-            //    {
-            //        Name = cell.EditedFormattedValue.ToString(),
-            //        Order = this.Context.Tasks.Count == 0 ? 1 : this.Context.Tasks.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    this.Context.Tasks.Add(newTask);
-            //    cell.Value = newTask.Name;
-            //}
+         
             ////Locations
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.LocationColumn.ColumnName
                  && this.Context.Locations.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
                 cell.Value = this.Context.Locations.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(l => l.Name).FirstOrDefault();
             }
-            //    && !String.IsNullOrWhiteSpace(cell.EditedFormattedValue.ToString())
-            //    && (this.Context.Locations.Where(p => p.Name == cell.EditedFormattedValue.ToString()).Count() < 1))
-            //{
-            //    var newLocation = new Models.UserConfigurationLocation()
-            //    {
-            //        Name = cell.EditedFormattedValue.ToString(),
-            //        Order = this.Context.Locations.Count == 0 ? 1 : this.Context.Locations.Max(p => p.Order) + 1,
-            //        OrderSpecified = true
-            //    };
-            //    this.Context.Locations.Add(newLocation);
-            //    cell.Value = newLocation.Name;
-            //}
+       
              //Time
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TimeColumn.ColumnName)
             {
@@ -568,7 +406,6 @@ namespace Timee
                     cell.Value = new TimeSpan();
                     grdWorkSummary.CancelEdit();
                 }
-                //cell.EditedFormattedValue
             }
         }
         /// <summary>
@@ -584,7 +421,6 @@ namespace Timee
                 ((ComboBox)e.Control).DropDownStyle = ComboBoxStyle.DropDown;
                 ((ComboBox)e.Control).AutoCompleteSource = AutoCompleteSource.ListItems;
                 ((ComboBox)e.Control).AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-
             }
         }
         /// <summary>
@@ -653,7 +489,6 @@ namespace Timee
                 btnPause.Text = "Resume";
             }
             grdWorkSummary.Rows.RemoveAt(e.RowIndex);
-
 
             hook.UnregisterLastHotKey();
         }
@@ -753,7 +588,6 @@ namespace Timee
                 }
             }
         }
-
         //Methods
         /// <summary>
         /// Init grid comboboxes, set handlers for custom events, change behaviour.
@@ -913,6 +747,5 @@ namespace Timee
                 MessageBox.Show("Incomplete Data!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }
