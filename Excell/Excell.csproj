@@ -40,8 +40,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.Composition.Registration" />
+    <Reference Include="System.ComponentModel.Composition">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition.Registration">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />

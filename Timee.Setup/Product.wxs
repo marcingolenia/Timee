@@ -56,6 +56,12 @@
             <Component Directory="INSTALLFOLDER">
                 <File Source="$(var.Timee.TargetDir)\AutoUpdater.Net.dll" />
             </Component>
+          <Component Directory="INSTALLFOLDER">
+            <File Source="$(var.Timee.TargetDir)\System.ComponentModel.Composition.dll" />
+          </Component>
+          <Component Directory="INSTALLFOLDER">
+            <File Source="$(var.Timee.TargetDir)\System.ComponentModel.Composition.Registration.dll" />
+          </Component>
             <Component Directory="INSTALLFOLDER">
                 <File Source="$(var.Timee.TargetDir)\AutoUpdater.Net.xml" />
             </Component>
@@ -89,6 +95,12 @@
             <Component Directory="PluginsFolder">
                 <File Source="$(var.Timee.TargetDir)\Plugins\ClosedXML.xml" />
             </Component>
+          <Component Directory="PluginsFolder">
+            <File Source="$(var.Timee.TargetDir)\Plugins\System.ComponentModel.Composition.dll" />
+          </Component>
+          <Component Directory="PluginsFolder">
+            <File Source="$(var.Timee.TargetDir)\Plugins\System.ComponentModel.Composition.Registration.dll" />
+          </Component>
             <Component Directory="PluginsFolder">
                 <File Source="$(var.Timee.TargetDir)\Plugins\Excell.dll" />
             </Component>
