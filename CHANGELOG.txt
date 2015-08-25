@@ -1,3 +1,34 @@
+v.0.9.4.5
+-------------------
+Added:
+Checkbox to turn on/off hints (About Dialog)
+Notification 
+Fixed:
+
+
+Changed:
+
+
+Known bugs:
+
+-------------------
+
+v.0.9.4.0
+-------------------
+Added:
+Possibility to create/use plugins
+Excel plugin
+Notifications
+New way to add tasks
+Hints
+Possibility to start plugin when alarm ends
+
+Fixed:
+
+Changed:
+
+Known bugs:
+
 v.0.9.3.5
 -------------------
 Added:

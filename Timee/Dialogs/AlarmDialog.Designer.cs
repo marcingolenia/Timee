@@ -71,7 +71,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(10, 226);
+            this.btnOk.Location = new System.Drawing.Point(10, 230);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 5;
@@ -81,7 +81,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(205, 226);
+            this.btnCancel.Location = new System.Drawing.Point(197, 230);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -100,12 +100,13 @@
             // 
             // grbAlarmOptions
             // 
+            this.grbAlarmOptions.Controls.Add(this.cbPlugins);
             this.grbAlarmOptions.Controls.Add(this.chkPlugin);
             this.grbAlarmOptions.Controls.Add(this.chkSound);
             this.grbAlarmOptions.Controls.Add(this.chkMessage);
-            this.grbAlarmOptions.Location = new System.Drawing.Point(44, 120);
+            this.grbAlarmOptions.Location = new System.Drawing.Point(40, 110);
             this.grbAlarmOptions.Name = "grbAlarmOptions";
-            this.grbAlarmOptions.Size = new System.Drawing.Size(200, 100);
+            this.grbAlarmOptions.Size = new System.Drawing.Size(200, 114);
             this.grbAlarmOptions.TabIndex = 8;
             this.grbAlarmOptions.TabStop = false;
             this.grbAlarmOptions.Text = "Alarm Options";
@@ -146,7 +147,7 @@
             // 
             this.cbPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPlugins.FormattingEnabled = true;
-            this.cbPlugins.Location = new System.Drawing.Point(159, 105);
+            this.cbPlugins.Location = new System.Drawing.Point(6, 87);
             this.cbPlugins.Name = "cbPlugins";
             this.cbPlugins.Size = new System.Drawing.Size(121, 21);
             this.cbPlugins.TabIndex = 2;
@@ -155,8 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.cbPlugins);
+            this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.grbAlarmOptions);
             this.Controls.Add(this.dtpAlarmDuration);
             this.Controls.Add(this.btnCancel);

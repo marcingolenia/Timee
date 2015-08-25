@@ -230,19 +230,22 @@ namespace Timee
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e)
         {
+            
+            int tmpRowsCount = this.grdWorkSummary.Rows.Count;
+            using (var dlg = new Dialogs.TimeeItemsDialog(this))
             {
-                int tmpRowsCount = this.grdWorkSummary.Rows.Count;
-                using (var dlg = new Dialogs.TimeeItemsDialog(this))
-                {
-                    dlg.Context = this.Context;
-                    dlg.ShowDialog();
-                }
-                if (tmpRowsCount < this.grdWorkSummary.Rows.Count)
-                {
-                    this.btnPause.Enabled = true;
-                    this.btnPause.Text = "Pause";
-                }
+                dlg.Context = this.Context;
+                dlg.ShowDialog();
             }
+            if (tmpRowsCount < this.grdWorkSummary.Rows.Count)
+            {
+                this.btnPause.Enabled = true;
+                this.btnPause.Text = "Pause";
+            }
+            Services.TimeeXMLService.Instance.LoadContext();
+            cmbSubProject_SelectedIndexChanged(sender, e);
+            cmbTask_SelectedIndexChanged(sender, e);
+            
         }
         /// <summary>
         /// Open table with PredefinedTasks.
@@ -314,7 +317,7 @@ namespace Timee
            
             if (!Context.Projects.Any(p => p.Name.Equals(cmbProject.Text)))
             {
-                cmbProject.SelectedItem = Context.Projects.FirstOrDefault();
+                cmbProject.SelectedItem = "";
             }
         }
         /// <summary>
@@ -327,9 +330,10 @@ namespace Timee
            
             if (!Context.Subprojects.Any(p => p.Name.Equals(cmbSubProject.Text)))
             {
-                cmbSubProject.SelectedItem = Context.Subprojects.FirstOrDefault();
+                cmbSubProject.SelectedItem = "";
             }
         }
+
         /// <summary>
         /// Allow users to add Task at edit-time.
         /// </summary>
@@ -340,7 +344,7 @@ namespace Timee
            
             if (!Context.Tasks.Any(p => p.Name.Equals(cmbTask.Text)))
             {
-                cmbTask.SelectedItem = Context.Tasks.FirstOrDefault();
+                cmbTask.SelectedItem = "";
             }
         }
         /// <summary>
@@ -707,6 +711,7 @@ namespace Timee
             if (cmbSubProject.Items.Count == 0)
             {
                 cmbTask.DataSource = null;
+                cmbTask.Text = "";
                 cmbSubProject.Text = "";
             }
         }
@@ -715,6 +720,24 @@ namespace Timee
         {
             cmbTask.DataSource = Context.Tasks.Where(s => s.ParentId == Context.Subprojects.Where(p => p.Name == cmbSubProject.Text).Select(p => p.Value).FirstOrDefault()).Select(s => s).ToList();
             cmbTask.DisplayMember = "Name";
+            if (cmbTask.Items.Count == 0)
+            {
+                cmbTask.DataSource = null;
+                cmbTask.Text = "";
+            }
+            if (cmbSubProject.Items.Count == 0)
+            {
+                cmbSubProject.DataSource = null;
+                cmbSubProject.Text = "";
+            }
+        }
+        private void cmbTask_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbTask.Items.Count == 0)
+            {
+                cmbTask.DataSource = null;
+                cmbTask.Text = "";
+            }
         }
 
         private void hotKeysSettingsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -308,6 +308,7 @@ namespace Timee
             this.cmbTask.Name = "cmbTask";
             this.cmbTask.Size = new System.Drawing.Size(121, 21);
             this.cmbTask.TabIndex = 6;
+            this.cmbTask.SelectedIndexChanged += new System.EventHandler(this.cmbTask_SelectedIndexChanged);
             this.cmbTask.Validating += new System.ComponentModel.CancelEventHandler(this.cmbTask_Validating);
             // 
             // btnAddRow
@@ -587,6 +588,7 @@ namespace Timee
             this.PerformLayout();
 
         }
+
 
 
 
