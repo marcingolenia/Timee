@@ -371,26 +371,27 @@ namespace Timee
             //Projects
             var cell = ((DataGridView)sender).CurrentCell;
 
+			if (cell.ColumnIndex > 2) parent = ((DataGridView)sender).CurrentRow.Cells[cell.ColumnIndex - 1].Value.ToString();
+
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.ProjectColumn.ColumnName
                 && this.Context.Projects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
                 cell.Value = this.Context.Projects.Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(p => p.Name).FirstOrDefault();
-                parent = cell.Value.ToString();
             }
            
             ////Subprojects
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.SubProjectColumn.ColumnName
                 && this.Context.Subprojects.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
+
                 cell.Value = this.Context.Subprojects.Where(p=>p.Parent == parent).Where(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(s => s.Name).FirstOrDefault();
-                parentId = this.Context.Subprojects.Where(p => p.Parent == parent).Where(p=>p.Name == cell.Value.ToString()).Select(p => p.Value).FirstOrDefault();                
-                parent = cell.Value.ToString();
             }
           
             ////Tasks
             if (cell.OwningColumn.Name == this.timeeDataSet.TimeSheetTable.TaskColumn.ColumnName
                 && this.Context.Tasks.Any(p => p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())))
             {
+				parentId = this.Context.Subprojects.Where(p => p.Parent == ((DataGridView)sender).CurrentRow.Cells[cell.ColumnIndex - 2].Value.ToString()).Where(p => p.Name == parent).Select(p => p.Value).FirstOrDefault();                
                 cell.Value = this.Context.Tasks.Where(p=>p.ParentId == parentId).Where(p=> p.Name.ToLower().Equals(cell.EditedFormattedValue.ToString().ToLower())).Select(t => t.Name).FirstOrDefault();
             }
          
